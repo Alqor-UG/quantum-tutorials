@@ -14,7 +14,15 @@ parts:
     - file: beginner_qml/qml_104
   - caption: Introduction to quantum technologies
     chapters:
+    - file: qtech_basics/qtech_summary
     - file: qtech_basics/qtech_intro
     - file: qtech_basics/bell_inequalities
+  - caption: Introduction to quantum hardware
+    chapters:
+    - file: hardware_tutorial/qhw_intro
+    - file: hardware_tutorial/quantum_hardware_101
+    - file: hardware_tutorial/quantum_hardware_102
+    - file: hardware_tutorial/quantum_hardware_103
+    - file: hardware_tutorial/quantum_hardware_104
 
   
