@@ -1,5 +1,5 @@
 # quantum-tutorials
- [![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://github.com/Alqor-UG/tutorial-test)
+ [![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://alqor-ug.github.io/quantum-tutorials/intro.html)
  This repo contains tutorials on quantum technologies. We share them here for an open collaboration. 
 
 ## Licence
