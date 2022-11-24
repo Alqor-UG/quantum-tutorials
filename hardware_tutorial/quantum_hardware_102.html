@@ -1,0 +1,1080 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial 2 - Continuous variables or the quantum harmonic oscillator &#8212; Quantum Tutorials</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "Alqor-UG/quantum-tutorials");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial 3 - A few words about quantum computing with trapped ions" href="quantum_hardware_103.html" />
+    <link rel="prev" title="Tutorial 1 - The qubit or the two level system" href="quantum_hardware_101.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Quantum Tutorials</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Welcome to our quantum tutorials
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  A beginners guide to QML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_intro.html">
+   Course summary for a beginners guide to QML
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_001.html">
+   QML 001 - A summary of classical supervised learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_101.html">
+   QML 101 - Some basic concepts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_102.html">
+   QML 102 - Deeper Classifiers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_103.html">
+   QML 103 - Teaching the circle
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_104.html">
+   QML 104 - More is different ? Working with multiple qubits
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to quantum technologies
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/qtech_summary.html">
+   Course summary for introduction to quantum technologies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/qtech_intro.html">
+   Tutorial 1 - Basic concepts of quantum technologies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/bell_inequalities.html">
+   Tutorial on the nobel prize 2022 - How to win Bell’s game
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to quantum hardware
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="qhw_intro.html">
+   Course summary for introduction to quantum hardware
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantum_hardware_101.html">
+   Tutorial 1 - The qubit or  the two level system
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Tutorial 2 - Continuous variables or the quantum harmonic oscillator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantum_hardware_103.html">
+   Tutorial 3 - A few words about quantum computing with trapped ions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantum_hardware_104.html">
+   Tutorial 4 - A few words about quantum computing with superconducting qubits
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/hardware_tutorial/quantum_hardware_102.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials/issues/new?title=Issue%20on%20page%20%2Fhardware_tutorial/quantum_hardware_102.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Alqor-UG/quantum-tutorials/main?urlpath=tree/book/hardware_tutorial/quantum_hardware_102.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-classical-harmonic-oscillator">
+   The classical harmonic oscillator
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#random-initial-conditions">
+     Random initial conditions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#quantum-harmonic-oscillator">
+   Quantum  harmonic oscillator
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#finding-the-hamiltonian">
+     Finding the Hamiltonian
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#time-evolution">
+     Time evolution
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#initial-conditions">
+     Initial conditions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#connection-the-dots">
+   Connection the dots
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#so-what-is-discrete-or-quanitized-in-the-quantum-harmonic-oscillator">
+   So what is discrete or quanitized in the quantum harmonic oscillator ?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#energies-for-the-classical-harmonic-oscillator">
+     Energies for the classical harmonic oscillator
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tutorial 2 - Continuous variables or the quantum harmonic oscillator</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-classical-harmonic-oscillator">
+   The classical harmonic oscillator
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#random-initial-conditions">
+     Random initial conditions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#quantum-harmonic-oscillator">
+   Quantum  harmonic oscillator
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#finding-the-hamiltonian">
+     Finding the Hamiltonian
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#time-evolution">
+     Time evolution
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#initial-conditions">
+     Initial conditions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#connection-the-dots">
+   Connection the dots
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#so-what-is-discrete-or-quanitized-in-the-quantum-harmonic-oscillator">
+   So what is discrete or quanitized in the quantum harmonic oscillator ?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#energies-for-the-classical-harmonic-oscillator">
+     Energies for the classical harmonic oscillator
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="tutorial-2-continuous-variables-or-the-quantum-harmonic-oscillator">
+<span id="qhw2"></span><h1>Tutorial 2 - Continuous variables or the quantum harmonic oscillator<a class="headerlink" href="#tutorial-2-continuous-variables-or-the-quantum-harmonic-oscillator" title="Permalink to this headline">¶</a></h1>
+<p>In the <a class="reference internal" href="quantum_hardware_101.html#qhw1"><span class="std std-ref">first tutorial</span></a> we saw a simple description of the qubit, which is quite often as far as hardware discussions go. Qubits are pretty awesome for the solution to a substantial amount of binary problems. However, the translation of continouous variables (CV) onto qubit is most of the time a rather sad moment. But to simply solve a problem with CV on a quantum system, there is no fundamental reason in going through a qubit representation.</p>
+<p>We will examplify this at the widely discussed problem of the harmonic oscillator. This also lays the groundwork for the discussion of such hardware systems like photonic quantum systems, cold atoms or even the readout of qubit based hardware like trapped ions or superconducting devices.</p>
+<div class="section" id="the-classical-harmonic-oscillator">
+<h2>The classical harmonic oscillator<a class="headerlink" href="#the-classical-harmonic-oscillator" title="Permalink to this headline">¶</a></h2>
+<p>Within physics we love to describe the evolution of a system with differential equations up to second order. The absolute classic is a particle of mass <span class="math notranslate nohighlight">\(m\)</span> that is moving in a harmonic potential. We describe its position as <span class="math notranslate nohighlight">\(x\)</span>. Its equation of motion is then:</p>
+<div class="math notranslate nohighlight">
+\[
+\ddot{x} +\omega^2 x = 0
+\]</div>
+<p>The solutions are then just oscillatory solutions:</p>
+<div class="math notranslate nohighlight">
+\[
+x(t) = a \cos(\omega t)+ b \sin(\omega t)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\dot{x}(t) = -a\omega \sin(\omega t)+ b\omega \cos(\omega t)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\ddot{x}(t) = -\omega^2 x(t)
+\]</div>
+<p>The two prefactors are are fully determined by:</p>
+<ul class="simple">
+<li><p>The initial speed of the particle <span class="math notranslate nohighlight">\(\dot{x}(t=0) = v_0\)</span>, or its associated momentum <span class="math notranslate nohighlight">\(p = mv\)</span>.</p></li>
+<li><p>The initial position of the particle <span class="math notranslate nohighlight">\(x(t=0) = x_0\)</span>.</p></li>
+</ul>
+<p>This results in:</p>
+<div class="math notranslate nohighlight">
+\[
+x(t=0) = a  = x_0
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\dot{x}(t=0) = b\omega = v_0
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">pi</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># steepness of the potential</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">omega</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">1</span><span class="p">;</span>
+
+<span class="c1"># initial conditions</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">v0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="n">tlin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
+
+<span class="n">xt</span> <span class="o">=</span> <span class="n">x0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">omega</span><span class="o">*</span><span class="n">tlin</span><span class="p">)</span><span class="o">+</span><span class="n">v0</span><span class="o">/</span><span class="n">omega</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">omega</span><span class="o">*</span><span class="n">tlin</span><span class="p">);</span>
+<span class="n">vt</span> <span class="o">=</span> <span class="o">-</span><span class="n">x0</span><span class="o">*</span><span class="n">omega</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">omega</span><span class="o">*</span><span class="n">tlin</span><span class="p">)</span><span class="o">+</span><span class="n">v0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">omega</span><span class="o">*</span><span class="n">tlin</span><span class="p">);</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tlin</span><span class="p">,</span> <span class="n">xt</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tlin</span><span class="p">,</span> <span class="n">vt</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;time $t$&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;position $x$&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;velocity $v$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;velocity $v$&#39;)
+</pre></div>
+</div>
+<img alt="../_images/quantum_hardware_102_3_1.png" src="../_images/quantum_hardware_102_3_1.png" />
+</div>
+</div>
+<p>We learn a few things from this example:</p>
+<ul class="simple">
+<li><p>The position and momentum are independent variables of the problem.</p></li>
+<li><p>If we cannot solve the equations of motion analytically or numerically, we have to resort to an <em>‘experiment’</em> that solves the differential equation for us. However, every <em>‘experiment’</em> will only solve one eom for one set of parameters for us.</p></li>
+</ul>
+<div class="section" id="random-initial-conditions">
+<h3>Random initial conditions<a class="headerlink" href="#random-initial-conditions" title="Permalink to this headline">¶</a></h3>
+<p>We have seen that the system might be solved analytically, however this might hit some problems for more complex problems. Then we have to investigate the solutions experimentally. For this work, we will prepare the system with some fidelity in some initial state. We assume:</p>
+<ul class="simple">
+<li><p>We have some precision <span class="math notranslate nohighlight">\(\Delta x\)</span> on the initial state preparation at <span class="math notranslate nohighlight">\(x_0\)</span>.</p></li>
+<li><p>We have some precision <span class="math notranslate nohighlight">\(\Delta v\)</span> on the initial state preparation at <span class="math notranslate nohighlight">\(v_0\)</span>.</p></li>
+</ul>
+<p>Let us just assume a gaussian  for simplicity. To describe this initial state we can then use the probability distribution <span class="math notranslate nohighlight">\(P_0(x)\)</span> and <span class="math notranslate nohighlight">\(P_0(v)\)</span>. For a finite grid size it means that we describe the initial state by a vector whose a elements are positive real numbers between 0 and 1 with the normalization condition:</p>
+<div class="math notranslate nohighlight">
+\[
+\sum p_i = 1
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">v0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="n">dv</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">dx</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+
+<span class="n">Px</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">Pv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">dv</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">Px</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">Pv</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;initial position $x$&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;initial velocity $v$&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/quantum_hardware_102_6_0.png" src="../_images/quantum_hardware_102_6_0.png" />
+</div>
+</div>
+<p>\And depending on these initial conditions, we will obtain some final distributions <span class="math notranslate nohighlight">\(P(x_f)\)</span> and <span class="math notranslate nohighlight">\(P(v_f)\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initial conditions</span>
+<span class="n">v0</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class="n">dv</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">dx</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+<span class="n">Ntries</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+
+<span class="n">x0s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">Ntries</span><span class="p">);</span>
+<span class="n">v0s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">dv</span><span class="p">,</span> <span class="n">Ntries</span><span class="p">);</span>
+
+
+<span class="n">tlin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
+
+<span class="n">xts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="n">Ntries</span><span class="p">));</span>
+<span class="n">vts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="n">Ntries</span><span class="p">));</span>
+<span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Ntries</span><span class="p">):</span>
+    <span class="n">xts</span><span class="p">[:,</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">x0s</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">omega</span><span class="o">*</span><span class="n">tlin</span><span class="p">)</span><span class="o">+</span><span class="n">v0s</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">/</span><span class="n">omega</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">omega</span><span class="o">*</span><span class="n">tlin</span><span class="p">);</span>
+    <span class="n">vts</span><span class="p">[:,</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">x0s</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">*</span><span class="n">omega</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">omega</span><span class="o">*</span><span class="n">tlin</span><span class="p">)</span><span class="o">+</span><span class="n">v0s</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">omega</span><span class="o">*</span><span class="n">tlin</span><span class="p">);</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tlin</span><span class="p">,</span> <span class="n">xts</span><span class="p">,</span> <span class="s1">&#39;bo&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tlin</span><span class="p">,</span> <span class="n">vts</span><span class="p">,</span> <span class="s1">&#39;bo&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;time $t$&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;position $x$&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;velocity $v$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;velocity $v$&#39;)
+</pre></div>
+</div>
+<img alt="../_images/quantum_hardware_102_8_1.png" src="../_images/quantum_hardware_102_8_1.png" />
+</div>
+</div>
+<p>quite importantly we can only test one set of initial conditions for each trajectory. The particle cannot be at several positions at the same time. With quantum  mechanics, we can now look into a system where this restriction gets lifted.</p>
+</div>
+</div>
+<div class="section" id="quantum-harmonic-oscillator">
+<h2>Quantum  harmonic oscillator<a class="headerlink" href="#quantum-harmonic-oscillator" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="finding-the-hamiltonian">
+<h3>Finding the Hamiltonian<a class="headerlink" href="#finding-the-hamiltonian" title="Permalink to this headline">¶</a></h3>
+<p>To find the quantum mechanical analog to some classical equations of motion, we must  re-express them in terms of a <strong>Lagrangien</strong> <span class="math notranslate nohighlight">\(L\)</span>. It is a functional, which depends on the position <span class="math notranslate nohighlight">\(x\)</span> and the independent velocity <span class="math notranslate nohighlight">\(\dot{x}\)</span>. The equations of motion of the particle are then given as:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{x}}\right) = \frac{\partial L}{\partial x}
+\]</div>
+<p>For the harmonic oscillator we have the Lagrangien:</p>
+<div class="math notranslate nohighlight">
+\[
+L_{h.o.} = \frac{m\dot{x}^2}{2}-\frac{m\omega^2}{2}x^2
+\]</div>
+<p>We can then identify from it several fundamental quantities:</p>
+<ul class="simple">
+<li><p>the kinetic energy of the particle <span class="math notranslate nohighlight">\(T = \frac{m\dot{x}^2}{2}\)</span>.</p></li>
+<li><p>Its potential energy <span class="math notranslate nohighlight">\(V = \frac{m\omega^2}{2}x^2\)</span>.</p></li>
+<li><p>Its total energy <span class="math notranslate nohighlight">\(E = T + V\)</span></p></li>
+</ul>
+<p>However, for the translation to quantum mechanics it is even more important that the Lagrangien allows us to define the <em>conjugate momentum</em> to the position:</p>
+<div class="math notranslate nohighlight">
+\[
+p = \frac{\partial L}{\partial \dot{x}}
+\]</div>
+<p>We then obtain the classical Hamiltonian for the system, which is:</p>
+<div class="math notranslate nohighlight">
+\[
+H = \dot{x} p - L
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+H_{h.o.} = \frac{p^2}{2m}+\frac{m\omega^2}{2}x^2
+\]</div>
+<p>We have now assembled all ingridients to ‘quantize’ the system.</p>
+<ul class="simple">
+<li><p>We know the Hamiltonian.</p></li>
+<li><p>We know its conjugate variables.</p></li>
+</ul>
+<p>The system is then described by the Hamiltonian:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{H}_{H.O.} = \frac{\hat{p}^2}{2m} + \frac{m\omega^2}{2}\hat{x}^2
+\]</div>
+<p>and the commutation relationship:</p>
+<div class="math notranslate nohighlight">
+\[
+[\hat{x}, \hat{p}] = i\hbar
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+[\hat{x}, \hat{p}] \equiv \hat{x} \hat{p} - \hat{p}\hat{x}
+\]</div>
+<p>The fact that the commutators are not disappearing is telling us that for any quantum system we cannot observe its position and momentum to arbitrary position at the same time.  A few notes before we continue:</p>
+<ul class="simple">
+<li><p>In the quantum mechanical system we can still have completely continouous observables <span class="math notranslate nohighlight">\(\hat{x}\)</span> and <span class="math notranslate nohighlight">\(\hat{p}\)</span>. Nothing has changed here.</p></li>
+<li><p>As we will see we now have a quantized energy spectrum, which is a fundamental change to quantum mechanics.</p></li>
+<li><p>As we will also see, we can launch the system in a superposition of different initial conditions, which are then explored in a parallel fashion.</p></li>
+</ul>
+</div>
+<div class="section" id="time-evolution">
+<h3>Time evolution<a class="headerlink" href="#time-evolution" title="Permalink to this headline">¶</a></h3>
+<p>This set of equations allows us to obtain the equations of motion through the Heisenberg equation as:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{d \hat{x}}{dt} = \frac{i}{\hbar}[\hat{H}, \hat{x}]
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{d \hat{p}}{dt} = \frac{i}{\hbar}[\hat{H}, \hat{p}]
+\]</div>
+<p>For the position the harmonic oscillator we obtain then:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{d \hat{x}}{dt} = \frac{i}{\hbar}[\hat{H}_{H.O.}, \hat{x}]
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+= \frac{i}{\hbar}[\frac{p^2}{2m}, \hat{x}]
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+= \frac{\hat{p}}{m}
+\]</div>
+<p>and for its momentum we obtain:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{d \hat{p}}{dt} = \frac{i}{\hbar}[\hat{H}_{H.O.}, \hat{p}]
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+= \frac{i}{\hbar}[\frac{m\omega^2}{2} \hat{x}^2, \hat{p}]
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+= -m\omega^2 \hat{x}
+\]</div>
+<p>So we are basically back at the set of differential equations, which looks similiar to what we had previously, except of th funny operator symbol on top of <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(p\)</span>. For all practical purposes you might see these operators as some massive matrices acting on some kind complex vectors <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>. A few comments here:</p>
+<ul class="simple">
+<li><p>To solve the problem you have to numerically solve the time evolution of the massive matrix  and not only of one variable. One example of quantum paralellism.</p></li>
+<li><p>The state vectors contain the initial state as we will see in a moment.</p></li>
+<li><p>To solve the problem we typically decompose the matrices into the eigenstates and eigenvalues, which are then the energies.</p></li>
+<li><p>If you want to solve the problem analytically it is most common to work with the Schrödinger picture, but it looks a bit different on first sight and we will just leave it to the appendix for the moment.</p></li>
+</ul>
+</div>
+<div class="section" id="initial-conditions">
+<h3>Initial conditions<a class="headerlink" href="#initial-conditions" title="Permalink to this headline">¶</a></h3>
+<p>In the quantum mechanical system we do not describe the initial conditions through its probability distributions anymore, but rather the wavefunction <span class="math notranslate nohighlight">\(|\psi_0\rangle\)</span>.</p>
+<ul class="simple">
+<li><p>Imagine that we are now observing the position of the particle. Each outcome is noted <span class="math notranslate nohighlight">\(|x_i \rangle\)</span>. It is basically the points on the grid with a spacing set by the resolution of the detector or the size of my quantum computer etc. This discretization is just for a simpler discussion, you can also just replace the sums, by integrals if you would like.</p></li>
+<li><p>To each outcome we associate some complex number <span class="math notranslate nohighlight">\(\psi(x_i)\)</span> to describe the initial condition.</p></li>
+<li><p>We obtain the probability distribution <span class="math notranslate nohighlight">\(P(x_i) = |\psi(x_i)|^2\)</span></p></li>
+</ul>
+<p>We then typically write the initial state as:</p>
+<div class="math notranslate nohighlight">
+\[
+|\psi_{init}\rangle = \int dx~\psi(x) |x\rangle\langle x|
+\]</div>
+<p>Or if you prefer the discrete version:</p>
+<div class="math notranslate nohighlight">
+\[
+|\psi_{init}\rangle = \sum_i \alpha_i|x_i\rangle
+\]</div>
+<p>So we can describe the initial state, by a vector whose entries are complex numbers  and which fulfill the normalization conditions:</p>
+<div class="math notranslate nohighlight">
+\[
+\int dx~ |\psi(x)|^2 = 1
+\]</div>
+<p>For conciseness it is always nice to just use a Gaussian with width <span class="math notranslate nohighlight">\(\sigma_x\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xlin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+<span class="n">sigmax</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="c1"># initial shape</span>
+<span class="n">psiInit</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">sigmax</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">xlin</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">sigmax</span><span class="o">**</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="c1"># normalization</span>
+<span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">psiInit</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">xlin</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xlin</span><span class="p">,</span> <span class="n">psiInit</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;position (x)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$\psi$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$\\psi$&#39;)
+</pre></div>
+</div>
+<img alt="../_images/quantum_hardware_102_15_1.png" src="../_images/quantum_hardware_102_15_1.png" />
+</div>
+</div>
+<p>But what about the momentum distribution ? In the same way as we were able to assign some values to the initial distribution of the position, we can associate some distribution for the distribution in momentum:</p>
+<ul class="simple">
+<li><p>We will note every possible outcome for position as <span class="math notranslate nohighlight">\(|k_j \rangle\)</span></p></li>
+<li><p>We will associate its components with some complex value <span class="math notranslate nohighlight">\(\beta_j\)</span></p></li>
+</ul>
+<p>We then typically write the initial state as:</p>
+<div class="math notranslate nohighlight">
+\[
+|\psi_{init}\rangle = \int dk~\psi(k) |k\rangle\langle k|
+\]</div>
+<p>Or if you prefer the discrete version:</p>
+<div class="math notranslate nohighlight">
+\[
+|\psi_{init}\rangle = \sum_j \beta_j|k_j\rangle
+\]</div>
+<p>Once again the entries are complex numbers and fulfill the normalization condition:</p>
+<div class="math notranslate nohighlight">
+\[
+\int dk~ |\psi(k)|^2 = 1
+\]</div>
+<p>The two representations are not independent. They are connected through the Fourier transform:</p>
+<div class="math notranslate nohighlight">
+\[
+\psi(k) = \frac{1}{\sqrt{2\pi}}\int dx \psi(x) e^{-ikx}
+\]</div>
+<p>For a Gaussian of width <span class="math notranslate nohighlight">\(\sigma_x\)</span> in position space, this results in a gaussian of width <span class="math notranslate nohighlight">\(\sigma_k = 1/2\sigma_x\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xlin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+<span class="n">klin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+<span class="n">sigmax</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">sigmak</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">sigmax</span><span class="p">;</span>
+<span class="c1"># initial shape</span>
+<span class="n">psiInit_x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">sigmax</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">xlin</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">sigmax</span><span class="o">**</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">psiInit_k</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">sigmak</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">klin</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">sigmak</span><span class="o">**</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="c1"># normalization</span>
+<span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">psiInit_x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">xlin</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xlin</span><span class="p">,</span> <span class="n">psiInit_x</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;position $x$&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$\psi(x)$&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">klin</span><span class="p">,</span> <span class="n">psiInit_k</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;momentum $k$&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$\psi(k)$&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/quantum_hardware_102_17_0.png" src="../_images/quantum_hardware_102_17_0.png" />
+</div>
+</div>
+<p>It is of fundamental importance to recognize that we can now choose initial conditions in which the particle is in several initial conditions at the same time. As an example it is perfectly valid to have a particle which is centered at zero, but is in a super position of opposite velocities.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.fftpack</span> <span class="k">as</span> <span class="nn">ft</span>
+
+<span class="n">Nx</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span><span class="n">Nk</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="n">xlin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="n">Nx</span><span class="p">);</span>
+
+<span class="c1"># size of the wavepackage</span>
+<span class="n">sigmax</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> 
+<span class="c1">#initial velocity</span>
+<span class="n">k0</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+<span class="c1"># initial shape</span>
+<span class="n">psiInit_x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">sigmax</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">xlin</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">sigmax</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">k0</span><span class="o">*</span><span class="n">xlin</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">k0</span><span class="o">*</span><span class="n">xlin</span><span class="p">));</span>
+
+<span class="c1"># normalization</span>
+<span class="n">Nx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">psiInit_x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">xlin</span><span class="p">);</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Nx</span><span class="p">)</span>
+
+
+<span class="c1"># get its Fourier transform</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">xlin</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">k_fft</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">xlin</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="n">d</span> <span class="o">=</span> <span class="n">dx</span><span class="p">)</span>
+<span class="n">k_fft</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">ft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">k_fft</span><span class="p">)</span>
+<span class="n">dk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">k_fft</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">psiInit_fft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">psiInit_x</span><span class="p">));</span>
+<span class="c1"># normalization</span>
+<span class="n">Nk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">psiInit_fft</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">k_fft</span><span class="p">);</span>
+<span class="n">psiInit_fft</span> <span class="o">=</span> <span class="n">psiInit_fft</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Nk</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xlin</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">psiInit_x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;position $x$&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$\psi(x)$&#39;</span><span class="p">)</span>
+<span class="c1">#ax2.plot(klin, psiInit_k)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">k_fft</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">psiInit_fft</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;momentum $k$&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$\psi(k)$&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0000000000000124
+</pre></div>
+</div>
+<img alt="../_images/quantum_hardware_102_19_1.png" src="../_images/quantum_hardware_102_19_1.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="connection-the-dots">
+<h2>Connection the dots<a class="headerlink" href="#connection-the-dots" title="Permalink to this headline">¶</a></h2>
+<p>We have now seen how to define the initial conditions and how obtain the time evolution of momentum and position. To connect the two of them, we
+have to look into expectation values, which are defined as:
+$<span class="math notranslate nohighlight">\(
+x(t) = \langle\psi_0| \hat{x}(t) |\psi_0\rangle
+\)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(
+p(t) = \langle\psi_0| \hat{p}(t) |\psi_0\rangle
+\)</span>$</p>
+<p>This also allows us to obtain some typical classical equations of motion:</p>
+<div class="math notranslate nohighlight">
+\[
+\langle\psi_0|\frac{d \hat{x}}{dt} |\psi_0\rangle = \frac{\langle\psi_0|\hat{p}|\psi_0\rangle}{m}
+\]</div>
+<p>and for its momentum we obtain:</p>
+<div class="math notranslate nohighlight">
+\[
+\langle\psi_0|\frac{d \hat{p}}{dt} |\psi_0\rangle = -m\omega^2 \langle\psi_0|\hat{x}|\psi_0\rangle
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linalg</span> <span class="k">as</span> <span class="n">LA</span>
+
+<span class="n">Nx</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span>
+<span class="n">xvec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="n">Nx</span><span class="p">);</span>
+
+<span class="n">omega</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">hbar</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="c1"># kinetic energy</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">xvec</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">dia</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">Nx</span><span class="p">)</span>
+<span class="n">offdia</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">Nx</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">d2grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">dia</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">offdia</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">offdia</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="n">dx</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">d2grid</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">d2grid</span><span class="p">[</span><span class="n">Nx</span><span class="o">-</span><span class="mi">1</span><span class="p">,:]</span><span class="o">=</span><span class="mi">0</span>
+
+<span class="n">Ekin</span> <span class="o">=</span> <span class="o">-</span><span class="n">hbar</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">)</span><span class="o">*</span><span class="n">d2grid</span>
+<span class="n">Ekin</span>
+
+<span class="c1"># potential energy</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">xvec</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">Vx</span> <span class="o">=</span> <span class="n">m</span><span class="o">*</span><span class="n">omega</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">xvec</span><span class="o">**</span><span class="mi">2</span><span class="p">;</span>
+<span class="n">Epot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">Vx</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="n">H</span> <span class="o">=</span>  <span class="n">Ekin</span> <span class="o">+</span> <span class="n">Epot</span>
+
+<span class="c1"># diagonalization</span>
+<span class="n">w</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">LA</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+<span class="c1"># sort it such that things look nice later</span>
+<span class="n">sortinds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<span class="n">EigVecs</span> <span class="o">=</span> <span class="n">v</span><span class="p">[:,</span><span class="n">sortinds</span><span class="p">]</span>
+<span class="n">EigVals</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="n">sortinds</span><span class="p">]</span>
+
+<span class="c1"># size of the wavepackage</span>
+<span class="n">sigmax</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> 
+
+<span class="c1">#initial velocity</span>
+<span class="n">k0</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+<span class="c1"># initial shape</span>
+<span class="n">psiInit_x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">sigmax</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">xlin</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">sigmax</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">k0</span><span class="o">*</span><span class="n">xlin</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">k0</span><span class="o">*</span><span class="n">xlin</span><span class="p">));</span>
+<span class="c1">#psiInit_x = 1/(2*np.pi*sigmax**2)**(1/4)*np.exp(-xlin**2/4/sigmax**2)*np.exp(1j*k0*xlin);</span>
+<span class="c1">#psiInit_x = 1/(2*np.pi*sigmax**2)**(1/4)*np.exp(-xlin**2/4/sigmax**2)*np.exp(-1j*k0*xlin);</span>
+<span class="n">psiInit_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">psiInit_x</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="c1">#transform to matrix</span>
+<span class="n">EigVals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">EigVals</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># EigVecs contains the Eigenvectors as columns, </span>
+<span class="c1"># conjugate transpose times Psi0 calculates the scalar product</span>
+<span class="c1"># of every energy-eigenvector with Psi0 (yields the representation in the energy-eigenbasis)</span>
+<span class="n">Psi0Eig</span> <span class="o">=</span> <span class="n">EigVecs</span><span class="o">.</span><span class="n">H</span> <span class="o">*</span> <span class="n">psiInit_x</span>
+
+<span class="n">tmax</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">NSteps</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">tmax</span><span class="o">/</span><span class="n">NSteps</span>
+<span class="n">meanx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">NSteps</span><span class="p">)</span>
+<span class="n">xsq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">NSteps</span><span class="p">)</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">NSteps</span><span class="p">)</span>
+<span class="n">psi_t</span> <span class="o">=</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">Nx</span><span class="p">,</span> <span class="n">NSteps</span><span class="p">))</span>
+<span class="n">n_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">Nx</span><span class="p">,</span> <span class="n">NSteps</span><span class="p">))</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">NSteps</span><span class="p">):</span>
+    
+    <span class="c1"># Time evolution is just a phase evolution in the energy eigenbasis</span>
+    <span class="n">PsitEig</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">EigVals</span><span class="o">/</span><span class="n">hbar</span><span class="o">*</span><span class="n">t</span><span class="p">),</span><span class="n">Psi0Eig</span> <span class="p">)</span>
+    
+    <span class="c1"># Transform back to the grid representation (calculate the time-evolved </span>
+    <span class="c1"># superposition of energy-eigenstates)</span>
+    <span class="n">Psit</span> <span class="o">=</span> <span class="n">EigVecs</span><span class="o">*</span><span class="n">PsitEig</span>
+    <span class="n">psi_t</span><span class="p">[:,</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">Psit</span><span class="o">.</span><span class="n">flatten</span><span class="p">();</span>
+    <span class="n">n_t</span><span class="p">[:,</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Psit</span><span class="o">.</span><span class="n">flatten</span><span class="p">()))</span><span class="o">**</span><span class="mi">2</span><span class="p">;</span>
+    <span class="c1"># calculate the mean position</span>
+    <span class="n">meanx</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">Psit</span><span class="o">.</span><span class="n">H</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">Psit</span><span class="p">);</span>
+    <span class="n">xsq</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">Psit</span><span class="o">.</span><span class="n">H</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">Psit</span><span class="p">);</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">+</span><span class="n">dt</span>
+    <span class="n">ts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">=</span><span class="n">t</span>
+
+<span class="n">xstd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">xsq</span><span class="o">-</span><span class="n">meanx</span><span class="o">**</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">n_t</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/quantum_hardware_102_21_0.png" src="../_images/quantum_hardware_102_21_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="so-what-is-discrete-or-quanitized-in-the-quantum-harmonic-oscillator">
+<h2>So what is discrete or quanitized in the quantum harmonic oscillator ?<a class="headerlink" href="#so-what-is-discrete-or-quanitized-in-the-quantum-harmonic-oscillator" title="Permalink to this headline">¶</a></h2>
+<p>We have seen now that one fundamental difference between the classical and the quantum implementation of the harmonic oscillator is the possibility of superpositions in the initial state. This did not change that the observables are perfectly continuous variables. However the dramatic change happens in the accessible energy levels.</p>
+<div class="section" id="energies-for-the-classical-harmonic-oscillator">
+<h3>Energies for the classical harmonic oscillator<a class="headerlink" href="#energies-for-the-classical-harmonic-oscillator" title="Permalink to this headline">¶</a></h3>
+<p>For the classical harmonic oscillator the energy is directly linked to the speed and the position of the particle and it is given as:</p>
+<div class="math notranslate nohighlight">
+\[
+E_{h.o.} = \frac{mv^2}{2}+\frac{m\omega^2}{2}x^2
+\]</div>
+<p>So it can take any value. For the quantum system this is dramatically different. The energies are quantized now and given by</p>
+<div class="math notranslate nohighlight">
+\[
+E_n = \hbar \omega(n+1/2)\mbox{ with }n\in \mathbb{N}
+\]</div>
+<p>So this thing is now discrete in the quantum version of the harmonic oscillator, not more and not less.</p>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial we have seen the description of the quantum harmonic oscillator, how it connects to certain problems and how to solve this numerically. In the <a class="reference internal" href="quantum_hardware_103.html#qhw3"><span class="std std-ref">third tutorial</span></a>, we will see how it is used to trap and cool ions, which are one of the leading quantum computation platforms.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Alqor-UG/quantum-tutorials",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./hardware_tutorial"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="quantum_hardware_101.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Tutorial 1 - The qubit or  the two level system</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="quantum_hardware_103.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial 3 - A few words about quantum computing with trapped ions</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Quantum Tutorials Community<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

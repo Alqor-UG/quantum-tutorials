@@ -1,0 +1,765 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial 4 - A few words about quantum computing with superconducting qubits &#8212; Quantum Tutorials</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "Alqor-UG/quantum-tutorials");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Tutorial 3 - A few words about quantum computing with trapped ions" href="quantum_hardware_103.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Quantum Tutorials</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Welcome to our quantum tutorials
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  A beginners guide to QML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_intro.html">
+   Course summary for a beginners guide to QML
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_001.html">
+   QML 001 - A summary of classical supervised learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_101.html">
+   QML 101 - Some basic concepts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_102.html">
+   QML 102 - Deeper Classifiers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_103.html">
+   QML 103 - Teaching the circle
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_104.html">
+   QML 104 - More is different ? Working with multiple qubits
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to quantum technologies
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/qtech_summary.html">
+   Course summary for introduction to quantum technologies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/qtech_intro.html">
+   Tutorial 1 - Basic concepts of quantum technologies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/bell_inequalities.html">
+   Tutorial on the nobel prize 2022 - How to win Bell’s game
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to quantum hardware
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="qhw_intro.html">
+   Course summary for introduction to quantum hardware
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantum_hardware_101.html">
+   Tutorial 1 - The qubit or  the two level system
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantum_hardware_102.html">
+   Tutorial 2 - Continuous variables or the quantum harmonic oscillator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantum_hardware_103.html">
+   Tutorial 3 - A few words about quantum computing with trapped ions
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Tutorial 4 - A few words about quantum computing with superconducting qubits
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/hardware_tutorial/quantum_hardware_104.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials/issues/new?title=Issue%20on%20page%20%2Fhardware_tutorial/quantum_hardware_104.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Alqor-UG/quantum-tutorials/main?urlpath=tree/book/hardware_tutorial/quantum_hardware_104.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-quantum-lc-oscillator">
+   The quantum LC-oscillator
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lagrangien-formulation">
+     Lagrangien formulation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quantization">
+     Quantization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-josephson-junction">
+   The Josephson junction
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-simplistic-picture-of-superconductivity">
+     A simplistic picture of superconductivity
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-josephson-relations">
+     The Josephson relations
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#single-qubit-control">
+   Single qubit control
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#generating-entanglement">
+   Generating entanglement
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-cnot-gate-constructed-from-the-physical-entangling-gates">
+   A CNOT gate constructed from the physical entangling gates
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summmary">
+   Summmary
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tutorial 4 - A few words about quantum computing with superconducting qubits</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-quantum-lc-oscillator">
+   The quantum LC-oscillator
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lagrangien-formulation">
+     Lagrangien formulation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quantization">
+     Quantization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-josephson-junction">
+   The Josephson junction
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-simplistic-picture-of-superconductivity">
+     A simplistic picture of superconductivity
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-josephson-relations">
+     The Josephson relations
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#single-qubit-control">
+   Single qubit control
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#generating-entanglement">
+   Generating entanglement
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-cnot-gate-constructed-from-the-physical-entangling-gates">
+   A CNOT gate constructed from the physical entangling gates
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summmary">
+   Summmary
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="tutorial-4-a-few-words-about-quantum-computing-with-superconducting-qubits">
+<span id="qhw4"></span><h1>Tutorial 4 - A few words about quantum computing with superconducting qubits<a class="headerlink" href="#tutorial-4-a-few-words-about-quantum-computing-with-superconducting-qubits" title="Permalink to this headline">¶</a></h1>
+<p>We have seen in the <a class="reference internal" href="quantum_hardware_103.html#qhw3"><span class="std std-ref">last tutorial</span></a> the
+possibilities of quantum computation with trapped ions. However, a second major platform are superconducting qubits. They the platform of choice of commercial giants like <a class="reference external" href="https://quantumai.google/">google</a>, <a class="reference external" href="https://www.ibm.com/quantum">IBM</a> or <a class="reference external" href="https://www.rigetti.com/">Rigetti</a>.
+In this tutorial, we will identify the existence of qubits in superconducting circuits, the different gates and the read-out. We will finish by a comparison in the computing performance of trapped ions and
+superconducting qubits.</p>
+<div class="section" id="the-quantum-lc-oscillator">
+<h2>The quantum LC-oscillator<a class="headerlink" href="#the-quantum-lc-oscillator" title="Permalink to this headline">¶</a></h2>
+<p>As in the second tutorial, we have to find the appropiate harmonic oscillator, but this time in electric circuits. Then we can discuss
+the need of the Josephson junction for the implementation of
+superconducting qubits.</p>
+<p>The fundamental ingredient for superconducting qubits are LC
+oscillators, which are simply put a loop of wire which is not closed. To study
+its quantum behavior we will closely follow the discussion in Sec. II of
+<a class="reference external" href="https://arxiv.org/abs/1904.06560v2">“A Quantum Engineer’s Guide to Superconducting Qubits”</a>.</p>
+<p>In electrical engineering we first have to identify the conjugate
+variables within the circuit. We will therefore follow the standard procedure of:</p>
+<ol class="simple">
+<li><p>Identifying the equations of motion.</p></li>
+<li><p>Identify the Lagrangien.</p></li>
+<li><p>Identify the conjugate variables.</p></li>
+<li><p>Write down the Hamiltonian.</p></li>
+<li><p>Quantize the Hamiltonian.</p></li>
+</ol>
+<p>While it might be overly complicated for simple LC circuits it provides
+a powerful framework for more complex systems (see <a class="reference external" href="https://doi.org/10.1103/physrevlett.108.240502">Nigg et al.</a>
+)</p>
+<div class="section" id="lagrangien-formulation">
+<h3>Lagrangien formulation<a class="headerlink" href="#lagrangien-formulation" title="Permalink to this headline">¶</a></h3>
+<p>The wire is caracterized by an <em>inductivity</em>, which is counteracting the
+change in current:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+V = L\frac{dI}{dt}\end{aligned}\]</div>
+<p>and a <em>capacitance</em>, which allows us
+to measure the cost of putting charges on the ends of the wire:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+I = C\frac{dV}{dt}\end{aligned}\]</div>
+<p>To put it under a partical form for
+quantization we typically express them through the flux, which is
+defined as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+\Phi(t) = \int_{-\infty}^tV(t')dt'\end{aligned}\]</div>
+<p>The electromagnetic
+energy stored within the loop of wire is in general given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+E(t) &amp;= \int_{-\infty}^t V(t')I(t')dt'\end{aligned}\]</div>
+<p>We then obtain the
+energies:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+E_{kin} = \frac{1}{2}C\dot{\Phi}^2\\
+E_{pot} = \frac{1}{2L}\Phi^2\\\end{aligned}\end{split}\]</div>
+<p>This now leads to the
+Lagrangien:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+L &amp;= \frac{1}{2}C\dot{\Phi}^2-\frac{1}{2L}\Phi^2\end{aligned}\]</div>
+</div>
+<div class="section" id="quantization">
+<h3>Quantization<a class="headerlink" href="#quantization" title="Permalink to this headline">¶</a></h3>
+<p>We can now identify the conjugate momentum the flux as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{\partial L}{\partial\dot{\Phi}} &amp;= C \dot{\Phi}\\
+&amp;= Q\end{aligned}\end{split}\]</div>
+<p>So the charge is the conjugate variable to the flux
+in the loop. They will be therefore the two fundamental variables of
+quantum theory, very much like position and momentum are for massive
+particles.</p>
+<p>We can now write down the Hamiltonian as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+H &amp;= Q\dot{\Phi}- L\\
+&amp;= \frac{Q^2}{2C}+\frac{\Phi^2}{2L}\end{aligned}\end{split}\]</div>
+<p>At this stage we can
+quantize the system through the commutation relation:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+[\hat{\Phi},\hat{Q}]&amp;= i\hbar\\
+\hat{H} &amp;= \frac{\hat{Q}^2}{2C}+\frac{\hat{\Phi}^2}{2L}\end{aligned}\end{split}\]</div>
+<p>So it is once again a harmonic oscillator with resonance frequency
+<span class="math notranslate nohighlight">\(\omega_r = \frac{1}{\sqrt{LC}}\)</span> and ‘mass’ <span class="math notranslate nohighlight">\(C\)</span>. So the system reads:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+\hat{H} &amp;= \hbar \omega_r \left(\hat{a}^\dagger a + \frac{1}{2}\right)\end{aligned}\]</div>
+<p>While this is now a quantum system, it is manifestly not a qubit as the
+transitions are equidistant in energy with <span class="math notranslate nohighlight">\(\omega_r\)</span>. The typical order
+of magnitude is here 3-6GHz.</p>
+<p>To prepare for the introduction of superconducting elements, we typically rewrite the equations above in terms of dimensionless quantities. Namely the Cooper pair density <span class="math notranslate nohighlight">\(n = \frac{Q}{2e}\)</span> and the reduced flux <span class="math notranslate nohighlight">\(\phi= 2\pi \Phi/\Phi_0\)</span> with <span class="math notranslate nohighlight">\(\Phi_0 = \frac{h}{2e}\)</span>. These two quantities correspond directly to the density and the phase of the superconducting wavefunction that we will discuss in the next section. We then obtain the Hamiltonian $<span class="math notranslate nohighlight">\(\begin{aligned} \hat{H} = 4E_C n^2 + \frac{1}{2}E_L \varphi^2\end{aligned}\)</span>$ So we quantify the influence of each lump element through their energy:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(E_C=\frac{e^2}{2C}\)</span> is the energy required to add a cooper pair.</p></li>
+<li><p><span class="math notranslate nohighlight">\(E_L=\frac{(\Phi_0/2\pi)^2}{L}\)</span> is the inductive energy</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="the-josephson-junction">
+<h2>The Josephson junction<a class="headerlink" href="#the-josephson-junction" title="Permalink to this headline">¶</a></h2>
+<p>To resolve the degeneracy we need to make the oscillator anharmonic.
+This is done through <em>Josephson junctions</em>, which are the backbone of
+superconducting electronics (very much like the transistor or the diode
+are classical electronics). To understand them roughly, we will fall
+back on the <a class="reference external" href="http://www.feynmanlectures.caltech.edu/III_21.html">Feynman
+picture</a> of
+Josephson dynamics.</p>
+<div class="section" id="a-simplistic-picture-of-superconductivity">
+<h3>A simplistic picture of superconductivity<a class="headerlink" href="#a-simplistic-picture-of-superconductivity" title="Permalink to this headline">¶</a></h3>
+<p>We could spend several lectures to understand the physics of Josephson
+junctions in all its gory details. A good overview might be found in the
+following books <a class="reference external" href="https://www.crcpress.com/Superfluidity-and-Superconductivity/Tilley-Tilley/p/book/9780750300339">(D.R. Tilley, 1990</a>; <a class="reference external" href="https://books.google.de/books?id=VpUk3NfwDIkC">Tinkham, 2004)</a>. However, the basic idea is that the fermionic electrons form cooper
+pairs at very low temperatures. These pairs are bosonic and can hence
+condense into a macroscopic wavefunction: $<span class="math notranslate nohighlight">\(\begin{aligned}
+\psi(x,t) &amp;= \sqrt{n}e^{i\varphi(x,t)}\end{aligned}\)</span>$ Now the system can
+be understood through the following relations:</p>
+<ul class="simple">
+<li><p>the density is given by <span class="math notranslate nohighlight">\(n= |\psi(x,t)|^2\)</span>.</p></li>
+<li><p>The velocity is set by the gradient of the phase
+<span class="math notranslate nohighlight">\(\vec{v}= \frac{\hbar}{2m_e}\nabla \varphi\)</span>.</p></li>
+<li><p>The voltage is set by the time evolution of the phase
+<span class="math notranslate nohighlight">\(V = \frac{\hbar}{2e} \frac{\partial \varphi}{\partial t}\)</span>.</p></li>
+</ul>
+</div>
+<div class="section" id="the-josephson-relations">
+<h3>The Josephson relations<a class="headerlink" href="#the-josephson-relations" title="Permalink to this headline">¶</a></h3>
+<p>A Josephson junction describes now a system where two superconducting
+regions are slightly separated by a normal metal such that only
+tunneling is allowed between the two regions.</p>
+<p>We can now write down the Schrödinger equation for this setup:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+i\hbar \partial_t \psi_L &amp;= \frac{eV}{2}\psi_L+J \psi_R\\
+i\hbar \partial_t \psi_R &amp;= -\frac{eV}{2}\psi_R+J \psi_L\end{aligned}\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(V\)</span> is the voltage applied to the junction and <span class="math notranslate nohighlight">\(J\)</span> is the tunneling
+element. We now use the decomposition to write:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\dot{n}_L &amp;= \frac{2}{\hbar}J\sqrt{n_Rn_L}\sin(\delta )\\
+\dot{n}_R &amp;= -\frac{2}{\hbar}J\sqrt{n_Rn_L}\sin(\delta)\\
+\phi &amp;=\varphi_L-\varphi_R\end{aligned}\end{split}\]</div>
+<p>We can now use it to write
+down the current-phase relationship:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+I &amp;= I_c\sin(\phi)\\
+I_c &amp;= \frac{2}{\hbar}Jn\end{aligned}\end{split}\]</div>
+<p>We can once again integrate the
+equation of motion to obtain:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\hat{H} = 4E_Cn^2-E_J \cos(\phi)\\
+E_C = \frac{e^2}{2(C+C_J)}\\
+E_J = \frac{I_C\Phi_0}{2\pi}\end{aligned}\end{split}\]</div>
+</div>
+</div>
+<div class="section" id="single-qubit-control">
+<h2>Single qubit control<a class="headerlink" href="#single-qubit-control" title="Permalink to this headline">¶</a></h2>
+<p>Superconducting qubits can be controlled either through inductive or
+capacitive coupling. Inductive coupling is widely used for flux-qubits
+like the rf-squid. However, here we focus on the transmon qubit, which
+is typically capacitavely coupled</p>
+<p>Going through the quantization procedure we discussed above, we can write
+the circuit Hamiltonian as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+\hat{H} &amp;= \frac{\tilde{Q}^2}{2C_\Sigma}+\frac{\Phi^2}{2L}+\frac{C_d}{C_\Sigma}V_d(t)\tilde{Q}\end{aligned}\]</div>
+<p>The charge is defined for this system as
+<span class="math notranslate nohighlight">\(\tilde{Q} = C_\Sigma\dot{\Phi} - C_d V_d(t)\)</span>. In the limit of weak
+coupling <span class="math notranslate nohighlight">\(C_d V_d \ll C_\Sigma \dot{\Phi}\)</span>, we have can quantize the
+system as before and only need to understand the influence of the last
+term.</p>
+<p>The second part of the Hamiltonian resembles strong the electric dipole
+coupling we discussed in the last lecture. It contains the displaced
+charge, which is linearly coupled to an oscillating electric field. So
+we can rewrite the charge once again in terms of raising an lower
+operators and arrive at the coupled Hamiltonian:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+\hat{H} &amp;= \frac{\omega_t}{2}\hat{\sigma}_z+\Omega V_d(t)\hat{\sigma}_y\end{aligned}\]</div>
+<p>All the other discussions are equivalent to our discussion on the ion
+and any other single qubit system.</p>
+</div>
+<div class="section" id="generating-entanglement">
+<h2>Generating entanglement<a class="headerlink" href="#generating-entanglement" title="Permalink to this headline">¶</a></h2>
+<p>Having identified the qubit, we can now also implement the entanglement
+gate to build the universal quantum computer. Different options exist:</p>
+<ul class="simple">
+<li><p>The qubit island could be coupled through a mutual capacitance, such
+that <span class="math notranslate nohighlight">\(\hat{H}_{int}= C_g V_1 V_2\)</span>.</p></li>
+<li><p>The qubit island could be coupled through a mututal inductance, such that <span class="math notranslate nohighlight">\(\hat{H}_{int}= M_{12} I_1 I_2\)</span>.</p></li>
+</ul>
+<p>Typically the inductive coupling is chosen in a regime of very small
+coupling <span class="math notranslate nohighlight">\(C_g \ll C_1, C_2\)</span>, where the <span class="math notranslate nohighlight">\(C_i\)</span> describe the transmon
+qubits. The full Hamiltonian reads then:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+\hat{H} &amp;=\hat{H}_{T,1}+\hat{H}_{T,2}+4e^2\frac{C_g}{C_1C_2}n_1n_2\end{aligned}\]</div>
+<p>we identified here <span class="math notranslate nohighlight">\(V_i = \frac{2e}{C_i}n_i\)</span>. We can now further rewrite
+the occupation in terms of raising and lowering operators
+<span class="math notranslate nohighlight">\(n\propto i(a-a^\dagger)\)</span>, which is can be expressed as a Pauli matrix for
+the buttom manifold. So we actually have the coupling:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+\hat{H} &amp;=\hat{H}_{T,1}+\hat{H}_{T,2}+g\sigma_{y,1}\sigma_{y,2}\end{aligned}\]</div>
+<p>While this basic operating principle of capacitive coupling is indeed
+widely used, it is worth to read the fine-print as the different actual
+implementation can to different 2-Qubit gates:</p>
+<ul class="simple">
+<li><p>The <strong>iSWAP</strong> gate is the implementation of the <span class="math notranslate nohighlight">\(\sigma_y \sigma_y\)</span>
+coupling.</p></li>
+<li><p>The <strong>phase</strong> gate, shows very high fidelities, but makes it necessary to tune the freuqency of the qubit. It implements a <span class="math notranslate nohighlight">\(\sigma_z \sigma_z\)</span>-coupling on the spins. Fidelities of &gt; 99% were demonstrated for this gate <a class="reference external" href="https://doi.org/10.1038/nature13171">(Barends et al., 2014)</a>.</p></li>
+<li><p>The <strong>cross-resonance</strong> (CR) gate is only controlled through
+microwaves. It implements the a <span class="math notranslate nohighlight">\(\sigma_x \sigma_z\)</span>-coupling on the
+spins. This is gate employed by IBM <a class="reference external" href="https://doi.org/10.1103/physrevlett.107.080502">(Chow et al., 2011)</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="a-cnot-gate-constructed-from-the-physical-entangling-gates">
+<h2>A CNOT gate constructed from the physical entangling gates<a class="headerlink" href="#a-cnot-gate-constructed-from-the-physical-entangling-gates" title="Permalink to this headline">¶</a></h2>
+<p>We would now like to discuss how we can use the capacitive coupling to
+implement a CNOT gates. This discussion is closely related to the
+possibility of using a Soerensen-Molmer gate, discussed in lecture 2, to
+implement a CNOT gate.</p>
+<p>The <span class="math notranslate nohighlight">\(\sigma_y \sigma_y\)</span> coupling for the right amount of leads to a
+coupling matrix:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+iSWAP &amp;= \left(\begin{array}{cccc}
+1 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp;-i &amp; 0\\
+0 &amp; -i &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{array}\right)\end{aligned}\end{split}\]</div>
+<p>The iSWAP can then be used to
+represent the CNOT gate.</p>
+<p>So we will focus shortly on the current limitations of qubit systems.
+Please be aware that this is a rapidly evolving field, so most likely
+the paragraph will be outdated within a few months. One good summary can
+be found in <a class="reference external" href="https://doi.org/10.1073/pnas.1618020114">(Linke et al., 2017)</a> and written by an ion trapping group.</p>
+</div>
+<div class="section" id="summmary">
+<h2>Summmary<a class="headerlink" href="#summmary" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial, we discussed how the two level system is implemented in superconducting devices and how they are coupled. This should give you a basic feeling for this widely used hardware platform and its limitations.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Alqor-UG/quantum-tutorials",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./hardware_tutorial"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="quantum_hardware_103.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Tutorial 3 - A few words about quantum computing with trapped ions</p>
+        </div>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Quantum Tutorials Community<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

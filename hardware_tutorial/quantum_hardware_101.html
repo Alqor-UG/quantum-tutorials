@@ -1,0 +1,755 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial 1 - The qubit or the two level system &#8212; Quantum Tutorials</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "Alqor-UG/quantum-tutorials");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial 2 - Continuous variables or the quantum harmonic oscillator" href="quantum_hardware_102.html" />
+    <link rel="prev" title="Course summary for introduction to quantum hardware" href="qhw_intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Quantum Tutorials</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Welcome to our quantum tutorials
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  A beginners guide to QML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_intro.html">
+   Course summary for a beginners guide to QML
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_001.html">
+   QML 001 - A summary of classical supervised learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_101.html">
+   QML 101 - Some basic concepts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_102.html">
+   QML 102 - Deeper Classifiers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_103.html">
+   QML 103 - Teaching the circle
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_104.html">
+   QML 104 - More is different ? Working with multiple qubits
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to quantum technologies
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/qtech_summary.html">
+   Course summary for introduction to quantum technologies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/qtech_intro.html">
+   Tutorial 1 - Basic concepts of quantum technologies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/bell_inequalities.html">
+   Tutorial on the nobel prize 2022 - How to win Bell’s game
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to quantum hardware
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="qhw_intro.html">
+   Course summary for introduction to quantum hardware
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Tutorial 1 - The qubit or  the two level system
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantum_hardware_102.html">
+   Tutorial 2 - Continuous variables or the quantum harmonic oscillator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantum_hardware_103.html">
+   Tutorial 3 - A few words about quantum computing with trapped ions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantum_hardware_104.html">
+   Tutorial 4 - A few words about quantum computing with superconducting qubits
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/hardware_tutorial/quantum_hardware_101.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials/issues/new?title=Issue%20on%20page%20%2Fhardware_tutorial/quantum_hardware_101.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Alqor-UG/quantum-tutorials/main?urlpath=tree/book/hardware_tutorial/quantum_hardware_101.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hamiltonian-eigenstates-and-matrix-notation">
+   Hamiltonian, Eigenstates and Matrix Notation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#case-of-no-perturbation-omega-0">
+   Case of no perturbation
+   <span class="math notranslate nohighlight">
+    \(\Omega = 0\)
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#case-of-no-detuning-delta-0">
+   Case of no detuning
+   <span class="math notranslate nohighlight">
+    \(\Delta = 0\)
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#general-case">
+   General case
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dynamical-aspects">
+   Dynamical Aspects
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-few-words-on-the-quantum-information-notation">
+   A few words on the quantum information notation
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tutorial 1 - The qubit or  the two level system</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hamiltonian-eigenstates-and-matrix-notation">
+   Hamiltonian, Eigenstates and Matrix Notation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#case-of-no-perturbation-omega-0">
+   Case of no perturbation
+   <span class="math notranslate nohighlight">
+    \(\Omega = 0\)
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#case-of-no-detuning-delta-0">
+   Case of no detuning
+   <span class="math notranslate nohighlight">
+    \(\Delta = 0\)
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#general-case">
+   General case
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dynamical-aspects">
+   Dynamical Aspects
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-few-words-on-the-quantum-information-notation">
+   A few words on the quantum information notation
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="tutorial-1-the-qubit-or-the-two-level-system">
+<span id="qhw1"></span><h1>Tutorial 1 - The qubit or  the two level system<a class="headerlink" href="#tutorial-1-the-qubit-or-the-two-level-system" title="Permalink to this headline">¶</a></h1>
+<p>In this first tutorial we are going to discuss the two-level system as it is the simplest unit of quantum computing systems. We discuss on a physics level with Hamiltonians etc its static properties like level splitting and avoided crossings. Then we discuss dynamical processes like Rabi oscillations and their connection to the notation of quantum computation.</p>
+<p>This lays the basis for the discussion of quantum computation hardware in the next tutorials. Namely:</p>
+<ul class="simple">
+<li><p>superconducting qubits</p></li>
+<li><p>trapped ions</p></li>
+<li><p>neutral atoms</p></li>
+</ul>
+<div class="section" id="hamiltonian-eigenstates-and-matrix-notation">
+<h2>Hamiltonian, Eigenstates and Matrix Notation<a class="headerlink" href="#hamiltonian-eigenstates-and-matrix-notation" title="Permalink to this headline">¶</a></h2>
+<p>To start out, we will consider two eigenstates <span class="math notranslate nohighlight">\(|0\rangle,~|1\rangle \)</span> of the Hamiltonian <span class="math notranslate nohighlight">\(\hat{H}_0\)</span> with</p>
+<div class="math notranslate nohighlight">
+\[
+ \hat{H}_0|0\rangle=E_0|0\rangle, \qquad \hat{H}_0|1\rangle=E_1|1\rangle.
+\]</div>
+<p>Quite typically we might think of it as a two-level atom with states 0 and 1. The eigenstates can be expressed in matrix notation:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+ |0\rangle=\left( \begin{array}{c} 1 \\ 0 \end{array} \right), \qquad |1\rangle=\left( \begin{array}{c} 0 \\ 1 \end{array} \right),
+\end{split}\]</div>
+<p>so that <span class="math notranslate nohighlight">\(\hat{H}_0\)</span> be written as a diagonal matrix</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \hat{H}_0 = \left(\begin{array}{cc} E_0 &amp; 0 \\ 0 &amp; E_1 \end{array}\right).
+\end{split}\]</div>
+<p>If we would only prepare eigenstates the system would be rather boring. However, we typically have the ability to change the Hamiltonian by switching on and off laser or microwave fields. We can then write the Hamiltonian in its most general form as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\hat{H} = \frac{\hbar}{2}\left( \begin{array}{cc} \Delta  &amp; \Omega_x - i\Omega_y\\ \Omega_x +i\Omega_y &amp; -\Delta \end{array} \right)
+\end{split}\]</div>
+<p>Sometimes we will also chose the definition:</p>
+<div class="math notranslate nohighlight">
+\[
+\Omega = |\Omega| e^{i\varphi}=\Omega_x + i\Omega_y
+\]</div>
+<p>It is particularly useful for the case in which the coupling is created by a laser. Another useful way of thinking about the two-level system is as a spin in a magnetic field. Let us remind us of the definitions of the of the spin-1/2 matrices:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+s_x = \frac{\hbar}{2}\left(\begin{array}{cc}
+0 &amp; 1\\
+1 &amp;  0
+\end{array}
+\right)~
+s_y = \frac{\hbar}{2}\left(\begin{array}{cc}
+0 &amp; -i\\
+i &amp;  0
+\end{array}
+\right)~s_z =\frac{\hbar}{2} \left(\begin{array}{cc}
+1 &amp; 0\\
+0 &amp;  -1
+\end{array}
+\right)
+\end{split}\]</div>
+<p>We then obtain:</p>
+<div class="math notranslate nohighlight">
+\[%\label{Eq:HamSpin}
+\hat{H} = \mathbf{B}\cdot\hat{\mathbf{s}}\text{ with }\mathbf{B} = (\Omega_x, \Omega_y, \Delta)
+\]</div>
+<p>You will go through this calculation in the excercise of this week.</p>
+</div>
+<div class="section" id="case-of-no-perturbation-omega-0">
+<h2>Case of no perturbation <span class="math notranslate nohighlight">\(\Omega = 0\)</span><a class="headerlink" href="#case-of-no-perturbation-omega-0" title="Permalink to this headline">¶</a></h2>
+<p>This is exactly the case of no applied laser fields that we discussed previously. We simply removed the energy offset <span class="math notranslate nohighlight">\(E_m = \frac{E_0+E_1}{2}\)</span> and pulled out the factor <span class="math notranslate nohighlight">\(\hbar\)</span>, such that <span class="math notranslate nohighlight">\(\Delta\)</span> measures a frequency. So we have:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+E_0 = E_m+ \frac{\hbar}{2}\Delta\\
+E_1 = E_m- \frac{\hbar}{2}\Delta
+\end{split}\]</div>
+<p>We typically call <span class="math notranslate nohighlight">\(\Delta\)</span> the energy difference between the levels or the <em>detuning</em>.</p>
+</div>
+<div class="section" id="case-of-no-detuning-delta-0">
+<h2>Case of no detuning <span class="math notranslate nohighlight">\(\Delta = 0\)</span><a class="headerlink" href="#case-of-no-detuning-delta-0" title="Permalink to this headline">¶</a></h2>
+<p>Let us suppose that the diagonal elements are exactly zero. And for simplicity we will also keep <span class="math notranslate nohighlight">\(\Omega_y =0\)</span> as it simply complicates the calculations without adding much to the discussion at this stage. The Hamiltonian reads then:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\hat{H} = \frac{\hbar}{2}\left( \begin{array}{cc} 0  &amp; \Omega\\ \Omega &amp;0 \end{array} \right)
+\end{split}\]</div>
+<p>Quite clearly the states <span class="math notranslate nohighlight">\(\varphi_{1,2}\)</span> are not the eigenstates of the system anymore. How should the system be described now ? We can once again diagonalize the system and write</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\hat{H}|\varphi_{\pm}\rangle = E_{\pm}|\varphi_{\pm}\rangle\\
+E_{\pm} = \pm\frac{\hbar}{2}\Omega\\
+|\varphi_{\pm}\rangle = \frac{|0\rangle\pm|1\rangle}{\sqrt{2}}
+\end{split}\]</div>
+<p>Two important consequences can be understood from this result:</p>
+<ul class="simple">
+<li><p>The coupling of the two states shifts their energy by <span class="math notranslate nohighlight">\(\Omega\)</span>. This is the idea of level repulsion.</p></li>
+<li><p>The coupled states are a superposition of the initial states.</p></li>
+</ul>
+<p>This is also a motivation the formulation of the ‘bare’ system for <span class="math notranslate nohighlight">\(\Omega = 0\)</span> and the ‘dressed’ states for the coupled system.</p>
+</div>
+<div class="section" id="general-case">
+<h2>General case<a class="headerlink" href="#general-case" title="Permalink to this headline">¶</a></h2>
+<p>Quite importantly we can solve the system completely even in the general case. By diagonalizing  the Hamiltonian  we obtain:</p>
+<div class="math notranslate nohighlight">
+\[
+ E_\pm = \pm \frac{\hbar}{2} \sqrt{\Delta^2+|\Omega|^2}
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">deltaMax</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">deltaMax</span><span class="p">,</span> <span class="n">deltaMax</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">omega</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">Eplus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">omega</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">Eminus</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">omega</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">Eplus</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$E_+$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">Eminus</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$E_+$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;detuning $\Delta$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;energy $E$&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/quantum_hardware_101_3_0.png" src="../_images/quantum_hardware_101_3_0.png" />
+</div>
+</div>
+<p>The Eigenstates then read:</p>
+<div class="math notranslate nohighlight">
+\[
+|\psi_+\rangle =\cos\left(\frac{\theta}{2}\right) e^{-i{\varphi}/{2}}|0\rangle+\sin\left(\frac{\theta}{2}\right) e^{i{\varphi}/{2}}|1\rangle
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+|\psi_-\rangle =-\sin\left(\frac{\theta}{2}\right)e^{-i{\varphi}/{2}}|0\rangle+\cos\left(\frac{\theta}{2}\right) e^{i{\varphi}/{2}}|1\rangle
+\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[
+\tan(\theta) = \frac{|\Omega|}{\Delta} 
+\]</div>
+</div>
+<div class="section" id="dynamical-aspects">
+<h2>Dynamical Aspects<a class="headerlink" href="#dynamical-aspects" title="Permalink to this headline">¶</a></h2>
+<p>After the static case we now want to investigate the dynamical properties of the two-state system. We calculate the time evolution of <span class="math notranslate nohighlight">\(|\psi(t)\rangle = c_0(t)|0\rangle + c_1(t)|1\rangle\)</span> with the Schrödinger equation and the perturbed Hamiltonian :</p>
+<div class="math notranslate nohighlight">
+\[
+i\hbar \frac{d}{dt}|\psi(t)\rangle=\hat{H}|\psi(t)\rangle,
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+i \frac{d}{dt}\left(\begin{array}{c} c_0(t) \\ c_1(t) \end{array}\right) = \frac{1}{2}\left( \begin{array}{cc} \Delta &amp; \Omega \\ \Omega^* &amp; -\Delta \end{array} \right) \left(\begin{array}{c} c_0(t) \\ c_1(t) \end{array} \right).
+\end{split}\]</div>
+<p>We have two coupled differential equations and we luckily already know how to solve them as we have calculated the two eigenenergies in the previous section. For the state <span class="math notranslate nohighlight">\(|\psi(t)\rangle\)</span> we get</p>
+<div class="math notranslate nohighlight">
+\[
+ |\psi(t)\rangle=\lambda e^{-i{E_+}t/{\hbar}} |\psi_+\rangle + \mu e^{-i{E_-}t/{\hbar}} |\psi_-\rangle 
+\]</div>
+<p>with the factors <span class="math notranslate nohighlight">\(\lambda\)</span> and <span class="math notranslate nohighlight">\(\mu\)</span>, which are defined by the initial state. The most common question is then what happens to the system if we start out in the bare state <span class="math notranslate nohighlight">\(|0\rangle\)</span> and then let it evolve under coupling with a laser ? So what is the probability to find it in the other state <span class="math notranslate nohighlight">\(|1\rangle\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+P_1(t)=\left|\langle 1|\psi(t)\rangle\right|^2.
+\]</div>
+<p>As a first step, we have to apply the initial condition  and express <span class="math notranslate nohighlight">\(|\psi(0)\rangle\)</span> in terms of <span class="math notranslate nohighlight">\(|\psi_{\pm}\rangle\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+|\psi(0)\rangle \overset{!}{=} |0\rangle
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+  =  e^{i{\varphi}/{2}} \left[ \cos\left( \frac{\theta}{2}\right) |\psi_{+}\rangle-\sin\left(\frac{\theta}{2}\right)|\psi_{-}\rangle\right]
+\]</div>
+<p>By equating the coefficients we get for <span class="math notranslate nohighlight">\(\lambda\)</span> and <span class="math notranslate nohighlight">\(\mu\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda = e^{i{\varphi}/{2}}\cos\left(\frac{\theta}{2}\right), \qquad  \mu = -e^{i{\varphi}/{2}}\sin\left(\frac{\theta}{2}\right).
+\]</div>
+<p>One thus gets:</p>
+<div class="math notranslate nohighlight">
+\[
+ P_1(t)= \left|e^{i\varphi} \sin\left(\frac{\theta}{2}\right)\cos\left(\frac{\theta}{2}\right)\left[e^{-i{E_+}t/{\hbar}} - e^{-i{E_-}t/{\hbar}}\right]\right|^2
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+= \sin^2(\theta)\sin^2\left(\frac{E_+-E_-}{2\hbar}t\right)
+\]</div>
+<p><span class="math notranslate nohighlight">\(P_1(t)\)</span> can be expressed with <span class="math notranslate nohighlight">\(\Delta\)</span> and <span class="math notranslate nohighlight">\(\Omega\)</span> alone. The obtained relation is called Rabi’s formula:</p>
+<div class="math notranslate nohighlight">
+\[
+ P_1(t)=\frac{1}{1+\left(\frac{\Delta}{|\Omega|}\right)^2}\sin^2\left(\sqrt{|\Omega|^2+\Delta^2}\frac{t}{2}\right)
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rabi_osc</span><span class="p">(</span><span class="n">time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">omega</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  time evolution in the Rabi oscillation</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    time: time at which we measure</span>
+<span class="sd">    omega: coupling strength</span>
+<span class="sd">    delta: detuning</span>
+<span class="sd">  </span>
+<span class="sd">  Returns:</span>
+<span class="sd">    float: probability to be in the excited state</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="p">(</span><span class="n">delta</span><span class="o">/</span><span class="n">omega</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">omega</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">delta</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">time</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+
+<span class="n">omega</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">1</span>
+<span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+
+
+<span class="n">delta</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">rabi_osc</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;$\Delta = 0$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">rabi_osc</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">omega</span><span class="p">),</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;$\Delta = \Omega$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">rabi_osc</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="n">omega</span><span class="p">),</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;$\Delta = 10\cdot\Omega$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;time $t$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;probability $P_1$&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;probability $P_1$&#39;)
+</pre></div>
+</div>
+<img alt="../_images/quantum_hardware_101_6_1.png" src="../_images/quantum_hardware_101_6_1.png" />
+</div>
+</div>
+<p>A few key words concerning Rabi oscillations are in order:</p>
+<ul class="simple">
+<li><p>The probability to be in the excited state is indeed maximal if there is zero detuning.</p></li>
+<li><p>The speed of the oscillations get higher with higher detuning. This fact is often overlooked at first sight but key in approximations like the <em>rotating wave approximation</em>.</p></li>
+</ul>
+</div>
+<div class="section" id="a-few-words-on-the-quantum-information-notation">
+<h2>A few words on the quantum information notation<a class="headerlink" href="#a-few-words-on-the-quantum-information-notation" title="Permalink to this headline">¶</a></h2>
+<p>The qubit is THE basic ingredient of quantum computers. However, you will typically not find Pauli matrices and other common notations of two-state systems in the platforms. The typical notation there is:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(R_x(\phi)\)</span> is a rotation around the x-axis for an angle <span class="math notranslate nohighlight">\(\phi\)</span>.</p></li>
+<li><p>Same holds for <span class="math notranslate nohighlight">\(R_y\)</span> and <span class="math notranslate nohighlight">\(R_z\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(X\)</span> denotes the rotation around the x axis for an angle <span class="math notranslate nohighlight">\(\pi\)</span>. So it transforms <span class="math notranslate nohighlight">\(|1\rangle\)</span> into  <span class="math notranslate nohighlight">\(|0\rangle\)</span> and vise versa.</p></li>
+<li><p><span class="math notranslate nohighlight">\(Z\)</span> denotes the rotation around the x axis for an angle <span class="math notranslate nohighlight">\(\pi\)</span>. So it transforms <span class="math notranslate nohighlight">\(|+\rangle\)</span> into  <span class="math notranslate nohighlight">\(|-\rangle\)</span> and vise versa.</p></li>
+</ul>
+<p>The most commonly used gate is actually one that we did not talk about at all, it is the Hadamard gate, which transforms <span class="math notranslate nohighlight">\(|1\rangle\)</span> into  <span class="math notranslate nohighlight">\(|-\rangle\)</span> and <span class="math notranslate nohighlight">\(|0\rangle\)</span> into  <span class="math notranslate nohighlight">\(|+\rangle\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{H}|1\rangle = |-\rangle
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\hat{H}|0\rangle = |+\rangle
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\hat{H}|-\rangle = |1\rangle 
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\hat{H}|+\rangle = |0\rangle
+\]</div>
+<p>In the next tutorial we will see how these concepts are implemented in real hardware.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Alqor-UG/quantum-tutorials",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./hardware_tutorial"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="qhw_intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Course summary for introduction to quantum hardware</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="quantum_hardware_102.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial 2 - Continuous variables or the quantum harmonic oscillator</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Quantum Tutorials Community<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

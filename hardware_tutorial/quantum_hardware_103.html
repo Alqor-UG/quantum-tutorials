@@ -1,0 +1,780 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial 3 - A few words about quantum computing with trapped ions &#8212; Quantum Tutorials</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "Alqor-UG/quantum-tutorials");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial 4 - A few words about quantum computing with superconducting qubits" href="quantum_hardware_104.html" />
+    <link rel="prev" title="Tutorial 2 - Continuous variables or the quantum harmonic oscillator" href="quantum_hardware_102.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Quantum Tutorials</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Welcome to our quantum tutorials
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  A beginners guide to QML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_intro.html">
+   Course summary for a beginners guide to QML
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_001.html">
+   QML 001 - A summary of classical supervised learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_101.html">
+   QML 101 - Some basic concepts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_102.html">
+   QML 102 - Deeper Classifiers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_103.html">
+   QML 103 - Teaching the circle
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_104.html">
+   QML 104 - More is different ? Working with multiple qubits
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to quantum technologies
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/qtech_summary.html">
+   Course summary for introduction to quantum technologies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/qtech_intro.html">
+   Tutorial 1 - Basic concepts of quantum technologies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/bell_inequalities.html">
+   Tutorial on the nobel prize 2022 - How to win Bell’s game
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to quantum hardware
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="qhw_intro.html">
+   Course summary for introduction to quantum hardware
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantum_hardware_101.html">
+   Tutorial 1 - The qubit or  the two level system
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantum_hardware_102.html">
+   Tutorial 2 - Continuous variables or the quantum harmonic oscillator
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Tutorial 3 - A few words about quantum computing with trapped ions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantum_hardware_104.html">
+   Tutorial 4 - A few words about quantum computing with superconducting qubits
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/hardware_tutorial/quantum_hardware_103.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials/issues/new?title=Issue%20on%20page%20%2Fhardware_tutorial/quantum_hardware_103.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Alqor-UG/quantum-tutorials/main?urlpath=tree/book/hardware_tutorial/quantum_hardware_103.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-do-we-want-from-a-quantum-computing-hardware">
+   What do we want from a quantum computing hardware ?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#trapping-and-cooling">
+   Trapping and cooling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#atom-light-interaction">
+   Atom-light interaction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#doppler-cooling">
+   Doppler cooling
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#working-in-the-lamb-dicke-regime">
+     Working in the Lamb-Dicke regime
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#single-qubit-operations">
+   Single-qubit operations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#two-qubit-operations">
+   Two-qubit operations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tutorial 3 - A few words about quantum computing with trapped ions</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-do-we-want-from-a-quantum-computing-hardware">
+   What do we want from a quantum computing hardware ?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#trapping-and-cooling">
+   Trapping and cooling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#atom-light-interaction">
+   Atom-light interaction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#doppler-cooling">
+   Doppler cooling
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#working-in-the-lamb-dicke-regime">
+     Working in the Lamb-Dicke regime
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#single-qubit-operations">
+   Single-qubit operations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#two-qubit-operations">
+   Two-qubit operations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="tutorial-3-a-few-words-about-quantum-computing-with-trapped-ions">
+<span id="qhw3"></span><h1>Tutorial 3 - A few words about quantum computing with trapped ions<a class="headerlink" href="#tutorial-3-a-few-words-about-quantum-computing-with-trapped-ions" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, we are going to discuss the fundamental ingredients for
+quantum computing with trapped ions.</p>
+<ul class="simple">
+<li><p>In a first step, we discuss trapping and cooling in a harmonic oscillator, which was introduced in the <a class="reference internal" href="quantum_hardware_102.html#qhw2"><span class="std std-ref">second tutorial</span></a>.</p></li>
+<li><p>Then we can discuss the implementation and control of the single qubit as generally summarized in the <a class="reference internal" href="quantum_hardware_101.html#qhw1"><span class="std std-ref">first tutorial</span></a> operations.</p></li>
+<li><p>Finally, we discuss how two ions are entangled through different two-qubit gates.</p></li>
+</ul>
+<p>Even if an enormous amount of additional literature
+exists, I will only reference here to a <a class="reference external" href="https://arxiv.org/abs/1804.03719v1">nice introduction</a> and a more complete list is left for future discussions.</p>
+<div class="section" id="what-do-we-want-from-a-quantum-computing-hardware">
+<h2>What do we want from a quantum computing hardware ?<a class="headerlink" href="#what-do-we-want-from-a-quantum-computing-hardware" title="Permalink to this headline">¶</a></h2>
+<p>In a QC we would like to implement algorithms, which are based on well
+defined operations. Influential examples of such algorithms are the
+quantum Fourier transform and the Grover algorithm.</p>
+<p>Given that computations are often implemented through logical truth
+tables, we typically base a quantum computer on qubits. We then call one
+state <span class="math notranslate nohighlight">\(\left|0\right\rangle\)</span> and on
+<span class="math notranslate nohighlight">\(\left|1\right\rangle\)</span>. Given that we would like to have
+reproducable computations, we always assume that we start them out with
+all qubits in the <span class="math notranslate nohighlight">\(\left|0\right\rangle\)</span> state.</p>
+<p>A computation then consists then in applying a number of gates. The key is
+here that any algorithm might be built up from an extremely limited
+number of gates. Typically four are sufficient:</p>
+<ul class="simple">
+<li><p>The three gates that rotate each individual qubit on the Bloch
+sphere.</p></li>
+<li><p>A gate that entangles them properly. The standard example is here
+the CNOT gate, which we will come back too.</p></li>
+</ul>
+<p>Such computations are then typically nicely visualized through circuit
+diagrams often resulting from the interaction with programming framworks like <code class="docutils literal notranslate"><span class="pre">pennylane</span></code> or <code class="docutils literal notranslate"><span class="pre">qiskit</span></code>. To make the programs flexible enough, we might want a checklist of what we want from a quantum computer hardware. DiVincenzo proposed
+the <a class="reference external" href="https://www.sciencedirect.com/science/article/abs/pii/S0370157308003463?via%3Dihub">following ingredients</a>:</p>
+<ol class="simple">
+<li><p>Qubits that can store information in a scalable system.</p></li>
+<li><p>The ability to initialize the system in the right state.</p></li>
+<li><p>A universal set of gates.</p></li>
+<li><p>Long coherence times, which are much longer than gate operation times.</p></li>
+<li><p>Good measurement capabilities</p></li>
+</ol>
+<p>Trapped ions allow us to fulfill all these requirements as we will see
+in this lecture and we will go through them step-by-step.</p>
+</div>
+<div class="section" id="trapping-and-cooling">
+<h2>Trapping and cooling<a class="headerlink" href="#trapping-and-cooling" title="Permalink to this headline">¶</a></h2>
+<p>For computing experiments one typically works with singe-charged ions
+like <span class="math notranslate nohighlight">\(Ca^+\)</span>. Given their charge, they can be trapped in very clean
+traps under vacuum. As such they are extremely well isolated from the
+environment and high precision experiments can be performed. Finally,
+they have only one remain electron in the outer shell. Therefore they
+have a hydrogenlike atomic structure.</p>
+<p>However, the trap construction is not trivial given Maxwells equation
+<span class="math notranslate nohighlight">\(\text{div} \vec{E} = 0\)</span>. So, the experimentalists have to play some
+tricks with oscillating fields. We will not derive in detail how a
+resulting <strong>Paul trap</strong> works, but the <a class="reference external" href="https://youtu.be/Xb-zpM0UOzk">linked
+video</a> gives a very nice impression of the
+idea behind it.</p>
+<p>This work on trapping ions dates back to the middle of the last century
+(!!!) and was recognized by the<a class="reference external" href="https://www.nobelprize.org/prizes/physics/1989/summary/"> Nobel prize in
+1989</a> for
+Wolfgang Paul  and Hans Dehmelt. They shared
+the prize with Norman Ramsey, who developped extremely precise
+spectroscopic methods, now known as Ramsey spectroscopy.</p>
+<p>A Paul trap provides a harmonic oscillator confinement with trapping
+frequencies in the order of hundreds of kHz. An ion trapped in such a
+trap can the be described by the Hamiltonian:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+\hat{H}_{t} &amp;= \frac{\hat{p}^2}{2m}+ \frac{m\omega_t^2}{2}\hat{x}^2\end{aligned}\]</div>
+<p>The two variables <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(x\)</span> are non-commuting <span class="math notranslate nohighlight">\([x, p] = i\hbar\)</span>, so
+they cannot be measured at the same time. It can be nicely diagonalized
+in terms of the ladder operators:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\hat{x} &amp;= \sqrt{\frac{\hbar}{2m\omega_t}}\left(\hat{a}+\hat{a}^\dagger\right)\\
+\hat{p} &amp;= i\sqrt{\frac{\hbar}{2m\omega_t}}\left(\hat{a}^\dagger-\hat{a}\right)\\\end{aligned}\end{split}\]</div>
+<p>So the Hamiltonian can now be written as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+\hat{H} &amp;= \hbar \omega_t \left(\hat{N} + \frac{1}{2}\right)\text{ with } \hat{N} = a^\dagger a
+\end{aligned}\]</div>
+<p>Having loaded the ions into the Paul trap we also need to cool them
+down.</p>
+</div>
+<div class="section" id="atom-light-interaction">
+<h2>Atom-light interaction<a class="headerlink" href="#atom-light-interaction" title="Permalink to this headline">¶</a></h2>
+<p>Given that the ions keep only on atom on the outer shell, they have a
+hydrogenlike structure, which makes them well controllable with light.</p>
+<p>Experimentally, we will then use light of amplitude <span class="math notranslate nohighlight">\(E_0\)</span> and frequency <span class="math notranslate nohighlight">\(\omega_L\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\vec{E}(t) &amp;= \vec{E}_0 \cos(kx - \omega_L t+\varphi)\\
+&amp;= \frac{\vec{E}_0}{2} \left(e^{i[kx - \omega_lt+\varphi]}+e^{-i[kx-\omega_lt+\varphi]}\right) \end{aligned}\end{split}\]</div>
+<p>We will describe the interal states of the ion for the moment with the
+simple two state system of ground state
+<span class="math notranslate nohighlight">\(\left|g\right\rangle\)</span> and excited state
+<span class="math notranslate nohighlight">\(\left|e\right\rangle\)</span> at an energy <span class="math notranslate nohighlight">\(\hbar \omega_0\)</span>, which
+is typically in the order of thousands of THz. It has the Hamiltonian:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+H_{ion} = \hbar \omega_0 \left|e\right\rangle\left\langle e\right|\end{aligned}\]</div>
+<p>Putting this ion into propagating light will induce a coupling between
+these two internal states. As previously , we will describe the coupling
+in the semi-classical approximation through
+<span class="math notranslate nohighlight">\(H_\textrm{int} = -\hat{\vec{D}} \cdot \vec{E}\)</span>. However, in this
+context we will not ignore the propagating nature of the light field and
+keep its position dependence. This is necessary as we would like to
+understand how the light influences the movement of the atoms and not
+only the internal states. Putting them together we obtain:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+H_\textrm{int} &amp;= \frac{\Omega}{2}\left([\left|g\right\rangle\left\langle e\right|+\left|e\right\rangle\left\langle g\right|]e^{i(k \hat{x} - \omega_L t+\varphi)} + h.c.\right)\end{aligned}\]</div>
+<p>The laser frequency is tuned closely to the frequency of the internal
+state transition and we will be only interested in the detuning
+<span class="math notranslate nohighlight">\(\Delta = \omega_0 - \omega_L\)</span>. Importantly, it couples the position of
+the atom and the internal states.</p>
+<p>To simplify the problem, we can work in the rotating frame to describe
+the external and internal degrees of freedom for the ion:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+\hat{H}= \hbar \omega_t \hat{a}^\dagger \hat{a} + \hbar\Delta \left|e\right\rangle\left\langle e\right| + \frac{\Omega}{2}\left(\left|e\right\rangle\left\langle g\right|e^{i\left(k \hat{x}+\varphi\right)} + h.c.\right)\end{aligned}\]</div>
+<p>We will now see how this system is used to cool the ions to the motional
+groundstate, perform single qubit operations and then two-qubit
+operations.</p>
+</div>
+<div class="section" id="doppler-cooling">
+<h2>Doppler cooling<a class="headerlink" href="#doppler-cooling" title="Permalink to this headline">¶</a></h2>
+<p>This interaction of the atom with a photon is at the origin of the
+all-important Laser cooling, which was pioneered for ions in the 1970s
+(!!) by the Wineland group. For cooling transition we couple the ground
+state to an excited state of finitie lifetime <span class="math notranslate nohighlight">\(\tau= \frac{1}{\Gamma}\)</span>.</p>
+<p>This laser cooling had a tremendous impact on the field of atomic
+physics in general. This importance was
+recognized in the <a class="reference external" href="https://www.nobelprize.org/prizes/physics/1997/summary/">Nobel prizes of 1997</a> for Steve Chu , Claude
+Cohen-Tannoudji and Bill Phillips.</p>
+<div class="section" id="working-in-the-lamb-dicke-regime">
+<h3>Working in the Lamb-Dicke regime<a class="headerlink" href="#working-in-the-lamb-dicke-regime" title="Permalink to this headline">¶</a></h3>
+<p>After this initial cooling stage the atoms have to be cooled to the
+ground state in the trap. To treat the trapped particles we will express
+the position operator in terms of the ladder operator, such that:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+k\hat{x} &amp;= \eta (\hat{a}^\dagger+ \hat{a})\\
+\eta &amp;= \sqrt{\frac{\hbar^2 k^2/2m}{\hbar \omega_t}} =\sqrt{\frac{E_R}{\hbar \omega_t}}\end{aligned}\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(\eta\)</span> is called the <em>Lamb-Dicke</em> parameter. It compares the change in
+motional energy due to the absorption of the photon
+<span class="math notranslate nohighlight">\(E_r = \frac{(\hbar k)^2}{2m}\)</span> compared to the energy spacing
+<span class="math notranslate nohighlight">\(\hbar \omega_t\)</span> in the trap. When it is small it suppresses the change
+of the motional state of the atom due to the absorption of a photon.</p>
+<p>For simplicity we will set in this section <span class="math notranslate nohighlight">\(\varphi=0\)</span> and develop the
+exponent to obtain:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+H_\textrm{int} &amp;= \frac{\Omega}{2}\left(\left|e\right\rangle\left\langle g\right|\left(1 + i\eta[\hat{a}^\dagger+ \hat{a}]\right) + h.c.\right)\end{aligned}\]</div>
+<p>So it contains three couplings for different trap levels and internal
+states:</p>
+<ul class="simple">
+<li><p>The <em>carrier</em> transition
+<span class="math notranslate nohighlight">\(\left|g,n\right\rangle\rightarrow \left|e,n\right\rangle\)</span>
+with strength <span class="math notranslate nohighlight">\(\Omega\)</span>.</p></li>
+<li><p>The <em>red</em> sideband
+<span class="math notranslate nohighlight">\(\left|g,n\right\rangle\rightarrow \left|e,n-1\right\rangle\)</span>
+with strength <span class="math notranslate nohighlight">\(\eta \Omega(n+1)\)</span>. It leads to a reduction of the
+trap level and it is resonant for <span class="math notranslate nohighlight">\(\Delta = -\omega_t\)</span>.</p></li>
+<li><p>The <em>blue</em> sideband
+<span class="math notranslate nohighlight">\(\left|g,n\right\rangle\rightarrow \left|e,n+1\right\rangle\)</span>
+with strength <span class="math notranslate nohighlight">\(\eta \Omega n\)</span>. It leads to an increase of the trap
+level and it is resonant for <span class="math notranslate nohighlight">\(\Delta = \omega_t\)</span>.</p></li>
+</ul>
+<p>This scheme is used to perform <strong>Raman side-band cooling</strong>. The laser is
+tuned on the transition
+<span class="math notranslate nohighlight">\(\left|n,g\right\rangle\rightarrow \left|n-1,e\right\rangle\)</span>
+such that each absorption involves a reduction in the trap level. This
+set-up for cooling was first demonstrated in 1995 by the Wineland group.</p>
+<p>It is at this stage that the ions are in the motional ground state and
+we can focus our attention to the high control of the internal qubit
+states of the ion for quantum computing.</p>
+</div>
+</div>
+<div class="section" id="single-qubit-operations">
+<h2>Single-qubit operations<a class="headerlink" href="#single-qubit-operations" title="Permalink to this headline">¶</a></h2>
+<p>The single qubit operations can now be identified with the transition
+<span class="math notranslate nohighlight">\(\left|e,n\right\rangle\leftrightarrow \left|g,n\right\rangle\)</span>.
+We can then simplify the above equation too:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+\hat{H}= \hbar\Delta \left|e\right\rangle\left\langle e\right| + \frac{\hbar\Omega}{2}\left(\left|e\right\rangle\left\langle g\right|e^{i\varphi} +\left|g\right\rangle\left\langle e\right|e^{-i\varphi}\right)
+\end{aligned}\]</div>
+<p>We can translate this into the language of qubit operations through the
+definitions:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\sigma_z &amp;= \frac{\left|e\right\rangle\left\langle e\right|-\left|g\right\rangle\left\langle g\right|}{2}\\
+\sigma_x &amp;= \frac{\left|e\right\rangle\left\langle g\right|+\left|g\right\rangle\left\langle e\right|}{2}\\
+\sigma_y &amp;= \frac{i\left|e\right\rangle\left\langle g\right|-i\left|g\right\rangle\left\langle e\right|}{2}
+\end{aligned}\end{split}\]</div>
+<p>So we can now simply write the Hamiltonian as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\hat{H}/\hbar &amp;= \Delta \sigma_z +\Omega_x \sigma_x +\Omega_y \sigma_y\\
+\Omega_x &amp;= \Omega \cos(\varphi)\\
+\Omega_y &amp;= \Omega \sin(\varphi)
+\end{aligned}\end{split}\]</div>
+<p>In the QC community people rarely talk about the Pauli matrices, but
+much rather about a few specific gates. The most cited here is the
+<em>Hadamard</em> gate, which transforms
+<span class="math notranslate nohighlight">\(\left|0/1\right\rangle\rightarrow \frac{\left|0\right\rangle\pm\left|1\right\rangle}{\sqrt{2}}\)</span>.
+So it has no good classical analog. Further a double application brings
+us back to the origin.</p>
+<p>The other gate we named about was a Z gate, which is simply a <span class="math notranslate nohighlight">\(\pi\)</span>
+rotation around the z axis.</p>
+</div>
+<div class="section" id="two-qubit-operations">
+<h2>Two-qubit operations<a class="headerlink" href="#two-qubit-operations" title="Permalink to this headline">¶</a></h2>
+<p>To implement a quantum computer the system has to be completed by a
+two-qubit operation. For ions a number of two-qubit gates exist:</p>
+<ul class="simple">
+<li><p>The <strong>Cirac-Zoller</strong> gate was the <a class="reference external" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.74.4091">first proposed</a> two-qubit gate  and it was also the first one realized within the <a class="reference external" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.75.4714">same year</a> .</p></li>
+<li><p>The <a class="reference external" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.82.1971"><strong>Soerensen-Moelmer</strong></a> gate was proposed later, but it is extremely important from a practical point of view as it leads to very high entanglement fidelities.</p></li>
+<li><p>Another realization, which we mention for completeness is the <a class="reference external" href="https://www.nature.com/articles/nature01492">geometric phase-gate</a>, which is used in the NIST group.</p></li>
+</ul>
+<p>We will now discuss a bit the Soerensen-Moelmer gate. In this set-up two ions sit in a common trap. The cost of energy for exciting one of the ions will be
+labelled <span class="math notranslate nohighlight">\(\omega_t\)</span> as in the first section. So we assume that the
+scheme starts in the state <span class="math notranslate nohighlight">\(\left|ggn\right\rangle\)</span>, where
+both atoms are in the internal ground-state <span class="math notranslate nohighlight">\(g\)</span> and in some excited trap
+level <span class="math notranslate nohighlight">\(n\)</span>.</p>
+<p>In the next step, these two ions experience two lasers, which are
+coupling excited and the ground state of the ions:</p>
+<ul class="simple">
+<li><p>One laser has frequency <span class="math notranslate nohighlight">\(\omega_1=\omega_0-\omega_t+\delta\)</span> and Rabi
+coupling strength <span class="math notranslate nohighlight">\(\Omega\)</span>. It is therefore only slightly detuned from the transitions <span class="math notranslate nohighlight">\(|ggn\rangle\rightarrow|eg,n-1\rangle |ge,n-1\rangle\)</span>.</p></li>
+<li><p>The second laser has frequency <span class="math notranslate nohighlight">\(\omega_2=\omega_0+\omega_t-\delta\)</span> and Rabi coupling strength <span class="math notranslate nohighlight">\(\Omega\)</span>. It is therefore only slightly detuned from the transitions <span class="math notranslate nohighlight">\(|ggn\rangle\rightarrow|eg,n+1\rangle |ge,n+1\rangle\)</span>.</p></li>
+</ul>
+<p>The gate is then operated in the regime of small coupling strength
+<span class="math notranslate nohighlight">\(\eta \Omega n \ll \delta\)</span>. In this case coupling to the excited
+motional states <span class="math notranslate nohighlight">\(n\pm 1\)</span> is suppressed by a factor of
+<span class="math notranslate nohighlight">\(\frac{\eta \Omega n}{\delta}\)</span>. On the other hand we are exactly on
+resonance for the two-photon transitions
+<span class="math notranslate nohighlight">\(|ggn\rangle\rightarrow|eg,n+1\rangle\rightarrow|ee,n\rangle\)</span> etc. So we
+can do second-order pertubation theory or
+adiabatic elimination to obtain the
+effective Hamiltonian:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+H_\mathrm{SM} &amp;= \frac{\Omega_\mathrm{SL}}{2}\left(\left|ggn\right\rangle\left\langle een\right| + (\left|een\right\rangle\left\langle ggn\right|\right)\text{ with }\Omega_{SL} = -\frac{(\Omega \eta)^2}{2(\eta - \delta)}\end{aligned}\]</div>
+<p>So starting out with the state <span class="math notranslate nohighlight">\(\left|gg\right\rangle\)</span> and
+applying the laser for <span class="math notranslate nohighlight">\(t\Omega =\frac{\pi}{2}\)</span>, we obtain the entangled
+state that we are looking for.</p>
+<p>The operation of the gate was first demonstrated in 2000 by the Wineland
+group and allowed at the time for generating a Bell state with a
+<a class="reference external" href="https://www.nature.com/articles/35005011">fidelity of 83%</a>. This limit has been increasingly pushed of the years and now reaches the 99.9% region.</p>
+<p>Such a fidelity sounds very impressive on first sight and it is by now
+the result of several decades of work. However, in a quantum computer we
+would like to chain a large number of these gates behind each other.</p>
+<ul class="simple">
+<li><p>After 10 iterations the fidelity dropped to 99%.</p></li>
+<li><p>After 100 iterations the fidelity dropped to 90%.</p></li>
+<li><p>After 1000 iterations the fidelity dropped to 30%.</p></li>
+</ul>
+<p>So even with such an excellent fidelity it will barely be possible to
+chain much more than 100 gates before the some extremely iffy things
+start to happen.</p>
+<p>So we have experimentally the choice of entanglement tool in the way
+that is most adapted to our work.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>Trapped ions have now become a major platform for quantum computation and in this tutorial, we have discussed the main ingriedients that underlie the computation. If you would like to use the devices, there are now emerging three major competitors within this technology stack:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://ionq.com/">IonQ</a> is based in Maryland with Chris Monroe as one of the founders. It was one of the first pure quantum computation companies and is now publically traded at the NASDAQ.</p></li>
+<li><p><a class="reference external" href="https://www.aqt.eu/">AQT</a> is a european company that is closely connected to the research team in Innsbruck around some of the founding fathers of the field like Rainer Blatt or Peter Zoller.</p></li>
+<li><p><a class="reference external" href="https://www.quantinuum.com/">Quantinuum</a> has its traditions in the NIST Boulder region on the hardware side. Despite their slightly younger age as a company they have recently demonstrated very high fidelity processors and became one of the leading players.</p></li>
+</ul>
+<p>In next weeks tutorial, we will move on to superconducting qubits and see how they are implementated.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Alqor-UG/quantum-tutorials",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./hardware_tutorial"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="quantum_hardware_102.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Tutorial 2 - Continuous variables or the quantum harmonic oscillator</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="quantum_hardware_104.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial 4 - A few words about quantum computing with superconducting qubits</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Quantum Tutorials Community<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
