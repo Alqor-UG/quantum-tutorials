@@ -1,0 +1,20 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+parts:
+  - caption: A beginners guide to QML
+    chapters:
+    - file: beginner_qml/qml_intro
+    - file: beginner_qml/qml_001
+    - file: beginner_qml/qml_101
+    - file: beginner_qml/qml_102
+    - file: beginner_qml/qml_103
+    - file: beginner_qml/qml_104
+  - caption: Introduction to quantum technologies
+    chapters:
+    - file: qtech_basics/qtech_intro
+    - file: qtech_basics/bell_inequalities
+
+  
