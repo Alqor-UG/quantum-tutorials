@@ -1,0 +1,856 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QML 104 - More is different ? Working with multiple qubits &#8212; Quantum Tutorials</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "Alqor-UG/quantum-tutorials");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial 1 - Basic concepts of quantum technologies" href="../qtech_basics/qtech_intro.html" />
+    <link rel="prev" title="QML 103 - Teaching the circle" href="qml_103.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Quantum Tutorials</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Welcome to our quantum tutorials
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  A beginners guide to QML
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="qml_intro.html">
+   Course summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="qml_001.html">
+   QML 001 - A summary of classical supervised learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="qml_101.html">
+   QML 101 - Some basic concepts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="qml_102.html">
+   QML 102 - Deeper Classifiers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="qml_103.html">
+   QML 103 - Teaching the circle
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   QML 104 - More is different ? Working with multiple qubits
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to quantum technologies
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/qtech_intro.html">
+   Tutorial 1 - Basic concepts of quantum technologies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/bell_inequalities.html">
+   Tutorial on the nobel prize 2022: How to win Bell’s game
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/beginner_qml/qml_104.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials/issues/new?title=Issue%20on%20page%20%2Fbeginner_qml/qml_104.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Alqor-UG/quantum-tutorials/main?urlpath=tree/book/beginner_qml/qml_104.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-multi-label-data-set">
+   A multi-label data set
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#handling-multiple-labels">
+   Handling multiple labels
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training">
+   Training
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#test">
+   Test
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary-and-outlook">
+   Summary and outlook
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>QML 104 - More is different ? Working with multiple qubits</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-multi-label-data-set">
+   A multi-label data set
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#handling-multiple-labels">
+   Handling multiple labels
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training">
+   Training
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#test">
+   Test
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary-and-outlook">
+   Summary and outlook
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="qml-104-more-is-different-working-with-multiple-qubits">
+<h1>QML 104 - More is different ? Working with multiple qubits<a class="headerlink" href="#qml-104-more-is-different-working-with-multiple-qubits" title="Permalink to this headline">¶</a></h1>
+<p>In the <a class="reference internal" href="qml_103.html#qml103"><span class="std std-ref">previous tutorial</span></a> we saw how we might be able to handle more complex inputs through reuploading. However, we only discussed algorithms with single qubits until now and there is little chance that such algorithms have an impact beyond their pedagogical power.</p>
+<p>In this tutorial, we will present one for to introduce multiple qubits and entangle them. We will learn:</p>
+<ul class="simple">
+<li><p>How multiple qubits can work with multiple labels.</p></li>
+<li><p>Entanglement might be used to control the performance of the circuit.</p></li>
+</ul>
+<p>We will always focus on simplicity throughout this tutorial and leave the more complex discussions to the extensive literature.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># only necessary on colab to have all the required packages installed</span>
+
+<span class="o">!</span>pip install qiskit
+<span class="o">!</span>pip install pylatexenc
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="c1"># for splitting the data set</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="c1"># for the quantum circuits</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span><span class="p">,</span> <span class="n">Parameter</span>
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">Aer</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="a-multi-label-data-set">
+<h2>A multi-label data set<a class="headerlink" href="#a-multi-label-data-set" title="Permalink to this headline">¶</a></h2>
+<p>In the <a class="reference internal" href="qml_101.html#qml101"><span class="std std-ref">first tutorials</span></a> we saw how to label data that depend only on one input and had binary labels <span class="math notranslate nohighlight">\(y_i \in \{0, 1\}\)</span>. In the <a class="reference internal" href="qml_103.html#qml103"><span class="std std-ref">third tutorial</span></a>, we worked with a data set that had a two-dimensional input <span class="math notranslate nohighlight">\(\mathbf{x}_i = (x_{1,i}, x_{2,i})\)</span> and a binary label <span class="math notranslate nohighlight">\(y_i \in \{0, 1\}\)</span>. We will now build up on this work and use a data set that has:</p>
+<ul class="simple">
+<li><p>one dimensional input <span class="math notranslate nohighlight">\(x\)</span>.</p></li>
+<li><p>Labels that go from <span class="math notranslate nohighlight">\(y_i \in \{0, 1, 2, 3\}\)</span>. Extending our previous data set.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">xdata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">ydata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">xdata</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;input value&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/qml_104_4_0.png" src="../_images/qml_104_4_0.png" />
+</div>
+</div>
+<p>Once again we split the data set and get into the training.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+
+<span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;input value&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot; given labels&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;training data&quot;</span><span class="p">)</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;input value&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;test data&quot;</span><span class="p">)</span>
+
+<span class="n">f</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/qml_104_6_0.png" src="../_images/qml_104_6_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="handling-multiple-labels">
+<h2>Handling multiple labels<a class="headerlink" href="#handling-multiple-labels" title="Permalink to this headline">¶</a></h2>
+<p>To achieve training now, we have to handle labels that go beyond binary. Quite interestingly there is a multitude of approaches on how to encode such labels, one of them was propose in the original paper <a class="reference external" href="https://quantum-journal.org/papers/q-2020-02-06-226/">data-reuploading approach</a>. However, we will follow a more intuitive path in which we simply use the qubits as <a class="reference external" href="https://en.wikipedia.org/wiki/Binary_number">binary encoding</a> of the labels. To represent the number <span class="math notranslate nohighlight">\(3\)</span>, we therefore need two qubits as the result <span class="math notranslate nohighlight">\(|11\rangle\)</span> is then translated in <span class="math notranslate nohighlight">\(2^1+1^1 = 3\)</span>.   In summary, we will</p>
+<ol class="simple">
+<li><p>Prepare the initial state, where multiple qubits are initialized in <span class="math notranslate nohighlight">\(0\)</span>.</p></li>
+<li><p>Apply a parametrized circuit with parameters <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> that depend on the input <span class="math notranslate nohighlight">\(U(\mathbf{w},x_i)\)</span>.</p></li>
+<li><p>Read out the label from the measurement of the qubit.</p></li>
+</ol>
+<p>The main difference is now that we have multiple qubits that we should handle in this approach and we have to choose how to properly parametrize the circuit. This falls into the large class of variational circuits, about which we might do a series of tutorials, if interest exists. A nice review on different choices can be found <a class="reference external" href="https://arxiv.org/abs/2008.08605">in this paper</a>.  Here, we will choose the following parametrization.</p>
+<ol class="simple">
+<li><p>We apply a rotation gate <span class="math notranslate nohighlight">\(R_x\)</span> on each qubit.</p></li>
+<li><p>We entangle the two qubit through a parametrized two qubit gate. A wide choice exists, but the  <span class="math notranslate nohighlight">\(R_{zz}\)</span> gate is especially nice as it creates entanglement and does not commute with the <span class="math notranslate nohighlight">\(R_x\)</span> gates.</p></li>
+<li><p>We apply another rotation gate <span class="math notranslate nohighlight">\(R_x\)</span> on each qubit.</p></li>
+</ol>
+<p>Let us just visualize it once in <code class="docutils literal notranslate"><span class="pre">qiskit</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sim</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s2">&quot;aer_simulator&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta1</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\theta_1$&quot;</span><span class="p">)</span>
+<span class="n">theta2</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\theta_2$&quot;</span><span class="p">)</span>
+
+<span class="n">alpha0</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\alpha_0$&quot;</span><span class="p">)</span>
+
+<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># first upload</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">theta1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">theta2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># first processing</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">rzz</span><span class="p">(</span><span class="n">alpha0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># second upload</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">theta1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">theta2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+
+<span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/qml_104_9_0.png" src="../_images/qml_104_9_0.png" />
+</div>
+</div>
+<p>We can now look at the performance of the code with some randomly initialized weight in predicting the appropiate label.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_accuracy</span><span class="p">(</span>
+    <span class="n">qc</span><span class="p">:</span> <span class="n">QuantumCircuit</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="p">,</span> <span class="n">alphas</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">xvals</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">yvals</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the accuracy of the circuit for a given set of data.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      qc: the quantum circuit</span>
+<span class="sd">      alphas: the training parameters for the z processing gate</span>
+<span class="sd">      gammas: the training parameters for the x processing gate</span>
+<span class="sd">      weights: the weights for the inputs</span>
+<span class="sd">      xvals: the input values</span>
+<span class="sd">      yvals: the labels</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      The accuracy and the predicted labels.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pred_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xvals</span><span class="p">))</span>
+    <span class="n">accurate_prediction</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">xinput</span><span class="p">,</span> <span class="n">yinput</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xvals</span><span class="p">)),</span> <span class="n">xvals</span><span class="p">,</span> <span class="n">yvals</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)):</span>
+        <span class="c1"># set the circuit parameter</span>
+        <span class="n">circuit</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span>
+            <span class="p">{</span><span class="n">theta1</span><span class="p">:</span> <span class="n">weights</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">xinput</span><span class="p">,</span>
+             <span class="n">theta2</span><span class="p">:</span> <span class="n">weights</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">xinput</span><span class="p">,</span>
+             <span class="n">alpha0</span><span class="p">:</span> <span class="n">alphas</span>
+             <span class="p">},</span>
+            <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># run the job and obtain the counts</span>
+        <span class="n">Nshots</span> <span class="o">=</span> <span class="mi">4000</span>
+        <span class="n">job</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">Nshots</span><span class="p">)</span>
+        <span class="n">counts1</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>  <span class="c1"># e.g. counts = {&quot;00&quot;: 2000, &quot;11&quot;: 2000}</span>
+
+        <span class="c1"># obtain the predicted label on average</span>
+        <span class="n">av_label</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">counts1</span><span class="p">:</span>
+          <span class="n">av_label</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">el</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">counts1</span><span class="p">[</span><span class="n">el</span><span class="p">]</span><span class="o">/</span><span class="n">Nshots</span>
+        <span class="n">pred_label</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">av_label</span><span class="p">)</span> 
+        
+        <span class="n">pred_labels</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred_label</span>
+        <span class="k">if</span> <span class="n">yinput</span> <span class="o">==</span> <span class="n">pred_label</span><span class="p">:</span>
+            <span class="n">accurate_prediction</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">accurate_prediction</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">yvals</span><span class="p">),</span> <span class="n">pred_labels</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+
+<span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span>
+
+
+<span class="n">accuracy</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">get_accuracy</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">alphas</span><span class="o">=</span><span class="n">alphas</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="n">xvals</span><span class="o">=</span><span class="n">x_train</span><span class="p">,</span> <span class="n">yvals</span><span class="o">=</span><span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">false_label</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_train</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+<span class="n">x_false</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
+<span class="n">y_false</span> <span class="o">=</span> <span class="n">y_pred</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The randomly initialized circuit has an accuracy of </span><span class="si">{</span><span class="n">accuracy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;predicted label&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_false</span><span class="p">,</span> <span class="n">y_false</span><span class="p">,</span> <span class="s2">&quot;ro&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;false label&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The randomly initialized circuit has an accuracy of 0.275
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f016e522a50&gt;
+</pre></div>
+</div>
+<img alt="../_images/qml_104_12_2.png" src="../_images/qml_104_12_2.png" />
+</div>
+</div>
+</div>
+<div class="section" id="training">
+<h2>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h2>
+<p>We once again have to train the circuit as discussed in the<a class="reference internal" href="qml_103.html#qml103"><span class="std std-ref"> previous tutorial</span></a> with <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/optimize.html"><code class="docutils literal notranslate"><span class="pre">scipy.optimize</span></code></a> package to optimize the target function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_cost_for_circ</span><span class="p">(</span><span class="n">xvals</span><span class="p">,</span> <span class="n">yvals</span><span class="p">,</span> <span class="n">machine</span><span class="o">=</span><span class="n">sim</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs parametrized circuit</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x: position of the dot</span>
+<span class="sd">        y: its state label</span>
+<span class="sd">        params: parameters of the circuit</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">execute_circ</span><span class="p">(</span><span class="n">params_flat</span><span class="p">):</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">params_flat</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">alphas</span> <span class="o">=</span> <span class="n">params_flat</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">accuracy</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">get_accuracy</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">alphas</span><span class="o">=</span><span class="n">alphas</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="n">xvals</span><span class="o">=</span><span class="n">xvals</span><span class="p">,</span> <span class="n">yvals</span><span class="o">=</span><span class="n">yvals</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;accuracy = </span><span class="si">{</span><span class="n">accuracy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="o">-</span><span class="n">accuracy</span>
+
+    <span class="k">return</span> <span class="n">execute_circ</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_cost</span> <span class="o">=</span> <span class="n">get_cost_for_circ</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">sim</span><span class="p">)</span>
+
+<span class="c1"># initial parameters which are randomly initialized</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">params</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">params_flat</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="c1"># params, which are guessed close to what we know to be a good result</span>
+<span class="n">params_flat</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.9</span><span class="p">,</span><span class="mf">0.9</span><span class="p">,</span><span class="mf">0.7</span><span class="p">]</span>
+
+<span class="c1"># minimze with COBYLA optimize, which often performs quite well</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">total_cost</span><span class="p">,</span> <span class="n">params_flat</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;COBYLA&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>accuracy = 0.975
+accuracy = 0.6125
+accuracy = 0.3125
+accuracy = 0.375
+accuracy = 0.2625
+accuracy = 0.5375
+accuracy = 0.8
+accuracy = 0.8
+accuracy = 0.75
+accuracy = 0.9375
+accuracy = 0.95
+accuracy = 0.95
+accuracy = 0.9625
+accuracy = 0.975
+accuracy = 0.975
+accuracy = 0.9875
+accuracy = 0.9625
+accuracy = 0.95
+accuracy = 0.975
+accuracy = 0.9625
+accuracy = 0.975
+accuracy = 0.975
+accuracy = 0.9875
+accuracy = 0.9875
+accuracy = 0.9625
+accuracy = 0.95
+accuracy = 0.9625
+accuracy = 0.975
+accuracy = 0.9625
+accuracy = 0.975
+accuracy = 0.975
+accuracy = 0.975
+accuracy = 0.975
+accuracy = 0.975
+accuracy = 0.975
+accuracy = 0.9625
+accuracy = 0.975
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that the accuracy is converging to a value of more than 95% and it is now time to look into the optimal training parameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">opt_weights</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">opt_alphas</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;optimal weights = </span><span class="si">{</span><span class="n">opt_weights</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;optimal alpha = </span><span class="si">{</span><span class="n">opt_alphas</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>optimal weights = [0.9010178  0.90824815]
+optimal alpha = 0.7131673355135238
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now test the accuracy on the optimal value of the weights again to test the accuracy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">get_accuracy</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">opt_weights</span><span class="p">,</span> <span class="n">alphas</span> <span class="o">=</span> <span class="n">opt_alphas</span><span class="p">,</span> <span class="n">xvals</span><span class="o">=</span><span class="n">x_train</span><span class="p">,</span> <span class="n">yvals</span><span class="o">=</span><span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">false_label</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_train</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+<span class="n">x_false</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
+<span class="n">y_false</span> <span class="o">=</span> <span class="n">y_pred</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The trained circuit has an accuracy of </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;predicted label&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_false</span><span class="p">,</span> <span class="n">y_false</span><span class="p">,</span> <span class="s2">&quot;ro&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;false label&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The trained circuit has an accuracy of 0.96
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f016e5952d0&gt;
+</pre></div>
+</div>
+<img alt="../_images/qml_104_20_2.png" src="../_images/qml_104_20_2.png" />
+</div>
+</div>
+<p>We can see quite excellent training for this data set. One common question that always comes up for these kinds of circuits is also about the potential role of entanglement. The simplest thing would be to simply set the alpha parameter to zero.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy_wo_entanglement</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_accuracy</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">opt_weights</span><span class="p">,</span> <span class="n">alphas</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">xvals</span><span class="o">=</span><span class="n">x_train</span><span class="p">,</span> <span class="n">yvals</span><span class="o">=</span><span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The trained circuit without entanglement has an accuracy of </span><span class="si">{</span><span class="n">accuracy_wo_entanglement</span><span class="si">:</span><span class="s2">.2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The trained circuit without entanglement has an accuracy of 0.79
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that the correlation between the two qubits plays and substantial role in the prediction of the labels. The training of the circuit without any kind of entanglement is left to the reader. Or you just send us a comment if you would like to have a cleaner introduction on this issue.</p>
+</div>
+<div class="section" id="test">
+<h2>Test<a class="headerlink" href="#test" title="Permalink to this headline">¶</a></h2>
+<p>Having finished the training, we can test the circuit now on data points that it has never seen.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_accuracy</span><span class="p">,</span> <span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">get_accuracy</span><span class="p">(</span>
+    <span class="n">qc</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">opt_weights</span><span class="p">,</span>  <span class="n">alphas</span> <span class="o">=</span> <span class="n">opt_alphas</span><span class="p">,</span> <span class="n">xvals</span><span class="o">=</span><span class="n">x_test</span><span class="p">,</span> <span class="n">yvals</span><span class="o">=</span><span class="n">y_test</span>
+<span class="p">)</span>
+
+<span class="n">false_label</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y_test_pred</span> <span class="o">-</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+<span class="n">x_false</span> <span class="o">=</span> <span class="n">x_test</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
+<span class="n">y_false</span> <span class="o">=</span> <span class="n">y_test_pred</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The circuit has a test accuracy of </span><span class="si">{</span><span class="n">test_accuracy</span><span class="si">:</span><span class="s2">.2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;predicted label&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_false</span><span class="p">,</span> <span class="n">y_false</span><span class="p">,</span> <span class="s2">&quot;ro&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;false label&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The circuit has a test accuracy of 1.0
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f016e403c50&gt;
+</pre></div>
+</div>
+<img alt="../_images/qml_104_25_2.png" src="../_images/qml_104_25_2.png" />
+</div>
+</div>
+</div>
+<div class="section" id="summary-and-outlook">
+<h2>Summary and outlook<a class="headerlink" href="#summary-and-outlook" title="Permalink to this headline">¶</a></h2>
+<p>In this last tutorial of this introductory series, we have seen that the data reuploading can be extended towards multiple labels.</p>
+<ul class="simple">
+<li><p>The crucial step was the extension to multiple qubits.</p></li>
+<li><p>To make the algorithm work efficiently we entangled the qudits with an entanglement gate and then trained the full circuit with the whole data set.</p></li>
+</ul>
+<p>Of course, we have not gone into complex data-sets like the MNIST or other problems in this series. This will be up to the more complex literature or more advanced courses. However, we hope that this series gave you a basic idea of some fairly common concepts that are used in the field nowadays.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Alqor-UG/quantum-tutorials",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./beginner_qml"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="qml_103.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">QML 103 - Teaching the circle</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../qtech_basics/qtech_intro.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial 1 - Basic concepts of quantum technologies</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Quantum Tutorials Community<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,745 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial on the nobel prize 2022: How to win Bell’s game &#8212; Quantum Tutorials</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "Alqor-UG/quantum-tutorials");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Tutorial 1 - Basic concepts of quantum technologies" href="qtech_intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Quantum Tutorials</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Welcome to our quantum tutorials
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  A beginners guide to QML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_intro.html">
+   Course summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_001.html">
+   QML 001 - A summary of classical supervised learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_101.html">
+   QML 101 - Some basic concepts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_102.html">
+   QML 102 - Deeper Classifiers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_103.html">
+   QML 103 - Teaching the circle
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_104.html">
+   QML 104 - More is different ? Working with multiple qubits
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to quantum technologies
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="qtech_intro.html">
+   Tutorial 1 - Basic concepts of quantum technologies
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Tutorial on the nobel prize 2022: How to win Bell’s game
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/qtech_basics/bell_inequalities.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials/issues/new?title=Issue%20on%20page%20%2Fqtech_basics/bell_inequalities.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Alqor-UG/quantum-tutorials/main?urlpath=tree/book/qtech_basics/bell_inequalities.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-casino-version-of-bell-s-chsh-game">
+   The casino version of Bell’s (CHSH) game
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-best-classical-strategy">
+   The best classical strategy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#breaking-the-casino-with-quantum-technologies">
+   Breaking the casino with quantum technologies
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-naive-quantum-strategy">
+   A naive quantum strategy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-winning-quantum-strategy">
+   The winning quantum strategy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-link-to-the-nobel-prize">
+   The link to the Nobel prize
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tutorial on the nobel prize 2022: How to win Bell’s game</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-casino-version-of-bell-s-chsh-game">
+   The casino version of Bell’s (CHSH) game
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-best-classical-strategy">
+   The best classical strategy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#breaking-the-casino-with-quantum-technologies">
+   Breaking the casino with quantum technologies
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-naive-quantum-strategy">
+   A naive quantum strategy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-winning-quantum-strategy">
+   The winning quantum strategy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-link-to-the-nobel-prize">
+   The link to the Nobel prize
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="tutorial-on-the-nobel-prize-2022-how-to-win-bell-s-game">
+<h1>Tutorial on the nobel prize 2022: How to win Bell’s game<a class="headerlink" href="#tutorial-on-the-nobel-prize-2022-how-to-win-bell-s-game" title="Permalink to this headline">¶</a></h1>
+<p>The nobel prize of physics for the year 2022 was awarded to three physicists for the test of Bell inequalities. As this work is foundational to any kind of modern quantum technology, we decided to provide you here with a description of the experiments in terms of a game. While the game is slightly odd it shows you nicely how quantum mechanics allow you to break the casino and what the experiments demonstrated specifically.</p>
+<p>To make the discussion very direct and hands-on we will implement it in some simple <code class="docutils literal notranslate"><span class="pre">qiskit</span></code> circuits such that you can test them directly on your own.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span>
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">Aer</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">trange</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-casino-version-of-bell-s-chsh-game">
+<h2>The casino version of Bell’s (CHSH) game<a class="headerlink" href="#the-casino-version-of-bell-s-chsh-game" title="Permalink to this headline">¶</a></h2>
+<p>A casino invented a new and exciting game, where Alice and Bob can try to win some nice objects at a huge discount  together. To participate in the game they have to pay 300 € as a team, but they have a good chance to come out of the game with objects that are worth 400€. Here are the rules of the game:</p>
+<ul class="simple">
+<li><p>Alice and Bob have to go into isolated cabins, where they get to see one out of two nice Apple watches (one being black and one being white). Quite importantly, they do not know which car was given to the other contestant.</p></li>
+<li><p>Now Alice and Bob have to tell the Referee what they would like to do. They have two options. They can either say that they would like to “sell” the watch or “keep” it.</p></li>
+</ul>
+<p>After they told the referee, their answers are compared. They can win in the following fashion:</p>
+<ul class="simple">
+<li><p>If Alice and Bob both saw a white watch, they win of one wanted to “sell” and the other one wanted to “keep” the car.</p></li>
+<li><p>In any other case, they win if both answered the same way (“keep” or “sell”)</p></li>
+</ul>
+<p>Let us simply translate these rules into python code.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bell_game</span><span class="p">(</span><span class="n">color_a</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">color_b</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">choice_a</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">choice_b</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The bell casino game translated into python</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      color_a: the color that Alice sees (either `black` or `white`)</span>
+<span class="sd">      color_b: the color that Alice sees (either `black` or `white`)</span>
+<span class="sd">      choice_a: the choice the Alice makes (`keep` or `sell`)</span>
+<span class="sd">      choice_b: the choice the Bob makes (`keep` or `sell`)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      A sring that says if Alice and Bob &quot;won&quot; or &quot;lost&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># the one case where Alice and Bob have to have different results</span>
+    <span class="k">if</span> <span class="n">color_a</span> <span class="o">==</span> <span class="s2">&quot;white&quot;</span> <span class="ow">and</span> <span class="n">color_b</span> <span class="o">==</span> <span class="s2">&quot;white&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">choice_a</span> <span class="o">==</span> <span class="s2">&quot;keep&quot;</span> <span class="ow">and</span> <span class="n">choice_b</span> <span class="o">==</span> <span class="s2">&quot;sell&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;won&quot;</span>
+        <span class="k">if</span> <span class="n">choice_a</span> <span class="o">==</span> <span class="s2">&quot;sell&quot;</span> <span class="ow">and</span> <span class="n">choice_b</span> <span class="o">==</span> <span class="s2">&quot;keep&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;won&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">choice_a</span> <span class="o">==</span> <span class="n">choice_b</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;won&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;lost&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-best-classical-strategy">
+<h2>The best classical strategy<a class="headerlink" href="#the-best-classical-strategy" title="Permalink to this headline">¶</a></h2>
+<p>It turns out that the best way to win for Alice and Bob is to cooperate and decide before if they would like to “keep” or “sell” the watch. Then they will get their wish in 75% of the cases and only lose if both see a white watch. We can even simulate this casino session in simple python code</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_games</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">wins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_games</span><span class="p">)</span>
+
+<span class="c1"># Alice and Bob decided to cooperate and always say &quot;sell&quot;</span>
+<span class="n">choice_alice</span> <span class="o">=</span> <span class="s2">&quot;sell&quot;</span>
+<span class="n">choice_bob</span> <span class="o">=</span> <span class="s2">&quot;sell&quot;</span>
+
+<span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_games</span><span class="p">):</span>
+
+    <span class="c1"># get the colors</span>
+    <span class="n">color_alice</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">])</span>
+    <span class="n">color_bob</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">])</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">bell_game</span><span class="p">(</span><span class="n">color_alice</span><span class="p">,</span> <span class="n">color_bob</span><span class="p">,</span> <span class="n">choice_alice</span><span class="p">,</span> <span class="n">choice_bob</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;won&quot;</span><span class="p">:</span>
+        <span class="n">wins</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Alice and Bob won </span><span class="si">{}</span><span class="s2"> games out of </span><span class="si">{}</span><span class="s2">. Hence a win rate of </span><span class="si">{:.2f}</span><span class="s2"> %&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">wins</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">n_games</span><span class="p">,</span> <span class="n">wins</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">n_games</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Alice and Bob won 7489.0 games out of 10000. Hence a win rate of 74.89 %
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see this makes the game fair as Bob and Alice have an expectation value of exactly 300€, so the casino and the players will have just an enjoyable time if we look at the wins and losses over the games.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profit</span> <span class="o">=</span> <span class="n">wins</span> <span class="o">*</span> <span class="mi">400</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_games</span><span class="p">)</span> <span class="o">*</span> <span class="mi">300</span>
+<span class="n">accu_profit</span> <span class="o">=</span> <span class="n">profit</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">accu_profit</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;profit in €&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;number of games&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x1111181f0&gt;
+</pre></div>
+</div>
+<img alt="../_images/bell_inequalities_7_1.png" src="../_images/bell_inequalities_7_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="breaking-the-casino-with-quantum-technologies">
+<h2>Breaking the casino with quantum technologies<a class="headerlink" href="#breaking-the-casino-with-quantum-technologies" title="Permalink to this headline">¶</a></h2>
+<p>Quite interestingly Alice and Bob could win more often if they have access to quantum technologies. So we just assume that Alice and Bob are really good techies and had access to a quantum computer, which allows them to entangle two qubits. Let us first plot up the kind of instructions that Alice and Bob have to give the quantum computer to obtain the entangled pair.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sim</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s2">&quot;aer_simulator&quot;</span><span class="p">)</span>
+
+<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/bell_inequalities_9_0.png" src="../_images/bell_inequalities_9_0.png" />
+</div>
+</div>
+<p>As a result of the circuit they have created a pair of entangled qubits. Imagine now that Alice and Bob can each one take one of the qubits into their cabin to play the quantum game. Given that Alice and Bob have to carry the qubit they have to have it in a box with two buttons.</p>
+<ul class="simple">
+<li><p>The first button says <code class="docutils literal notranslate"><span class="pre">measurement</span></code> such that they can read out the recommendation of their qubit.</p></li>
+<li><p>The second button allows them change their personal qubit a bit once they saw if they have a white or black watch in front of them.</p></li>
+<li><p>The key thing is that the box is not sending out any signal to the other player. So they are following perfectly the rules of the casino.</p></li>
+</ul>
+</div>
+<div class="section" id="a-naive-quantum-strategy">
+<h2>A naive quantum strategy<a class="headerlink" href="#a-naive-quantum-strategy" title="Permalink to this headline">¶</a></h2>
+<p>A naive way of using the qubit is to simply push the <code class="docutils literal notranslate"><span class="pre">measurement</span></code> and nothing else.If the qubit results in a zero, they will tell the casino that they would like to “keep” the watch. If it is qubit result is a one, they decide to “sell” the watch.</p>
+<p>We can just implement this once as a <code class="docutils literal notranslate"><span class="pre">qiskit</span></code> circuit and look at the result.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_games</span> <span class="o">=</span> <span class="mi">10000</span>
+
+<span class="n">naive_q_wins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_games</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">trange</span><span class="p">(</span><span class="n">n_games</span><span class="p">):</span>
+
+    <span class="n">color_alice</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">])</span>
+    <span class="n">color_bob</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">])</span>
+
+    <span class="c1"># time to prepare the Bell pair</span>
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># both measure</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+
+    <span class="c1"># now run the circuit</span>
+    <span class="n">job</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">outcome</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+
+    <span class="c1"># a horribly intransparent way to get the value of the outcome</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="n">outcome</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">choice_alice</span> <span class="o">=</span> <span class="s2">&quot;sell&quot;</span> <span class="k">if</span> <span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span> <span class="k">else</span> <span class="s2">&quot;keep&quot;</span>
+    <span class="n">choice_bob</span> <span class="o">=</span> <span class="s2">&quot;sell&quot;</span> <span class="k">if</span> <span class="n">keys</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span> <span class="k">else</span> <span class="s2">&quot;keep&quot;</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">bell_game</span><span class="p">(</span><span class="n">color_alice</span><span class="p">,</span> <span class="n">color_bob</span><span class="p">,</span> <span class="n">choice_alice</span><span class="p">,</span> <span class="n">choice_bob</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;won&quot;</span><span class="p">:</span>
+        <span class="n">naive_q_wins</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Alice and Bob won </span><span class="si">{}</span><span class="s2"> games out of </span><span class="si">{}</span><span class="s2">. Hence a win rate of </span><span class="si">{:.2f}</span><span class="s2"> %&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">naive_q_wins</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">n_games</span><span class="p">,</span> <span class="n">naive_q_wins</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">n_games</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|███████████████████████████████████| 10000/10000 [00:03&lt;00:00, 2953.99it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Alice and Bob won 7500.0 games out of 10000. Hence a win rate of 75.00 %
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As you can see above the players right now will always make the same choice. This is just a very geeky variation of the classical strategy that we implemented above.</p>
+</div>
+<div class="section" id="the-winning-quantum-strategy">
+<h2>The winning quantum strategy<a class="headerlink" href="#the-winning-quantum-strategy" title="Permalink to this headline">¶</a></h2>
+<p>But being really good in quantum tech, Alice and Bob now also have the second button  at hand to have a more sophisticated strategy, which allows them to take into account the color of the watches that they see in front of them.</p>
+<p>So what is the physics Bob and Alice developped the following strategy:</p>
+<ul class="simple">
+<li><p>If Alice sees a <em>black</em> watch she simply measures her qubit.</p></li>
+<li><p>If Alice sees a <em>white</em> watch she changes her personal qubit a bit by pushing the button on her qubit bag. In physics terms, it applies a hardamard gate on her qubit. Then she measures her qubit.</p></li>
+</ul>
+<p>Bob does the following:</p>
+<ul class="simple">
+<li><p>If he sees a <em>white</em> watch he switches the button to <code class="docutils literal notranslate"><span class="pre">white</span></code>. This performs <span class="math notranslate nohighlight">\(R_y\)</span> a rotation of qubit by <span class="math notranslate nohighlight">\(\frac{\pi}{8}\)</span>.</p></li>
+<li><p>If he sees a <em>black</em> watch he switches the button to <code class="docutils literal notranslate"><span class="pre">black</span></code>. This performs <span class="math notranslate nohighlight">\(R_y\)</span> a rotation of qubit by <span class="math notranslate nohighlight">\(-\frac{\pi}{8}\)</span>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_games</span> <span class="o">=</span> <span class="mi">10000</span>
+
+<span class="n">fancy_q_wins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_games</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">trange</span><span class="p">(</span><span class="n">n_games</span><span class="p">):</span>
+
+    <span class="c1"># get the numbers that tell us if Alice and Bob obtained</span>
+    <span class="c1"># a white or a black watch</span>
+    <span class="n">color_alice</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">])</span>
+    <span class="n">color_bob</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">])</span>
+
+    <span class="c1"># time to prepare the Bell pair</span>
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Alice acts her qubit</span>
+    <span class="k">if</span> <span class="n">color_alice</span> <span class="o">==</span> <span class="s2">&quot;white&quot;</span><span class="p">:</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Bob acts on his qubit</span>
+    <span class="k">if</span> <span class="n">color_bob</span> <span class="o">==</span> <span class="s2">&quot;white&quot;</span><span class="p">:</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">ry</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">ry</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># both measure</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+
+    <span class="c1"># now run the circuit</span>
+    <span class="n">job</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">outcome</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;lost&quot;</span>
+
+    <span class="c1"># a horribly intransparent way to get the value of the outcome</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="n">outcome</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">choice_alice</span> <span class="o">=</span> <span class="s2">&quot;sell&quot;</span> <span class="k">if</span> <span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span> <span class="k">else</span> <span class="s2">&quot;keep&quot;</span>
+    <span class="n">choice_bob</span> <span class="o">=</span> <span class="s2">&quot;sell&quot;</span> <span class="k">if</span> <span class="n">keys</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span> <span class="k">else</span> <span class="s2">&quot;keep&quot;</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">bell_game</span><span class="p">(</span><span class="n">color_alice</span><span class="p">,</span> <span class="n">color_bob</span><span class="p">,</span> <span class="n">choice_alice</span><span class="p">,</span> <span class="n">choice_bob</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;won&quot;</span><span class="p">:</span>
+        <span class="n">fancy_q_wins</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Alice and Bob won </span><span class="si">{}</span><span class="s2"> games out of </span><span class="si">{}</span><span class="s2">. Hence a win rate of </span><span class="si">{:.2f}</span><span class="s2"> %&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">fancy_q_wins</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">n_games</span><span class="p">,</span> <span class="n">fancy_q_wins</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">n_games</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|███████████████████████████████████| 10000/10000 [00:03&lt;00:00, 2636.13it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Alice and Bob won 8318.0 games out of 10000. Hence a win rate of 83.18 %
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fancy_profit</span> <span class="o">=</span> <span class="n">fancy_q_wins</span> <span class="o">*</span> <span class="mi">400</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_games</span><span class="p">)</span> <span class="o">*</span> <span class="mi">300</span>
+<span class="n">fancy_accu_profit</span> <span class="o">=</span> <span class="n">fancy_profit</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">accu_profit</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;classical tech&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fancy_accu_profit</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;quantum tech&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;profit in €&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;number of games&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_games</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 10000.0)
+</pre></div>
+</div>
+<img alt="../_images/bell_inequalities_15_1.png" src="../_images/bell_inequalities_15_1.png" />
+</div>
+</div>
+<p>This graph nicely summarizes that Alice and Bob have found a clear <strong>quantum advantage</strong> in the game. They could break the casino if the casino let’s them play long enough. It is fairly crucial to underline that Alice and Bob did not cheat in any way. They were simply able to do <strong>more</strong> with quantum technologies than it would be possible with any classical approach.</p>
+</div>
+<div class="section" id="the-link-to-the-nobel-prize">
+<h2>The link to the Nobel prize<a class="headerlink" href="#the-link-to-the-nobel-prize" title="Permalink to this headline">¶</a></h2>
+<p>This quantum advantage was formulated in a clean fashion in Bell’s inequalities in the 1970s. The three Nobel prize winners (John Clauser, Alain Aspect, Anton Zeilinger) tested experimentally that it is indeed possible for Alice and Bob to break the casino without any cheating.</p>
+<p>Of course, the experimentalists did not take qubits into a casino. The experiments performed the game in highly controlled lab experiments. The qubits were implemented through flying photons and the decisions on the colors of the watches were high quality random number generators. Even as the experiments became more and more sophisticated they continued to show that the entangled qubits allowed for quantum advantage. And this work was so foundational to modern quantum technologies that it obtained this years <a class="reference external" href="https://www.nobelprize.org/prizes/physics/2022/press-release/">Nobel prize</a>. Modern quantum computing systems and sophisticated algorithms essentially attempts to reproduce this clear advantage in increasingly complex situations like <a class="reference external" href="https://alqor.io/tutorials/introduction-to-generative-modelling-with-quantum-hardware">unsupervised machine learning</a>.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Alqor-UG/quantum-tutorials",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./qtech_basics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="qtech_intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Tutorial 1 - Basic concepts of quantum technologies</p>
+        </div>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Quantum Tutorials Community<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
