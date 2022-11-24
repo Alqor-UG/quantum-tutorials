@@ -1,4 +1,4 @@
-# Course summary
+# Course summary for a beginners guide to QML
 Classical machine learning has changed the internet in a dramatic fashion. Because of this, researchers put a substantial effort into the develop of quantum machine learning.  In this series of tutorials on quantum technologies, we provide a basic introduction into some of the fundamental concepts behind supervised quantum machine learning algorithms. 
 
 ## Requirements
