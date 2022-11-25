@@ -12,6 +12,13 @@ parts:
     - file: beginner_qml/qml_102
     - file: beginner_qml/qml_103
     - file: beginner_qml/qml_104
+  - caption: Generative modeling with quantum hardware
+    chapters:
+    - file: generative_modeling/gmqh_intro
+    - file: generative_modeling/generative_modeling_101
+    - file: generative_modeling/generative_modeling_102
+    - file: generative_modeling/generative_modeling_103
+    - file: generative_modeling/generative_modeling_104
   - caption: Introduction to quantum technologies
     chapters:
     - file: qtech_basics/qtech_summary
