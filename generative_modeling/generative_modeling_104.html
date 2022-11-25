@@ -1,0 +1,1156 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial 4 – A trained generative model with a few qubits &#8212; Quantum Tutorials</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "Alqor-UG/quantum-tutorials");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Course summary for introduction to quantum technologies" href="../qtech_basics/qtech_summary.html" />
+    <link rel="prev" title="Tutorial 3 – An untrained generative model with qubits" href="generative_modeling_103.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Quantum Tutorials</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Welcome to our quantum tutorials
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  A beginners guide to QML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_intro.html">
+   Course summary for a beginners guide to QML
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_001.html">
+   QML 001 - A summary of classical supervised learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_101.html">
+   QML 101 - Some basic concepts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_102.html">
+   QML 102 - Deeper Classifiers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_103.html">
+   QML 103 - Teaching the circle
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_104.html">
+   QML 104 - More is different ? Working with multiple qubits
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Generative modeling with quantum hardware
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="gmqh_intro.html">
+   Summary of generative modeling with quantum hardware
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="generative_modeling_101.html">
+   Tutorial 1 – A baby example of generative modeling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="generative_modeling_102.html">
+   Tutorial 2 – Training generative models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="generative_modeling_103.html">
+   Tutorial 3 – An untrained generative model with qubits
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Tutorial 4 – A trained generative model with a few qubits
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to quantum technologies
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/qtech_summary.html">
+   Course summary for introduction to quantum technologies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/qtech_intro.html">
+   Tutorial 1 - Basic concepts of quantum technologies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/bell_inequalities.html">
+   Tutorial on the nobel prize 2022 - How to win Bell’s game
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to quantum hardware
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/qhw_intro.html">
+   Course summary for introduction to quantum hardware
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_101.html">
+   Tutorial 1 - The qubit or  the two level system
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_102.html">
+   Tutorial 2 - Continuous variables or the quantum harmonic oscillator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_103.html">
+   Tutorial 3 - A few words about quantum computing with trapped ions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_104.html">
+   Tutorial 4 - A few words about quantum computing with superconducting qubits
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/generative_modeling/generative_modeling_104.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials/issues/new?title=Issue%20on%20page%20%2Fgenerative_modeling/generative_modeling_104.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Alqor-UG/quantum-tutorials/main?urlpath=tree/book/generative_modeling/generative_modeling_104.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#recap-defining-a-quantum-circuit-generative-model-and-the-dataset">
+   Recap: Defining a quantum circuit generative model and the dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimizing-a-quantum-circuit-generative-model">
+   Optimizing a quantum circuit generative model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-role-of-entanglement">
+   The role of entanglement
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optional-discussion-on-entanglement">
+   Optional discussion on entanglement
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tutorial 4 – A trained generative model with a few qubits</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#recap-defining-a-quantum-circuit-generative-model-and-the-dataset">
+   Recap: Defining a quantum circuit generative model and the dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimizing-a-quantum-circuit-generative-model">
+   Optimizing a quantum circuit generative model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-role-of-entanglement">
+   The role of entanglement
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optional-discussion-on-entanglement">
+   Optional discussion on entanglement
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="tutorial-4-a-trained-generative-model-with-a-few-qubits">
+<h1>Tutorial 4 – A trained generative model with a few qubits<a class="headerlink" href="#tutorial-4-a-trained-generative-model-with-a-few-qubits" title="Permalink to this headline">¶</a></h1>
+<p>Welcome back to our tutorial on generative modeling with quantum hardware. In this tutorial, we will optimize the parameters of a quantum circuit generative model and find out which role entanglement plays for learning complicated data distributions.</p>
+<p>So far, we have learned that, in a generative machine learning task, you receive data and the goal is to learn a model of the true distribution underlying the data. Then, you want to be able to generate new data from this model, which has similar characteristics, but is not necessarily inside the training set.</p>
+<p>Lets get started and import the necessary Python tools.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span><span class="p">,</span> <span class="n">Parameter</span>
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">Aer</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="recap-defining-a-quantum-circuit-generative-model-and-the-dataset">
+<h2>Recap: Defining a quantum circuit generative model and the dataset<a class="headerlink" href="#recap-defining-a-quantum-circuit-generative-model-and-the-dataset" title="Permalink to this headline">¶</a></h2>
+<p>Last time, we introduced a quantum circuit generative model which encodes probability distributions over discrete data. Particularly, the data are binary qubit measurements <span class="math notranslate nohighlight">\(x\)</span>, e.g. <span class="math notranslate nohighlight">\(x = 0000, 0001, 0010, ... ,1111\)</span> for <span class="math notranslate nohighlight">\(n=4\)</span> qubits. The probability <span class="math notranslate nohighlight">\(p_{model}(x)\)</span> can formally be written as
+<span class="math notranslate nohighlight">\( |\langle x | \psi(\theta) \rangle|^2 \)</span>
+where <span class="math notranslate nohighlight">\(\theta\)</span> are the parameters of a parametrized quantum circuit which prepares the quantum state <span class="math notranslate nohighlight">\(\psi(\theta)\)</span>. In practice, this represents the probability of obtaining the outcome <span class="math notranslate nohighlight">\(x\)</span> when you measure the prepared quantum state.</p>
+<p>Let us recollect the function that flexibly constructs a quantum circuit with any number of qubits <span class="math notranslate nohighlight">\(n\)</span> and layers <span class="math notranslate nohighlight">\(d\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_circuit</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">,</span> <span class="n">number_of_layers</span><span class="p">):</span>
+
+    <span class="n">number_of_parameters</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">number_of_qubits</span> <span class="o">*</span> <span class="n">number_of_layers</span>
+    <span class="n">thetas</span> <span class="o">=</span> <span class="p">[</span><span class="n">Parameter</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\theta$&quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ii</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_parameters</span><span class="p">)]</span>
+
+    <span class="c1"># initialize the qiskit circuit</span>
+    <span class="n">circuit</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">)</span>
+
+    <span class="n">parameter_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># loop over the layers of the quantum circuit</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_layers</span><span class="p">):</span>
+
+        <span class="c1"># apply a layer of RX rotations</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">):</span>
+            <span class="n">circuit</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="n">parameter_counter</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span>
+            <span class="n">parameter_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># apply a layer of RZ rotations</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">):</span>
+            <span class="n">circuit</span><span class="o">.</span><span class="n">rz</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="n">parameter_counter</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span>
+            <span class="n">parameter_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># apply a layer of CNOTs</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_qubits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">circuit</span><span class="o">.</span><span class="n">cnot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># instructions to measure all qubits</span>
+    <span class="n">circuit</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">circuit</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For  <span class="math notranslate nohighlight">\(n=4\)</span> and <span class="math notranslate nohighlight">\(d=2\)</span>, the quantum circuit looks like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">number_of_qubits</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">number_of_layers</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">circuit</span> <span class="o">=</span> <span class="n">get_circuit</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">,</span> <span class="n">number_of_layers</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/generative_modeling_104_9_0.png" src="../_images/generative_modeling_104_9_0.png" />
+</div>
+</div>
+<p>The dataset that we constructed last time was a discretized version of the dataset used in Part 1 and Part 2 of our tutorial series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">training_data_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;0000&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;0001&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;0010&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;0011&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">&quot;0100&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">&quot;0101&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s2">&quot;0110&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="s2">&quot;0111&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="s2">&quot;1000&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="s2">&quot;1001&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s2">&quot;1010&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s2">&quot;1011&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="s2">&quot;1100&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span>
+    <span class="s2">&quot;1101&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span>
+    <span class="s2">&quot;1110&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="s2">&quot;1111&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># normalize the counts to be interpreted as probabilities</span>
+<span class="n">count_sum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">training_data_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">training_data_dict</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">/</span> <span class="n">count_sum</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;0000&#39;: 0.01, &#39;0001&#39;: 0.0, &#39;0010&#39;: 0.02, &#39;0011&#39;: 0.04, &#39;0100&#39;: 0.04, &#39;0101&#39;: 0.1, &#39;0110&#39;: 0.07, &#39;0111&#39;: 0.09, &#39;1000&#39;: 0.07, &#39;1001&#39;: 0.05, &#39;1010&#39;: 0.03, &#39;1011&#39;: 0.08, &#39;1100&#39;: 0.14, &#39;1101&#39;: 0.19, &#39;1110&#39;: 0.06, &#39;1111&#39;: 0.01}
+</pre></div>
+</div>
+</div>
+</div>
+<p>For convenience, let us define a function to get samples from our model given a circuit and a vector of parameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simulator</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s2">&quot;aer_simulator&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_model_dict</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+    <span class="c1"># bind the circuit parameters to numbers</span>
+    <span class="n">circuit_with_params</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">bind_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+
+    <span class="c1"># run the circuit and get the result</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circuit_with_params</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+    <span class="c1"># extract the measurement counts as a python dictionary</span>
+    <span class="n">model_dict</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">model_dict</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With a random initial guess for our parameter vector <span class="math notranslate nohighlight">\(\theta\)</span>, we can plot the quantum circuit model distribution together with the dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># the quantum circuit has 2*n*d parameters</span>
+<span class="n">number_of_parameters</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">number_of_qubits</span> <span class="o">*</span> <span class="n">number_of_layers</span>
+
+<span class="c1"># define value for the initial parameters</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">number_of_parameters</span><span class="p">)</span>
+
+<span class="c1"># get the model dict using our function</span>
+<span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+
+<span class="c1"># for convenience sort by binary order</span>
+<span class="n">model_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+
+<span class="c1"># do the plotting</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">training_data_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>  <span class="c1"># turn the counts into probabilities</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Distribution&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">model_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>  <span class="c1"># turn the counts into probabilities</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Model Distribution&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Counts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Outcome&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/generative_modeling_104_15_0.png" src="../_images/generative_modeling_104_15_0.png" />
+</div>
+</div>
+<p>A crucial component of our generative modeling task is the loss function that we optimize to learn the data. Here, we use the KL divergence</p>
+<div class="math notranslate nohighlight">
+\[\text{KL}(p_{data}, p_{model}) = \sum_{x\sim \mathcal{D}} \left[ p_{data}(x) \log(p_{data}(x)) - p_{data}(x) \log(p_{model}(x)) \right]\]</div>
+<p>which measures the similarity between data generated from our model and from the dataset. The KL divergence approaches <span class="math notranslate nohighlight">\(0\)</span> if the distributions match perfectly, i.e.,  <span class="math notranslate nohighlight">\(p_{data} = p_{model}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">kl_divergence</span><span class="p">(</span><span class="n">data_distribution</span><span class="p">,</span> <span class="n">model_distribution</span><span class="p">):</span>
+    <span class="c1"># we will require a small offset &quot;e&quot; to avoid possible log(0) singularities</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="mf">1e-6</span>
+
+    <span class="c1"># make sure the values in the dictionaries add up to 1</span>
+    <span class="n">sum_data</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">data_distribution</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">sum_model</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">model_distribution</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">bin_outcome</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">data_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">data_distribution</span><span class="p">[</span><span class="n">bin_outcome</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">count</span> <span class="o">/</span> <span class="n">sum_data</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">bin_outcome</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">model_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">model_distribution</span><span class="p">[</span><span class="n">bin_outcome</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">count</span> <span class="o">/</span> <span class="n">sum_model</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+    <span class="c1"># calculate the first term in the KL divergence formula</span>
+    <span class="n">term1</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">bin_outcome</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">data_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">term1</span> <span class="o">+=</span> <span class="n">prob</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span>
+
+    <span class="c1"># calculate the second term in the KL divergence formula</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">bin_outcome</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">data_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">term2</span> <span class="o">+=</span> <span class="n">prob</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">model_distribution</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">bin_outcome</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">term1</span> <span class="o">-</span> <span class="n">term2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For our random initial parameter guess we can estimate the KL divergence value and obtain:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.4231586563831473
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="optimizing-a-quantum-circuit-generative-model">
+<h2>Optimizing a quantum circuit generative model<a class="headerlink" href="#optimizing-a-quantum-circuit-generative-model" title="Permalink to this headline">¶</a></h2>
+<p>Our goal now is to optimize the parameters of the quantum circuit with the goal of lowering the KL divergence. One approach for doing that is via <em>gradient descent</em>. Similarly to Part 2 of this tutorial series, we define a simple function to estimate a numerical gradient of the KL divergence using finite differences:</p>
+<div class="math notranslate nohighlight">
+\[ grad(\text{KL})(x) \equiv \nabla \text{KL}(x) \approx \frac{\text{KL}(x+\epsilon) - \text{KL}(x+\epsilon)}{2\epsilon} \]</div>
+<p>with a small <span class="math notranslate nohighlight">\(\epsilon\)</span> (epsilon).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate_gradient</span><span class="p">(</span><span class="n">model_parameters</span><span class="p">,</span> <span class="n">circuit</span><span class="p">,</span> <span class="n">finite_distance_eps</span><span class="p">):</span>
+    <span class="n">gradient_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model_parameters</span><span class="p">))</span>
+
+    <span class="c1"># loop over all parameters</span>
+    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model_parameters</span><span class="p">)):</span>
+        <span class="c1"># define the eps vector in the direction of the parameter</span>
+        <span class="n">delta_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model_parameters</span><span class="p">))</span>
+        <span class="n">delta_vector</span><span class="p">[</span><span class="n">kk</span><span class="p">]</span> <span class="o">=</span> <span class="n">finite_distance_eps</span>
+
+        <span class="c1"># add or subtract eps from the parameter</span>
+        <span class="n">params_plus</span> <span class="o">=</span> <span class="n">model_parameters</span> <span class="o">+</span> <span class="n">delta_vector</span>
+        <span class="n">params_minus</span> <span class="o">=</span> <span class="n">model_parameters</span> <span class="o">-</span> <span class="n">delta_vector</span>
+
+        <span class="c1"># get the corresponding measurements from the quantum circuit</span>
+        <span class="n">model_dict_plus</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">params_plus</span><span class="p">)</span>
+        <span class="n">model_dict_minus</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">params_minus</span><span class="p">)</span>
+
+        <span class="c1"># calculate the KL divergence values</span>
+        <span class="n">kl_plus</span> <span class="o">=</span> <span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict_plus</span><span class="p">)</span>
+        <span class="n">kl_minus</span> <span class="o">=</span> <span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict_minus</span><span class="p">)</span>
+
+        <span class="c1"># calculate the finite difference gradient</span>
+        <span class="n">gradient</span> <span class="o">=</span> <span class="p">(</span><span class="n">kl_plus</span> <span class="o">-</span> <span class="n">kl_minus</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">finite_distance_eps</span><span class="p">)</span>
+        <span class="n">gradient_vector</span><span class="p">[</span><span class="n">kk</span><span class="p">]</span> <span class="o">=</span> <span class="n">gradient</span>
+
+    <span class="k">return</span> <span class="n">gradient_vector</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This time, we choose <span class="math notranslate nohighlight">\(\epsilon = 0.05\)</span>, which is a little larger than last time. We do this because we want to be able to confidently differentiate the two evaluations of the model at <span class="math notranslate nohighlight">\(2\epsilon\)</span> different parameters with a finite number of samples from the quantum computer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eps</span> <span class="o">=</span> <span class="mf">5e-2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And as in Part 2, we define a simple gradient descent algorithm via</p>
+<div class="math notranslate nohighlight">
+\[ \theta^{(t+1)} = \theta^{(t)} - \eta\cdot \nabla\text{KL}(x; \theta^{(t)}),\]</div>
+<p>with a <em>learning rate</em> <span class="math notranslate nohighlight">\(\eta\)</span> (eta), where <span class="math notranslate nohighlight">\(t\)</span> is the training iteration index.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># to keep track of the progress</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+
+<span class="c1"># generate initial random parameters</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">number_of_parameters</span><span class="p">)</span>
+
+<span class="c1"># learning rate and number of iterations</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">all_kls</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># evaluate and record the initial KL divergence loss</span>
+<span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+<span class="n">all_kls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">))</span>
+
+<span class="c1"># train!</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">)):</span>
+    <span class="c1"># one gradient descent step</span>
+    <span class="n">gradient_vector</span> <span class="o">=</span> <span class="n">calculate_gradient</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">circuit</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
+    <span class="n">parameters</span> <span class="o">-=</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">gradient_vector</span>
+
+    <span class="c1"># evaluate and record the KL divergence loss</span>
+    <span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+    <span class="n">all_kls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">))</span>
+
+
+<span class="n">final_parameters</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|████████████████████████████████████████████████████████████████████████████████| 100/100 [01:09&lt;00:00,  1.43it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 1min 9s
+Wall time: 1min 9s
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And plot up the optimization results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">all_kls</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;KL Divergence&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Iteration $t$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/generative_modeling_104_29_0.png" src="../_images/generative_modeling_104_29_0.png" />
+</div>
+</div>
+<p>This is a lot of improvement in terms of the KL divergence! To visually confirm that the freshly optimized model represents the data distribution much better, let us plot the model distribution together with the training data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># get the model dict using our function</span>
+<span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">final_parameters</span><span class="p">)</span>
+
+<span class="c1"># for convenience sort by binary order</span>
+<span class="n">model_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+
+<span class="c1"># do the plotting</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">x_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">training_data_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>  <span class="c1"># turn the counts into probabilities</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Distribution&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">model_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>  <span class="c1"># turn the counts into probabilities</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimized Model Distribution, d=2&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Counts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Outcome&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/generative_modeling_104_31_0.png" src="../_images/generative_modeling_104_31_0.png" />
+</div>
+</div>
+<p>This model distribution resembles the training data distribution pretty well, and our trained quantum circuit could already be used as a generative model.</p>
+<p>But let us take a few steps back and think about about the structure of the quantum circuit and how it may affect performance.</p>
+</div>
+<div class="section" id="the-role-of-entanglement">
+<h2>The role of entanglement<a class="headerlink" href="#the-role-of-entanglement" title="Permalink to this headline">¶</a></h2>
+<p>Remember that we defined the number of layers <span class="math notranslate nohighlight">\(d=2\)</span>, which gave us the circuit layout that you can see above. How would this all have worked if we used <span class="math notranslate nohighlight">\(d=1\)</span>, i.e., only one layer of entangling <em>CNOT</em> gates? This exploration is similar to our QML 104 tutorial, which you can find <a class="reference external" href="https://alqor.io/tutorials/a-beginners-guide-to-quantum-machine-learning">here</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">number_of_layers</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">circuit1</span> <span class="o">=</span> <span class="n">get_circuit</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">,</span> <span class="n">number_of_layers</span><span class="p">)</span>
+<span class="n">circuit1</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/generative_modeling_104_35_0.png" src="../_images/generative_modeling_104_35_0.png" />
+</div>
+</div>
+<p>Train it …</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+
+<span class="n">number_of_parameters1</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">number_of_qubits</span> <span class="o">*</span> <span class="n">number_of_layers</span>
+
+<span class="c1"># generate initial random parameters</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">number_of_parameters1</span><span class="p">)</span>
+
+<span class="c1"># learning rate and number of iterations</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">all_kls1</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># evaluate and record the initial KL divergence loss</span>
+<span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit1</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+<span class="n">all_kls1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">))</span>
+
+<span class="c1"># train!</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">)):</span>
+    <span class="c1"># one gradient descent step</span>
+    <span class="n">gradient_vector</span> <span class="o">=</span> <span class="n">calculate_gradient</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">circuit1</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
+    <span class="n">parameters</span> <span class="o">-=</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">gradient_vector</span>
+
+    <span class="c1"># evaluate and record the KL divergence loss</span>
+    <span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit1</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+    <span class="n">all_kls1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">))</span>
+
+
+<span class="n">final_parameters1</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|████████████████████████████████████████████████████████████████████████████████| 100/100 [00:35&lt;00:00,  2.85it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 35 s
+Wall time: 35.1 s
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>… and plot it together with the previous run with <span class="math notranslate nohighlight">\(d=2\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">all_kls1</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;d=1 layer&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">all_kls</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;d=2 layers&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;KL Divergence&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Iteration $t$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/generative_modeling_104_39_0.png" src="../_images/generative_modeling_104_39_0.png" />
+</div>
+</div>
+<p>We can see that <span class="math notranslate nohighlight">\(d=2\)</span> reaches slightly better KL divergence values than <span class="math notranslate nohighlight">\(d=1\)</span>. Let’s try the more adventurous <span class="math notranslate nohighlight">\(d = 5\)</span> and compare.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">number_of_layers</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">circuit5</span> <span class="o">=</span> <span class="n">get_circuit</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">,</span> <span class="n">number_of_layers</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+
+<span class="n">number_of_parameters5</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">number_of_qubits</span> <span class="o">*</span> <span class="n">number_of_layers</span>
+
+<span class="c1"># generate initial random parameters</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">number_of_parameters5</span><span class="p">)</span>
+
+<span class="c1"># learning rate and number of iterations</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">all_kls5</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># evaluate and record the initial KL divergence loss</span>
+<span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit5</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+<span class="n">all_kls5</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">))</span>
+
+<span class="c1"># train!</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">)):</span>
+    <span class="c1"># one gradient descent step</span>
+    <span class="n">gradient_vector</span> <span class="o">=</span> <span class="n">calculate_gradient</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">circuit5</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
+    <span class="n">parameters</span> <span class="o">-=</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">gradient_vector</span>
+
+    <span class="c1"># evaluate and record the KL divergence loss</span>
+    <span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit5</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+    <span class="n">all_kls5</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">))</span>
+
+
+<span class="n">final_parameters5</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|████████████████████████████████████████████████████████████████████████████████| 100/100 [03:21&lt;00:00,  2.01s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 3min 20s
+Wall time: 3min 21s
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Plot up all KL divergences that we collected:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">all_kls1</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;d=1 layers&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">all_kls</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;d=2 layers&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">all_kls5</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;d=5 layers&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;KL Divergence&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Iteration $t$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/generative_modeling_104_44_0.png" src="../_images/generative_modeling_104_44_0.png" />
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(d=5\)</span> enables the KL divergence to go much lower, and approach the perfect value of <span class="math notranslate nohighlight">\(KL = 0\)</span>. The corresponding model distribution looks like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># get the model dict using our function</span>
+<span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit5</span><span class="p">,</span> <span class="n">final_parameters5</span><span class="p">)</span>
+
+<span class="c1"># for convenience sort by binary order</span>
+<span class="n">model_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+
+<span class="c1"># do the plotting</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">training_data_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>  <span class="c1"># turn the counts into probabilities</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Distribution&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">model_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>  <span class="c1"># turn the counts into probabilities</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimized Model Distribution, d=5&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Counts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Outcome&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/generative_modeling_104_46_0.png" src="../_images/generative_modeling_104_46_0.png" />
+</div>
+</div>
+<p>This really is a much better fit on the training distribution <span class="math notranslate nohighlight">\(p_{data}\)</span>, just as the low KL divergence indicated. But why? Is it just the additional parameters <span class="math notranslate nohighlight">\(\theta\)</span> in the quantum circuit with more layers? No! In fact, without any entangling gates, the additional parameters would be redundant. What makes this quantum circuit model powerful (also called more <em>expressive</em>) is the entangling gates sandwiched between parametrized single-qubit gates. Lets think about this on the level of a two-qubit <em>wavefunction</em>.</p>
+</div>
+<div class="section" id="optional-discussion-on-entanglement">
+<h2>Optional discussion on entanglement<a class="headerlink" href="#optional-discussion-on-entanglement" title="Permalink to this headline">¶</a></h2>
+<p><strong>NOTE: If the following calculation is too involved for you, don’t worry! You will be still be able to take away the most important message.</strong></p>
+<p>Assume that you want to learn the target distribution that contains <span class="math notranslate nohighlight">\(50\%\)</span> <span class="math notranslate nohighlight">\(00\)</span> and <span class="math notranslate nohighlight">\(50\%\)</span> <span class="math notranslate nohighlight">\(11\)</span>. You might notice that this is the distribution that you would expect if you measured a <em>Bell state</em>. See our recent tutorial on this very special state <a class="reference internal" href="../qtech_basics/bell_inequalities.html#bell"><span class="std std-ref">here</span></a>.</p>
+<p>A general two-qubit wavefunction can be written as:</p>
+<div class="math notranslate nohighlight">
+\[
+|\psi\rangle = \alpha_{00}|00\rangle + \alpha_{01}|01\rangle + \alpha_{10}|10\rangle + \alpha_{00}|11\rangle
+\]</div>
+<p>where all <span class="math notranslate nohighlight">\(\alpha\)</span> are complex numbers and their absolute squares <span class="math notranslate nohighlight">\(|\alpha|^2\)</span> add up to <span class="math notranslate nohighlight">\(1\)</span>. If the two qubits are not entangled, then by definition, you can split up the state of both qubits into the product of the individual states:</p>
+<div class="math notranslate nohighlight">
+\[
+|\psi\rangle = |\psi\rangle_1 \otimes |\psi\rangle_2
+\]</div>
+<p>Writing each state with it’s own amplitudes <span class="math notranslate nohighlight">\(\alpha^{(1)}\)</span> and <span class="math notranslate nohighlight">\(\alpha^{(2)}\)</span>, respectively, we can write</p>
+<div class="math notranslate nohighlight">
+\[
+|\psi\rangle = (\alpha^{(1)}_0|0\rangle_1 + \alpha^{(1)}_1|1\rangle_1) \otimes (\alpha^{(2)}_0|0\rangle_2 + \alpha^{(2)}_1|1\rangle_2)
+\]</div>
+<p><strong>Question</strong>: Can you find a combination of <span class="math notranslate nohighlight">\(\alpha^{(1)}_0, \alpha^{(1)}_1, \alpha^{(2)}_0, \alpha^{(2)}_1\)</span> such that you can multiply the terms back together and achieve <span class="math notranslate nohighlight">\(|\alpha^{(1)}_0 \alpha^{(2)}_0|^2 = |\alpha^{(1)}_1 \alpha^{(2)}_1|^2 = 0.5\)</span>, and all other terms are <span class="math notranslate nohighlight">\(0\)</span>? Such a state would create the desired target distribution.</p>
+<p>No, that is not possible! You need at least one <em>CNOT</em> gate, that entangles the two qubits.</p>
+<p>The important message is:
+<strong>Without any entangling gates, you are very restricted in the distributions <span class="math notranslate nohighlight">\(p_{model}\)</span> that you can attain. And inversely, increasing the number of entangling gates in your quantum circuit allows you to model increasingly complicated distributions.</strong></p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>Quantum circuit generative models utilize the phenomena of entanglement and wavefunction collapse (i.e., the measurement) as a resource, and are thus promissing candidates for efficiently learning and sampling from complicated discrete probability distributions. In this tutorial, you learned how to train a quantum circuit generative model using the KL divergence loss function, and how more entanglement enables the model to learn continuously better models of the training data distribution.
+<br />
+<br />
+But there is much more to learn. For example, to we really want to reach <span class="math notranslate nohighlight">\(KL = 0\)</span> on the training dataset? Can more entanglement be detrimental for training? How do you choose a good ansatz for a particular dataset? Does KL divergence training scale well as we increase the number of qubits? And much more…
+<br />
+<br />
+Stay tuned for our next and final tutorial in the series of <em>Generative Modeling with Quantum Hardware</em>, where we explore cutting edge research in the domain quantum circuit generative models. See you soon!</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Alqor-UG/quantum-tutorials",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./generative_modeling"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="generative_modeling_103.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Tutorial 3 – An untrained generative model with qubits</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../qtech_basics/qtech_summary.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Course summary for introduction to quantum technologies</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Quantum Tutorials Community<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,777 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial 1 – A baby example of generative modeling &#8212; Quantum Tutorials</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "Alqor-UG/quantum-tutorials");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial 2 – Training generative models" href="generative_modeling_102.html" />
+    <link rel="prev" title="Summary of generative modeling with quantum hardware" href="gmqh_intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Quantum Tutorials</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Welcome to our quantum tutorials
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  A beginners guide to QML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_intro.html">
+   Course summary for a beginners guide to QML
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_001.html">
+   QML 001 - A summary of classical supervised learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_101.html">
+   QML 101 - Some basic concepts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_102.html">
+   QML 102 - Deeper Classifiers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_103.html">
+   QML 103 - Teaching the circle
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_104.html">
+   QML 104 - More is different ? Working with multiple qubits
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Generative modeling with quantum hardware
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="gmqh_intro.html">
+   Summary of generative modeling with quantum hardware
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Tutorial 1 – A baby example of generative modeling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="generative_modeling_102.html">
+   Tutorial 2 – Training generative models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="generative_modeling_103.html">
+   Tutorial 3 – An untrained generative model with qubits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="generative_modeling_104.html">
+   Tutorial 4 – A trained generative model with a few qubits
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to quantum technologies
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/qtech_summary.html">
+   Course summary for introduction to quantum technologies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/qtech_intro.html">
+   Tutorial 1 - Basic concepts of quantum technologies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/bell_inequalities.html">
+   Tutorial on the nobel prize 2022 - How to win Bell’s game
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to quantum hardware
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/qhw_intro.html">
+   Course summary for introduction to quantum hardware
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_101.html">
+   Tutorial 1 - The qubit or  the two level system
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_102.html">
+   Tutorial 2 - Continuous variables or the quantum harmonic oscillator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_103.html">
+   Tutorial 3 - A few words about quantum computing with trapped ions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_104.html">
+   Tutorial 4 - A few words about quantum computing with superconducting qubits
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/generative_modeling/generative_modeling_101.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials/issues/new?title=Issue%20on%20page%20%2Fgenerative_modeling/generative_modeling_101.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Alqor-UG/quantum-tutorials/main?urlpath=tree/book/generative_modeling/generative_modeling_101.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-data-for-generative-modelling">
+   The data for generative modelling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#designing-a-simple-generative-model">
+   Designing a simple generative model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#generating-new-data-from-the-model">
+   Generating new data from the model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary-and-outlook">
+   Summary and outlook
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tutorial 1 – A baby example of generative modeling</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-data-for-generative-modelling">
+   The data for generative modelling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#designing-a-simple-generative-model">
+   Designing a simple generative model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#generating-new-data-from-the-model">
+   Generating new data from the model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary-and-outlook">
+   Summary and outlook
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="tutorial-1-a-baby-example-of-generative-modeling">
+<span id="gmqh"></span><h1>Tutorial 1 – A baby example of generative modeling<a class="headerlink" href="#tutorial-1-a-baby-example-of-generative-modeling" title="Permalink to this headline">¶</a></h1>
+<p>This is the very first tutorial in a series in which we will discuss generative modelling. In previous series we already discussed how supervised learning works. With these algorithms, the computers learns to classify distinguish data based on some labels we give him. Often we take here the example were the algorithm gets thousands of images of cats and dogs, where we tell him what it sees in the data. At some point it will be able to classify also other cats and dogs.</p>
+<p>But what happens when no labels are available ? This is the field of generative modeling is a sub-domain of machine learning (ML). The goal is to learn from (often unlabeled) data, to generate similar but previously unseed data. Generative Models have undergone a series of breakthroughs in the last decade, with state of the art generative models like GANs (cite) and Diffusion Models (cite) being able to generate breath-taking images like these:\</p>
+<p><img alt="StyleGAN and DALL-E 2 generating photorealistic images" src="../_images/photorealistic_images.png" /></p>
+<p>As a very practical example I asked stable diffusion to provide me “a portrait of a female scientist sketching generative models on a white-board”. And as a result we obtained the provided images. Feel free to try it for yourself <a class="reference external" href="https://colab.research.google.com/drive/1WzKrJh9NeEgin-RTYPtSCb0bt6tb-sir#scrollTo=vF9Q0xKX8gLR">here</a>.</p>
+<p>But what are generative models and what do they have to do with quantum computers?</p>
+<p>In this notebook, we will go over an example of an intuitive generatie modeling task which highlights many of the building blocks that can later be replaced with quantum circuits.</p>
+<div class="section" id="the-data-for-generative-modelling">
+<h2>The data for generative modelling<a class="headerlink" href="#the-data-for-generative-modelling" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The usual imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Just like in any machine learning task, we start out with data. This will be the <em>training data</em> for our machine learning algorithm.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fmt: off</span>
+<span class="n">data_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+      <span class="p">[</span><span class="o">-</span><span class="mf">3.61078109e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.29291442e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.82588388e-02</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.58432923e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">4.97863965e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.78795061e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.10663163e-01</span><span class="p">,</span>  <span class="mf">4.36223299e-02</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">1.01858250e-02</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.57657880e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.61011437e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.63656495e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">5.00136079e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.30125377e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.12999295e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.22838879e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">7.75881873e-01</span><span class="p">,</span>  <span class="mf">1.68190537e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.69496934e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.04754810e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">2.62099948e-01</span><span class="p">,</span>  <span class="mf">1.36922064e-01</span><span class="p">,</span>  <span class="mf">3.93391710e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.12181958e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">3.15903057e-01</span><span class="p">,</span>  <span class="mf">1.10533721e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.50864695e-01</span><span class="p">,</span>  <span class="mf">6.56386891e-02</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">2.37497275e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.04398679e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.32560555e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.62669444e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">4.45701188e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.67952827e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.07722157e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.51854037e-02</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">1.35821066e+00</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.39440908e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.41656480e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.51452941e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">8.23083293e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.69844420e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.04400576e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.71350420e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">8.65458568e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.64222047e-01</span><span class="p">,</span>  <span class="mf">8.06578890e-04</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.68337779e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">6.25077227e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.00012510e+00</span><span class="p">,</span>  <span class="mf">7.59518951e-01</span><span class="p">,</span>  <span class="mf">2.46827712e-01</span><span class="p">,</span>
+        <span class="mf">5.70561107e-01</span><span class="p">,</span>  <span class="mf">6.52003162e-01</span><span class="p">,</span>  <span class="mf">6.73384341e-01</span><span class="p">,</span>  <span class="mf">8.04894781e-01</span><span class="p">,</span>
+        <span class="mf">6.34541410e-01</span><span class="p">,</span>  <span class="mf">3.63315273e-01</span><span class="p">,</span>  <span class="mf">4.36242632e-01</span><span class="p">,</span>  <span class="mf">3.31473086e-01</span><span class="p">,</span>
+        <span class="mf">5.18170902e-01</span><span class="p">,</span>  <span class="mf">6.00943305e-01</span><span class="p">,</span>  <span class="mf">7.09919182e-01</span><span class="p">,</span>  <span class="mf">5.42156544e-01</span><span class="p">,</span>
+        <span class="mf">5.96010036e-01</span><span class="p">,</span>  <span class="mf">6.32350524e-01</span><span class="p">,</span>  <span class="mf">5.11792431e-01</span><span class="p">,</span>  <span class="mf">7.26352234e-01</span><span class="p">,</span>
+        <span class="mf">5.24889933e-01</span><span class="p">,</span>  <span class="mf">6.33500447e-01</span><span class="p">,</span>  <span class="mf">7.76251971e-01</span><span class="p">,</span>  <span class="mf">7.53647980e-01</span><span class="p">,</span>
+        <span class="mf">3.36153030e-01</span><span class="p">,</span>  <span class="mf">8.15441364e-01</span><span class="p">,</span>  <span class="mf">5.57272462e-01</span><span class="p">,</span>  <span class="mf">1.44661947e-01</span><span class="p">,</span>
+        <span class="mf">6.16792976e-01</span><span class="p">,</span>  <span class="mf">6.91086153e-01</span><span class="p">,</span>  <span class="mf">6.87286823e-01</span><span class="p">,</span>  <span class="mf">3.98429153e-01</span><span class="p">,</span>
+        <span class="mf">1.07054311e+00</span><span class="p">,</span>  <span class="mf">6.24690432e-01</span><span class="p">,</span>  <span class="mf">6.84406406e-01</span><span class="p">,</span>  <span class="mf">7.26905590e-01</span><span class="p">,</span>
+        <span class="mf">3.09651946e-01</span><span class="p">,</span>  <span class="mf">7.78085930e-01</span><span class="p">,</span>  <span class="mf">3.60425786e-01</span><span class="p">,</span>  <span class="mf">6.33481589e-01</span><span class="p">,</span>
+        <span class="mf">3.17310855e-01</span><span class="p">,</span>  <span class="mf">6.56363955e-01</span><span class="p">,</span>  <span class="mf">6.10979533e-01</span><span class="p">,</span>  <span class="mf">8.08938177e-01</span><span class="p">,</span>
+        <span class="mf">7.71336408e-01</span><span class="p">,</span>  <span class="mf">6.11452930e-01</span><span class="p">,</span>  <span class="mf">5.03192825e-01</span><span class="p">,</span>  <span class="mf">5.66868324e-01</span><span class="p">,</span>
+        <span class="mf">7.22434360e-01</span><span class="p">,</span>  <span class="mf">5.64687162e-01</span><span class="p">,</span>  <span class="mf">5.11510302e-01</span><span class="p">,</span>  <span class="mf">7.02255988e-01</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="c1"># fmt: on</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">data_samples</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(100,)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we have 100 numbers stored in a numpy array. You can think of them as 100 images with one pixel each, or any other kind of data which only has 1 dimension.
+Lets assume that this is data that we collected in the real world, and that there was a process behind the data generation, i.e., there exists a set of rules that produced this data. In more mathematical terms, this dataset <span class="math notranslate nohighlight">\(\mathcal{D}\{x_i\}_i\)</span> consists of data samples <span class="math notranslate nohighlight">\(x_i, i=1\dots 100\)</span> , and the process that generated the data is characterized by the probablity distribution <span class="math notranslate nohighlight">\(p_{data}(x)\)</span>. This probability distribution is generally not known, but it is what we are interested in. Because our goal in the context of generative modeling is to build a <em>model</em> of <span class="math notranslate nohighlight">\(p_{data}(x)\)</span>, which encodes a probability distribution <span class="math notranslate nohighlight">\(p_{model}(x)\)</span>, and which approximates the true data distribution <span class="math notranslate nohighlight">\(p_{model}(x) \approx p_{data}(x)\)</span>. We then want to generate new data samples using our model which follow similar rules as the true data, but they are also novel. With such a model, we don’t have to go out into the real world to collect all possible data samples from <span class="math notranslate nohighlight">\(p_{data}\)</span>, we just have to learn the rules behind how the training data <span class="math notranslate nohighlight">\(\mathcal{D}\{x_i\}_i\)</span>, i.e., the numbers in the above numpy array, were created.</p>
+<p>Lets take a first look at the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_samples</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_samples</span><span class="p">)),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Occurences of the Data&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Data Value&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/generative_modeling_101_9_0.png" src="../_images/generative_modeling_101_9_0.png" />
+</div>
+</div>
+<p>This plot shows that the samples in the dataset are mostly in the domain <span class="math notranslate nohighlight">\([-1, 1]\)</span>. Lets check out the <em>density</em> of the data samples through a histogram plot:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data_samples</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data_samples</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Wider Histogram Bins&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Narrower Histogram Bins&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Data Value&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Occurances&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Data Entry&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Occurances&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/generative_modeling_101_11_0.png" src="../_images/generative_modeling_101_11_0.png" />
+</div>
+</div>
+<p>We plot two histgrams with wider and narrower bins, which gives us a sense of coarse and fine trends of the dataset distribution.</p>
+</div>
+<div class="section" id="designing-a-simple-generative-model">
+<h2>Designing a simple generative model<a class="headerlink" href="#designing-a-simple-generative-model" title="Permalink to this headline">¶</a></h2>
+<p>Do you see a familiar structure in that data? It may remind you of a gaussian distribution! In this simple example, could it be the case that the data was generated from two gaussians?<br />
+Gaussian distributions are characterized by the parameters <span class="math notranslate nohighlight">\(\mu\)</span> (the mean of the gaussian) and <span class="math notranslate nohighlight">\(\sigma\)</span> (the width of the gaussian). The <em>density</em> <span class="math notranslate nohighlight">\(\rho(x)\)</span> of the distribution around each point <span class="math notranslate nohighlight">\(x\)</span> in the data space is then defined as:</p>
+<div class="math notranslate nohighlight">
+\[ \rho(x; \mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac12 (\frac{x-\mu}{\sigma})^2}\]</div>
+<p>Lets code it up:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">**</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we assume that the true underlying distribution is well-approximated by two gaussian distribtions, we might be able to build a <em>model</em>, which represents our best guess of the underlying distribution for an optimal set of parameters <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span>. The model density consisting of two gaussians and parameteters <span class="math notranslate nohighlight">\(\mu_1,\mu_2,\sigma_1,\sigma_2\)</span> can be defined as</p>
+<div class="math notranslate nohighlight">
+\[ \rho_{model}(x) = \frac{\rho(x; \mu_1, \sigma_1) + \rho(x; \mu_2, \sigma_2)}{2}\]</div>
+<p>And in Python:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_density_function</span><span class="p">(</span><span class="n">x_points</span><span class="p">,</span> <span class="n">mus</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">):</span>
+    <span class="n">density_left</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">x_points</span><span class="p">,</span> <span class="n">mus</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sigmas</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">density_right</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">x_points</span><span class="p">,</span> <span class="n">mus</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sigmas</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">density_left</span> <span class="o">+</span> <span class="n">density_right</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Which appear to be reasonable initial guesses for the parameters? To keep it simple, we choose <span class="math notranslate nohighlight">\(\mu_1=-0.5, \mu_2 = 0.5\)</span>, which are close to the peaks that we observe in the histogram with wider bins. For the width of the gaussians, we remind ourselves that approximately <span class="math notranslate nohighlight">\(67\%\)</span> of the area under a gaussian distribution is inside one standard deviation <span class="math notranslate nohighlight">\(\sigma\)</span>. So how about we choose <span class="math notranslate nohighlight">\(\sigma_1=\sigma_2=0.2\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_mus</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">]</span>
+<span class="n">model_sigmas</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>When we input these values for <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> into the model density function, and then scan values of <span class="math notranslate nohighlight">\(x\)</span>, we get the following plot:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">x_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">data_samples</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Data&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">x_points</span><span class="p">,</span>
+    <span class="n">model_density_function</span><span class="p">(</span><span class="n">x_points</span><span class="p">,</span> <span class="n">model_mus</span><span class="p">,</span> <span class="n">model_sigmas</span><span class="p">),</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Model&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Data Value&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/generative_modeling_101_21_0.png" src="../_images/generative_modeling_101_21_0.png" />
+</div>
+</div>
+<p>This already looks pretty good! With this, we have implicitly defined the model distribution <span class="math notranslate nohighlight">\(p_{model}(x)\)</span>! Keep in mind that the model <em>density</em> <span class="math notranslate nohighlight">\(\rho_{model}(x)\)</span> and the model <em>probability distribution</em> <span class="math notranslate nohighlight">\(p_{model}(x)\)</span> are not the same thing. Instead, <span class="math notranslate nohighlight">\(p_{model}(x) \sim \int \rho_{model}(x) \ dx\)</span> represents the area below the curve below the <span class="math notranslate nohighlight">\(\rho_{model}(x)\)</span> function, i.e. its integral.</p>
+</div>
+<div class="section" id="generating-new-data-from-the-model">
+<h2>Generating new data from the model<a class="headerlink" href="#generating-new-data-from-the-model" title="Permalink to this headline">¶</a></h2>
+<p>But one crucial step is missing to make the a <strong>generative</strong> model: the <em>generation</em> part. Luckily, we know how to efficiently sample random numbers from gaussian distributions, and the <em>numpy</em> library provides simple functionality for this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sample_model_distribution</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">mus</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">):</span>
+    <span class="n">n_left_samples</span> <span class="o">=</span> <span class="n">n_samples</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">n_right_samples</span> <span class="o">=</span> <span class="n">n_samples</span> <span class="o">-</span> <span class="n">n_left_samples</span>
+
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mus</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sigmas</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">n_left_samples</span><span class="p">),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mus</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sigmas</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">n_right_samples</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">samples</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Collect samples from our model and plot it up!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">generated_samples</span> <span class="o">=</span> <span class="n">sample_model_distribution</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">model_mus</span><span class="p">,</span> <span class="n">model_sigmas</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">data_samples</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Data&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">generated_samples</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Generated Data&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">data_samples</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Data&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">generated_samples</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Generated Data&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Wider Histogram Bins&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Thinner Histogram Bins&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Data Value&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Data Value&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/generative_modeling_101_26_0.png" src="../_images/generative_modeling_101_26_0.png" />
+</div>
+</div>
+<p>We now have a full-fledged generative model for 1-dimensional data samples, where we can tune the parameters <span class="math notranslate nohighlight">\(\mu_1,\mu_2,\sigma_1,\sigma_2\)</span> and then sample from <span class="math notranslate nohighlight">\(p_{model}(x)\)</span>.</p>
+</div>
+<div class="section" id="summary-and-outlook">
+<h2>Summary and outlook<a class="headerlink" href="#summary-and-outlook" title="Permalink to this headline">¶</a></h2>
+<p>Let’s recap what we have done so far and how this exemplifies common tasks in generative ML tasks. The moving pieces that we saw were:</p>
+<ul class="simple">
+<li><p><strong>The dataset</strong>. How does it look like? Here, we had 100 1-dimensional data samples.</p></li>
+<li><p><strong>The model</strong>.  The goal is to learn a model of the true underlying probability distribution of the data, i.e., you want to learn the distribution from which the data itself was sampled from. In our case the highly specialized gaussian distribution.</p></li>
+</ul>
+<p>After plotting a histogram with the data, we made an educated guess that the true underlying distribution of the data, i.e., the distribution that the data itself was sampled from, consists of two gaussian distributions. With reasonable initial parameter guesses, we are now able to generate samples which apparently follow a very similar distributionto the original data samples. But is this machine learning? Not quite. The <strong>learning</strong> part is missing. We have a generative model, but we were only able to guess the underlying structure (i.e., the gaussians), as well as good initial parameters because the task is rather simple.  In later tutorials, we will see how the gaussian model can be substituded by quantum circuits with many more parameters.</p>
+<p>In more realistic cases, we won’t be able to guess such good initial models. This is why modern ML models are built using up to billions of parameters which are optimized/trained according to a <em>loss function</em>. And this is the topic of our <a class="reference external" href="https://">next tutorial</a>.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Alqor-UG/quantum-tutorials",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./generative_modeling"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="gmqh_intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Summary of generative modeling with quantum hardware</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="generative_modeling_102.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial 2 – Training generative models</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Quantum Tutorials Community<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,903 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial 3 – An untrained generative model with qubits &#8212; Quantum Tutorials</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "Alqor-UG/quantum-tutorials");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial 4 – A trained generative model with a few qubits" href="generative_modeling_104.html" />
+    <link rel="prev" title="Tutorial 2 – Training generative models" href="generative_modeling_102.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Quantum Tutorials</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Welcome to our quantum tutorials
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  A beginners guide to QML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_intro.html">
+   Course summary for a beginners guide to QML
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_001.html">
+   QML 001 - A summary of classical supervised learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_101.html">
+   QML 101 - Some basic concepts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_102.html">
+   QML 102 - Deeper Classifiers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_103.html">
+   QML 103 - Teaching the circle
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../beginner_qml/qml_104.html">
+   QML 104 - More is different ? Working with multiple qubits
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Generative modeling with quantum hardware
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="gmqh_intro.html">
+   Summary of generative modeling with quantum hardware
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="generative_modeling_101.html">
+   Tutorial 1 – A baby example of generative modeling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="generative_modeling_102.html">
+   Tutorial 2 – Training generative models
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Tutorial 3 – An untrained generative model with qubits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="generative_modeling_104.html">
+   Tutorial 4 – A trained generative model with a few qubits
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to quantum technologies
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/qtech_summary.html">
+   Course summary for introduction to quantum technologies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/qtech_intro.html">
+   Tutorial 1 - Basic concepts of quantum technologies
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/bell_inequalities.html">
+   Tutorial on the nobel prize 2022 - How to win Bell’s game
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction to quantum hardware
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/qhw_intro.html">
+   Course summary for introduction to quantum hardware
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_101.html">
+   Tutorial 1 - The qubit or  the two level system
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_102.html">
+   Tutorial 2 - Continuous variables or the quantum harmonic oscillator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_103.html">
+   Tutorial 3 - A few words about quantum computing with trapped ions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_104.html">
+   Tutorial 4 - A few words about quantum computing with superconducting qubits
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/generative_modeling/generative_modeling_103.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Alqor-UG/quantum-tutorials/issues/new?title=Issue%20on%20page%20%2Fgenerative_modeling/generative_modeling_103.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Alqor-UG/quantum-tutorials/main?urlpath=tree/book/generative_modeling/generative_modeling_103.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-brief-reminder-of-quantum-circuits">
+   A brief reminder of quantum circuits
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#designing-and-measuring-a-parametrized-quantum-circuit">
+   Designing and measuring a parametrized quantum circuit
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-dataset-for-quantum-computers">
+   A dataset for quantum computers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-loss-function-for-generative-modeling">
+   A loss function for generative modeling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#wrapping-it-up">
+   Wrapping it up
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tutorial 3 – An untrained generative model with qubits</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-brief-reminder-of-quantum-circuits">
+   A brief reminder of quantum circuits
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#designing-and-measuring-a-parametrized-quantum-circuit">
+   Designing and measuring a parametrized quantum circuit
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-dataset-for-quantum-computers">
+   A dataset for quantum computers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-loss-function-for-generative-modeling">
+   A loss function for generative modeling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#wrapping-it-up">
+   Wrapping it up
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="tutorial-3-an-untrained-generative-model-with-qubits">
+<h1>Tutorial 3 – An untrained generative model with qubits<a class="headerlink" href="#tutorial-3-an-untrained-generative-model-with-qubits" title="Permalink to this headline">¶</a></h1>
+<p>Welcome back to our tutorial on generative modeling with quantum hardware. So far, we have learned that, in a generative machine learning task, you receive data and the goal is to learn a model of the true distribution underlying the data. Then, you want to be able to generate new data from this model, which has similar characteristics, but is not necessarily inside the training set.<br />
+The moving pieces are:</p>
+<ul class="simple">
+<li><p><strong>The dataset</strong>. What type of data is it?</p></li>
+<li><p><strong>The model</strong>. Is it flexible enough to approximate the data distribution well? Or is it highly specialized like in the earlier gaussian case?</p></li>
+<li><p><strong>The loss function</strong>. How do you estimate the distance between the training data samples and your model distribution?</p></li>
+<li><p><strong>The optimization algorithm</strong>. How do you get from (potentially very bad) initial parameters to a good set of parameters?</p></li>
+</ul>
+<p>In this tutorial, we will be focusing on the <strong>model</strong> component, and replace the gaussian probability density function of the last two tutorials with a <strong>quantum circuit</strong>. In turn, we will also have a look at how to adapt the <strong>dataset</strong> such that it is compatible with the quantum circuit model.</p>
+<p>To simulate the outcomes of quantum circuits, we will be using the <em>qiskit</em> Python library. See more about <strong>qiskit</strong> <a class="reference external" href="https://qiskit.org/">here</a>.</p>
+<p>Lets first install <strong>qiskit</strong> and import the necessary Python libraries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span><span class="p">,</span> <span class="n">Parameter</span>
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">Aer</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="a-brief-reminder-of-quantum-circuits">
+<h2>A brief reminder of quantum circuits<a class="headerlink" href="#a-brief-reminder-of-quantum-circuits" title="Permalink to this headline">¶</a></h2>
+<p>In our <a class="reference internal" href="../beginner_qml/qml_101.html#qml101"><span class="std std-ref">Quantum Machine Learning Tutorial 101</span></a>, we presented this minimal example of a quantum circuit with one qubit and one parameter <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a symbolic parameter theta</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\theta$&quot;</span><span class="p">)</span>
+
+<span class="c1"># create a quantum circuit with one qubit</span>
+<span class="n">circuit</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># apply an X rotation with the symbolic parameter theta</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="c1"># define the measurement</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+<span class="c1"># draw the resulting circuit</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/generative_modeling_103_7_0.png" src="../_images/generative_modeling_103_7_0.png" />
+</div>
+</div>
+<p>This diagram represents the what we just coded up using <strong>qiskit</strong>: We start with one qubit, apply one gate, and then measure it. Let us now find out how the value of <span class="math notranslate nohighlight">\(\theta\)</span> modulates the distribution of outcomes.</p>
+<p>To run the circuit, we need to import and initialize a simulator backend:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simulator</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s2">&quot;aer_simulator&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># to plot it up</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">theta</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">((</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">),</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">4</span><span class="p">]):</span>
+
+    <span class="c1"># bind the parameter theta of the circuit to pi/4</span>
+    <span class="n">circuit_with_params</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">bind_parameters</span><span class="p">([</span><span class="n">theta</span><span class="p">])</span>
+
+    <span class="c1"># run the circuit and get the result</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circuit_with_params</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+    <span class="c1"># extract the measurement counts as a python dictionary</span>
+    <span class="n">count_dict</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+
+    <span class="c1"># for convenience sort by binary order</span>
+    <span class="n">count_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">count_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+
+    <span class="c1"># print the counts</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The results for theta = </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> was:&quot;</span><span class="p">,</span> <span class="n">count_dict</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+        <span class="n">count_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+        <span class="n">count_dict</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span>
+        <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;$\theta =$</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Counts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Outcome&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The results for theta = 0.785 was: {&#39;0&#39;: 844, &#39;1&#39;: 156}
+The results for theta = 1.571 was: {&#39;0&#39;: 530, &#39;1&#39;: 470}
+The results for theta = 2.356 was: {&#39;0&#39;: 143, &#39;1&#39;: 857}
+</pre></div>
+</div>
+<img alt="../_images/generative_modeling_103_11_1.png" src="../_images/generative_modeling_103_11_1.png" />
+</div>
+</div>
+<p>It becomes clear that <span class="math notranslate nohighlight">\(\theta\)</span> controls the probability distribution over outcomes “0” or “1”. <span class="math notranslate nohighlight">\(\theta=\frac{\pi}{2}\)</span> creates an equal superposition of “0” and “1” in the measurement basis, wheras <span class="math notranslate nohighlight">\(\theta=\frac{\pi}{4}\)</span> and <span class="math notranslate nohighlight">\(\theta=\frac{3\pi}{2}\)</span> had a larger probability for measuring “0” or “1”, respectively. The slight discrepancy in the measurement outcomes from the exact probabilities, for example <span class="math notranslate nohighlight">\(50\%\)</span> “0” and <span class="math notranslate nohighlight">\(50\%\)</span> “1” for the <span class="math notranslate nohighlight">\(\theta=\frac{\pi}{2}\)</span> case, are due to the inherent randomness of quantum measurements. If you toss a coin 1000 times, the most likely individual outcome is 500/500, but you are very unlikely to get that perfect balance of outcomes and not any other outcome that is close to it. However, if you take more and more measurements, the observed probabilities of measurements will approach the exact probabilities of <span class="math notranslate nohighlight">\(50\%\)</span>.</p>
+</div>
+<div class="section" id="designing-and-measuring-a-parametrized-quantum-circuit">
+<h2>Designing and measuring a parametrized quantum circuit<a class="headerlink" href="#designing-and-measuring-a-parametrized-quantum-circuit" title="Permalink to this headline">¶</a></h2>
+<p>Let us now write a function that returns a <strong>qiskit</strong> circuit with a flexible number of qubits <span class="math notranslate nohighlight">\(n\)</span>, and with varying <em>depth</em> <span class="math notranslate nohighlight">\(d\)</span>. The <em>depth</em> of a quantum circuit is a vague term for the number of gates in a quantum circuit, or, more commonly, how often a fixed structure of gates is repeated. These structures are commonly called circuit <em>layers</em>. Because we will be working with multiple qubits, the quantum circuit should also contain two-qubit <em>CNOT</em> gates. In addition to the <span class="math notranslate nohighlight">\(\theta\)</span> values of single-qubit gates controlling the measurement probabilities for each qubit, the <em>CNOT</em> gates correlate the measurement outcomes and create <em>entanglement</em> in the prepared quantum state. See our tutorial on <a class="reference external" href="https://alqor.io/tutorials/introduction-to-quantum-technologies/featured-tutorial-on-the-nobel-prize-2022-how-to-win-bells-game">Bell’s Game</a>, which highlights the power of entanglement in light of the recent Nobel Prices in Physics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_circuit</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">,</span> <span class="n">number_of_layers</span><span class="p">):</span>
+
+    <span class="n">number_of_parameters</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">number_of_qubits</span> <span class="o">*</span> <span class="n">number_of_layers</span>
+    <span class="n">thetas</span> <span class="o">=</span> <span class="p">[</span><span class="n">Parameter</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\theta$&quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ii</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_parameters</span><span class="p">)]</span>
+
+    <span class="c1"># initialize the qiskit circuit</span>
+    <span class="n">circuit</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">)</span>
+
+    <span class="n">parameter_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># loop over the layers of the quantum circuit</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_layers</span><span class="p">):</span>
+
+        <span class="c1"># apply a layer of RX rotations</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">):</span>
+            <span class="n">circuit</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="n">parameter_counter</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span>
+            <span class="n">parameter_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># apply a layer of RZ rotations</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">):</span>
+            <span class="n">circuit</span><span class="o">.</span><span class="n">rz</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="n">parameter_counter</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span>
+            <span class="n">parameter_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># apply a layer of CNOTs</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_qubits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">circuit</span><span class="o">.</span><span class="n">cnot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># instructions to measure all qubits</span>
+    <span class="n">circuit</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">circuit</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For <span class="math notranslate nohighlight">\(n=4\)</span> qubits and <span class="math notranslate nohighlight">\(d=2\)</span> layers, the quantum circuit looks like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">number_of_qubits</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">number_of_layers</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">circuit</span> <span class="o">=</span> <span class="n">get_circuit</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">,</span> <span class="n">number_of_layers</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/generative_modeling_103_17_0.png" src="../_images/generative_modeling_103_17_0.png" />
+</div>
+</div>
+<p>You can see that there are <span class="math notranslate nohighlight">\(16\)</span> <span class="math notranslate nohighlight">\(\theta\)</span> parameters <span class="math notranslate nohighlight">\(\theta_1, \dots \theta_{16}\)</span> in the circuit. In fact, the circuit has <span class="math notranslate nohighlight">\(2\cdot n \cdot d\)</span> parameters in general. Let us select random parameters <span class="math notranslate nohighlight">\(\theta_i \in [0, 2\pi]\)</span> and observe the measurement outcome distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># the quantum circuit has 2*n*d parameters</span>
+<span class="n">number_of_parameters</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">number_of_qubits</span> <span class="o">*</span> <span class="n">number_of_layers</span>
+
+<span class="c1"># define value for the initial parameters</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">number_of_parameters</span><span class="p">)</span>
+
+<span class="c1"># bind the circuit parameters to numbers</span>
+<span class="n">circuit_with_params</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">bind_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+
+<span class="c1"># run the circuit and get the result</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circuit_with_params</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+<span class="c1"># extract the measurement counts as a python dictionary</span>
+<span class="n">model_dict</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The results was:&quot;</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">)</span>
+
+<span class="c1"># for convenience sort by binary order</span>
+<span class="n">model_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+
+<span class="c1"># do the plotting</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">model_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+    <span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Counts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Outcome&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The results was: {&#39;1111&#39;: 283, &#39;1011&#39;: 218, &#39;1010&#39;: 23, &#39;0001&#39;: 72, &#39;0100&#39;: 63, &#39;1100&#39;: 13, &#39;0011&#39;: 77, &#39;0101&#39;: 99, &#39;0111&#39;: 14, &#39;1110&#39;: 24, &#39;0000&#39;: 67, &#39;1001&#39;: 23, &#39;0010&#39;: 6, &#39;0110&#39;: 8, &#39;1000&#39;: 4, &#39;1101&#39;: 6}
+</pre></div>
+</div>
+<img alt="../_images/generative_modeling_103_19_1.png" src="../_images/generative_modeling_103_19_1.png" />
+</div>
+</div>
+<p>Lets think about what this plot represents. We start out with four qubits and a quantum circuit acting on it. Then we prepare and measure the quantum state multiple times and observe outcomes of the encoded proabbility distirbution. Does this sound familiar to you? You might think this sounds like a generative model - and you are right! The parametrized quantum state encodes our model distribution, and we can generate data from it by measuring the qubits.</p>
+<p>The <strong>data</strong> now is discrete, i.e., it consists of “0”s and “1”s, instead of continuous numbers in the domain <span class="math notranslate nohighlight">\([-1.5, 1.5]\)</span> as in our earlier tutorials. You can think of quantum circuit generative models as enabling continuous parametrization of a discrete probability distribution with <span class="math notranslate nohighlight">\(2^n\)</span> possible outcomes - something, that is not easily done classically. While it may seem that only being able to model discrete probability distributions is a limitation, but in fact there are many potential use cases for generative models on discrete data, e.g., in finance applications.</p>
+</div>
+<div class="section" id="a-dataset-for-quantum-computers">
+<h2>A dataset for quantum computers<a class="headerlink" href="#a-dataset-for-quantum-computers" title="Permalink to this headline">¶</a></h2>
+<p>So lets think about a potential dataset for our quantum generative model. Last time, the data looked like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fmt: off</span>
+<span class="n">data_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+      <span class="p">[</span><span class="o">-</span><span class="mf">3.61078109e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.29291442e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.82588388e-02</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.58432923e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">4.97863965e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.78795061e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.10663163e-01</span><span class="p">,</span>  <span class="mf">4.36223299e-02</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">1.01858250e-02</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.57657880e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.61011437e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.63656495e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">5.00136079e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.30125377e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.12999295e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.22838879e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">7.75881873e-01</span><span class="p">,</span>  <span class="mf">1.68190537e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.69496934e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.04754810e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">2.62099948e-01</span><span class="p">,</span>  <span class="mf">1.36922064e-01</span><span class="p">,</span>  <span class="mf">3.93391710e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.12181958e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">3.15903057e-01</span><span class="p">,</span>  <span class="mf">1.10533721e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.50864695e-01</span><span class="p">,</span>  <span class="mf">6.56386891e-02</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">2.37497275e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.04398679e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.32560555e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.62669444e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">4.45701188e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.67952827e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.07722157e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.51854037e-02</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">1.35821066e+00</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.39440908e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.41656480e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.51452941e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">8.23083293e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.69844420e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.04400576e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.71350420e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">8.65458568e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.64222047e-01</span><span class="p">,</span>  <span class="mf">8.06578890e-04</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.68337779e-01</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">6.25077227e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.00012510e+00</span><span class="p">,</span>  <span class="mf">7.59518951e-01</span><span class="p">,</span>  <span class="mf">2.46827712e-01</span><span class="p">,</span>
+        <span class="mf">5.70561107e-01</span><span class="p">,</span>  <span class="mf">6.52003162e-01</span><span class="p">,</span>  <span class="mf">6.73384341e-01</span><span class="p">,</span>  <span class="mf">8.04894781e-01</span><span class="p">,</span>
+        <span class="mf">6.34541410e-01</span><span class="p">,</span>  <span class="mf">3.63315273e-01</span><span class="p">,</span>  <span class="mf">4.36242632e-01</span><span class="p">,</span>  <span class="mf">3.31473086e-01</span><span class="p">,</span>
+        <span class="mf">5.18170902e-01</span><span class="p">,</span>  <span class="mf">6.00943305e-01</span><span class="p">,</span>  <span class="mf">7.09919182e-01</span><span class="p">,</span>  <span class="mf">5.42156544e-01</span><span class="p">,</span>
+        <span class="mf">5.96010036e-01</span><span class="p">,</span>  <span class="mf">6.32350524e-01</span><span class="p">,</span>  <span class="mf">5.11792431e-01</span><span class="p">,</span>  <span class="mf">7.26352234e-01</span><span class="p">,</span>
+        <span class="mf">5.24889933e-01</span><span class="p">,</span>  <span class="mf">6.33500447e-01</span><span class="p">,</span>  <span class="mf">7.76251971e-01</span><span class="p">,</span>  <span class="mf">7.53647980e-01</span><span class="p">,</span>
+        <span class="mf">3.36153030e-01</span><span class="p">,</span>  <span class="mf">8.15441364e-01</span><span class="p">,</span>  <span class="mf">5.57272462e-01</span><span class="p">,</span>  <span class="mf">1.44661947e-01</span><span class="p">,</span>
+        <span class="mf">6.16792976e-01</span><span class="p">,</span>  <span class="mf">6.91086153e-01</span><span class="p">,</span>  <span class="mf">6.87286823e-01</span><span class="p">,</span>  <span class="mf">3.98429153e-01</span><span class="p">,</span>
+        <span class="mf">1.07054311e+00</span><span class="p">,</span>  <span class="mf">6.24690432e-01</span><span class="p">,</span>  <span class="mf">6.84406406e-01</span><span class="p">,</span>  <span class="mf">7.26905590e-01</span><span class="p">,</span>
+        <span class="mf">3.09651946e-01</span><span class="p">,</span>  <span class="mf">7.78085930e-01</span><span class="p">,</span>  <span class="mf">3.60425786e-01</span><span class="p">,</span>  <span class="mf">6.33481589e-01</span><span class="p">,</span>
+        <span class="mf">3.17310855e-01</span><span class="p">,</span>  <span class="mf">6.56363955e-01</span><span class="p">,</span>  <span class="mf">6.10979533e-01</span><span class="p">,</span>  <span class="mf">8.08938177e-01</span><span class="p">,</span>
+        <span class="mf">7.71336408e-01</span><span class="p">,</span>  <span class="mf">6.11452930e-01</span><span class="p">,</span>  <span class="mf">5.03192825e-01</span><span class="p">,</span>  <span class="mf">5.66868324e-01</span><span class="p">,</span>
+        <span class="mf">7.22434360e-01</span><span class="p">,</span>  <span class="mf">5.64687162e-01</span><span class="p">,</span>  <span class="mf">5.11510302e-01</span><span class="p">,</span>  <span class="mf">7.02255988e-01</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="c1"># fmt: on</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Plot it up:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">x_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">data_samples</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Data&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Counts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Data Value&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/generative_modeling_103_25_0.png" src="../_images/generative_modeling_103_25_0.png" />
+</div>
+</div>
+<p>We already suggestively plotted a histogram of the continuous data with <span class="math notranslate nohighlight">\(16\)</span> bins. What we are going to do now is to count the number of data samples in each bin, and assign each bin to one of the <span class="math notranslate nohighlight">\(16\)</span> possible binary outcomes of a quantum circuit. It is most comforable to assign them in the order of ascending binary numbers, i.e., <span class="math notranslate nohighlight">\(0000, 0001, 0010, \dots, 1110, 1111\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the data in 16 bins and extract the counts</span>
+<span class="n">counts</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">data_samples</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># generate the 2^4 = 16 discrete outcomes as bitstrings</span>
+<span class="n">string_outcomes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="nb">bin</span><span class="p">(</span><span class="n">ii</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">)</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">number_of_qubits</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1"># group counts and strings into a dictionary</span>
+<span class="n">training_data_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">string_outcomes</span><span class="p">,</span> <span class="n">counts</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;0000&#39;: 1, &#39;0001&#39;: 0, &#39;0010&#39;: 2, &#39;0011&#39;: 4, &#39;0100&#39;: 4, &#39;0101&#39;: 10, &#39;0110&#39;: 7, &#39;0111&#39;: 9, &#39;1000&#39;: 7, &#39;1001&#39;: 5, &#39;1010&#39;: 3, &#39;1011&#39;: 8, &#39;1100&#39;: 14, &#39;1101&#39;: 19, &#39;1110&#39;: 6, &#39;1111&#39;: 1}
+</pre></div>
+</div>
+</div>
+</div>
+<p>This new form of the data looks very familiar to <em>qiskit</em> practitioners. It represents a discretized form of the continuous dataset, and can in fact be plotted together with our quantum circuit outcomes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">x_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">training_data_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>  <span class="c1"># turn the counts into probabilities</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Data&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">model_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>  <span class="c1"># turn the counts into probabilities</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Model Data&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Probability&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Outcome&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/generative_modeling_103_29_0.png" src="../_images/generative_modeling_103_29_0.png" />
+</div>
+</div>
+<p>While we are able to plot the training data probabilities and our empirical quantum circuit measurement probabilities together, the distributions clearly don’t match at all. In the previous tutorials, we could make educated guesses for how to parametrize the gaussian model to match the gaussian data, but would you know how to do that with a parametrized quantum circuit? No, that is too hard to know in general and for arbitrary datasets. This is where training of the model parameters comes in. For that we need a loss function.</p>
+</div>
+<div class="section" id="a-loss-function-for-generative-modeling">
+<h2>A loss function for generative modeling<a class="headerlink" href="#a-loss-function-for-generative-modeling" title="Permalink to this headline">¶</a></h2>
+<p>We remember the KL divergence from the last tutorial:</p>
+<div class="math notranslate nohighlight">
+\[\text{KL}(p_{data}, p_{model}) = \sum_{x\sim \mathcal{D}} \left[ p_{data}(x) \log(p_{data}(x)) - p_{data}(x) \log(p_{model}(x)) \right]\]</div>
+<p>Since we are now working with discrete <span class="math notranslate nohighlight">\(x\)</span> as well as dictionaries of measurement counts, we will have to define a KL divergence loss function that accepts these formats:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">kl_divergence</span><span class="p">(</span><span class="n">data_distribution</span><span class="p">,</span> <span class="n">model_distribution</span><span class="p">):</span>
+    <span class="c1"># we will require a small offset &quot;e&quot; to avoid possible log(0) singularities</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="mf">1e-6</span>
+
+    <span class="c1"># make sure the values in the dictionaries add up to 1</span>
+    <span class="n">sum_data</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">data_distribution</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">sum_model</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">model_distribution</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">bin_outcome</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">data_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">data_distribution</span><span class="p">[</span><span class="n">bin_outcome</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">count</span> <span class="o">/</span> <span class="n">sum_data</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">bin_outcome</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">model_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">model_distribution</span><span class="p">[</span><span class="n">bin_outcome</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">count</span> <span class="o">/</span> <span class="n">sum_model</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+    <span class="c1"># calculate the first term in the KL divergence formula</span>
+    <span class="n">term1</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">bin_outcome</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">data_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">term1</span> <span class="o">+=</span> <span class="n">prob</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span>
+
+    <span class="c1"># calculate the second term in the KL divergence formula</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">bin_outcome</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">data_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">term2</span> <span class="o">+=</span> <span class="n">prob</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">model_distribution</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">bin_outcome</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">term1</span> <span class="o">-</span> <span class="n">term2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And measure our <em>initial</em> loss given the dataset, our quantum circuit, and a random parameter guess.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.4587267014826186
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="wrapping-it-up">
+<h2>Wrapping it up<a class="headerlink" href="#wrapping-it-up" title="Permalink to this headline">¶</a></h2>
+<p>As expected, the KL divergence is not zero and in fact quite large. In the next tutorial in this series on generative modeling using quantum hardware, we will apply the gradient descent optimization algorithm to train the circuit parameters to match this particular data distribution. Furthermore, we will study the role that <em>entanglement</em> plays in this algorithm and how it affects training performance.</p>
+<p>To summarize what we saw in this tutorial, we went implemented a quantum circuit generative <strong>model</strong> using <em>qiskit</em>. Because of the binary nature of qubit measurements, quantum circuit generative models operate on datasets consisting of discrete <strong>data</strong>. Interestingly, we were able to transfer the continuous dataset from the earlier tutorials and transform it into a dataset that’s suitable for quantum circuits. However, the initial KL divergence value between the training dataset and <span class="math notranslate nohighlight">\(1000\)</span> samples from our quantum circuit model was still quite large.</p>
+<p>See you soon when we train this quantum circuit model!</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Alqor-UG/quantum-tutorials",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./generative_modeling"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="generative_modeling_102.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Tutorial 2 – Training generative models</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="generative_modeling_104.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial 4 – A trained generative model with a few qubits</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Quantum Tutorials Community<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
