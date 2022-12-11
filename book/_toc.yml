@@ -23,6 +23,7 @@ parts:
     chapters:
     - file: qtech_basics/qtech_summary
     - file: qtech_basics/qtech_intro
+    - file: qtech_basics/quantum_metrology
     - file: qtech_basics/bell_inequalities
   - caption: Introduction to quantum hardware
     chapters:
