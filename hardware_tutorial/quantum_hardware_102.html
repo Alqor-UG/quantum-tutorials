@@ -215,6 +215,11 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/quantum_metrology.html">
+   Tutorial 2 - Quantum metrology
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../qtech_basics/bell_inequalities.html">
    Tutorial on the nobel prize 2022 - How to win Bell’s game
   </a>
@@ -249,6 +254,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="quantum_hardware_104.html">
    Tutorial 4 - A few words about quantum computing with superconducting qubits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantum_hardware_105.html">
+   Tutorial 5 -Quantum simulation with cold atoms
   </a>
  </li>
 </ul>
@@ -539,34 +549,34 @@ x(t=0) = a  = x_0
 \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">pi</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+import matplotlib.pyplot as plt
+from numpy import pi
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># steepness of the potential</span>
-<span class="n">m</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="n">omega</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">1</span><span class="p">;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># steepness of the potential
+m = 1;
+omega = 2*np.pi*1;
 
-<span class="c1"># initial conditions</span>
-<span class="n">x0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">v0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+# initial conditions
+x0 = 0;
+v0 = 1;
 
-<span class="n">tlin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
+tlin = np.linspace(0,3,100);
 
-<span class="n">xt</span> <span class="o">=</span> <span class="n">x0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">omega</span><span class="o">*</span><span class="n">tlin</span><span class="p">)</span><span class="o">+</span><span class="n">v0</span><span class="o">/</span><span class="n">omega</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">omega</span><span class="o">*</span><span class="n">tlin</span><span class="p">);</span>
-<span class="n">vt</span> <span class="o">=</span> <span class="o">-</span><span class="n">x0</span><span class="o">*</span><span class="n">omega</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">omega</span><span class="o">*</span><span class="n">tlin</span><span class="p">)</span><span class="o">+</span><span class="n">v0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">omega</span><span class="o">*</span><span class="n">tlin</span><span class="p">);</span>
+xt = x0*np.cos(omega*tlin)+v0/omega*np.sin(omega*tlin);
+vt = -x0*omega*np.sin(omega*tlin)+v0*np.cos(omega*tlin);
 
-<span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tlin</span><span class="p">,</span> <span class="n">xt</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tlin</span><span class="p">,</span> <span class="n">vt</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;time $t$&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;position $x$&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;velocity $v$&#39;</span><span class="p">)</span>
+f, (ax1,ax2) = plt.subplots(2,1, sharex=True)
+ax1.plot(tlin, xt)
+ax2.plot(tlin, vt)
+ax1.set_xlabel(&#39;time $t$&#39;)
+ax1.set_ylabel(&#39;position $x$&#39;)
+ax2.set_ylabel(&#39;velocity $v$&#39;)
 </pre></div>
 </div>
 </div>
@@ -596,18 +606,18 @@ x(t=0) = a  = x_0
 \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">v0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="n">dv</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
-<span class="n">x0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">dx</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>v0 = 1;dv = 0.1;
+x0 = 0; dx = 0.1;
 
-<span class="n">Px</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
-<span class="n">Pv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">dv</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+Px = np.random.normal(x0, dx, 500)
+Pv = np.random.normal(v0, dv, 500)
 
-<span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">Px</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">Pv</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;initial position $x$&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;initial velocity $v$&#39;</span><span class="p">)</span>
-<span class="n">f</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+f, (ax1,ax2) = plt.subplots(2,1)
+ax1.hist(Px, density=True)
+ax2.hist(Pv, density=True)
+ax1.set_xlabel(&#39;initial position $x$&#39;)
+ax2.set_xlabel(&#39;initial velocity $v$&#39;)
+f.tight_layout()
 </pre></div>
 </div>
 </div>
@@ -618,29 +628,29 @@ x(t=0) = a  = x_0
 <p>\And depending on these initial conditions, we will obtain some final distributions <span class="math notranslate nohighlight">\(P(x_f)\)</span> and <span class="math notranslate nohighlight">\(P(v_f)\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initial conditions</span>
-<span class="n">v0</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class="n">dv</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
-<span class="n">x0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">dx</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
-<span class="n">Ntries</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># initial conditions
+v0 = 3;dv = 0.1;
+x0 = 0; dx = 0.1;
+Ntries = 100;
 
-<span class="n">x0s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">Ntries</span><span class="p">);</span>
-<span class="n">v0s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">dv</span><span class="p">,</span> <span class="n">Ntries</span><span class="p">);</span>
+x0s = np.random.normal(x0, dx, Ntries);
+v0s = np.random.normal(v0, dv, Ntries);
 
 
-<span class="n">tlin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
+tlin = np.linspace(0,3,100);
 
-<span class="n">xts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="n">Ntries</span><span class="p">));</span>
-<span class="n">vts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="n">Ntries</span><span class="p">));</span>
-<span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Ntries</span><span class="p">):</span>
-    <span class="n">xts</span><span class="p">[:,</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">x0s</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">omega</span><span class="o">*</span><span class="n">tlin</span><span class="p">)</span><span class="o">+</span><span class="n">v0s</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">/</span><span class="n">omega</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">omega</span><span class="o">*</span><span class="n">tlin</span><span class="p">);</span>
-    <span class="n">vts</span><span class="p">[:,</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">x0s</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">*</span><span class="n">omega</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">omega</span><span class="o">*</span><span class="n">tlin</span><span class="p">)</span><span class="o">+</span><span class="n">v0s</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">omega</span><span class="o">*</span><span class="n">tlin</span><span class="p">);</span>
+xts = np.zeros((100, Ntries));
+vts = np.zeros((100, Ntries));
+for ii in np.arange(Ntries):
+    xts[:,ii] = x0s[ii]*np.cos(omega*tlin)+v0s[ii]/omega*np.sin(omega*tlin);
+    vts[:,ii] = -x0s[ii]*omega*np.sin(omega*tlin)+v0s[ii]*np.cos(omega*tlin);
 
-<span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tlin</span><span class="p">,</span> <span class="n">xts</span><span class="p">,</span> <span class="s1">&#39;bo&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tlin</span><span class="p">,</span> <span class="n">vts</span><span class="p">,</span> <span class="s1">&#39;bo&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;time $t$&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;position $x$&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;velocity $v$&#39;</span><span class="p">)</span>
+f, (ax1,ax2) = plt.subplots(2,1, sharex=True)
+ax1.plot(tlin, xts, &#39;bo&#39;, alpha = 0.1)
+ax2.plot(tlin, vts, &#39;bo&#39;, alpha = 0.1)
+ax1.set_xlabel(&#39;time $t$&#39;)
+ax1.set_ylabel(&#39;position $x$&#39;)
+ax2.set_ylabel(&#39;velocity $v$&#39;)
 </pre></div>
 </div>
 </div>
@@ -785,18 +795,18 @@ H_{h.o.} = \frac{p^2}{2m}+\frac{m\omega^2}{2}x^2
 <p>For conciseness it is always nice to just use a Gaussian with width <span class="math notranslate nohighlight">\(\sigma_x\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xlin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
-<span class="n">sigmax</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="c1"># initial shape</span>
-<span class="n">psiInit</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">sigmax</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">xlin</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">sigmax</span><span class="o">**</span><span class="mi">2</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>xlin = np.linspace(-10,10, 100);
+sigmax = 1;
+# initial shape
+psiInit = 1/(2*np.pi*sigmax**2)**(1/4)*np.exp(-xlin**2/4/sigmax**2);
 
-<span class="c1"># normalization</span>
-<span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">psiInit</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">xlin</span><span class="p">)</span>
+# normalization
+np.trapz(psiInit**2, xlin)
 
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xlin</span><span class="p">,</span> <span class="n">psiInit</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;position (x)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$\psi$&#39;</span><span class="p">)</span>
+f, ax = plt.subplots()
+ax.plot(xlin, psiInit)
+ax.set_xlabel(&#39;position (x)&#39;)
+ax.set_ylabel(&#39;$\psi$&#39;)
 </pre></div>
 </div>
 </div>
@@ -835,25 +845,25 @@ H_{h.o.} = \frac{p^2}{2m}+\frac{m\omega^2}{2}x^2
 <p>For a Gaussian of width <span class="math notranslate nohighlight">\(\sigma_x\)</span> in position space, this results in a gaussian of width <span class="math notranslate nohighlight">\(\sigma_k = 1/2\sigma_x\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xlin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
-<span class="n">klin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
-<span class="n">sigmax</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="n">sigmak</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">sigmax</span><span class="p">;</span>
-<span class="c1"># initial shape</span>
-<span class="n">psiInit_x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">sigmax</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">xlin</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">sigmax</span><span class="o">**</span><span class="mi">2</span><span class="p">);</span>
-<span class="n">psiInit_k</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">sigmak</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">klin</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">sigmak</span><span class="o">**</span><span class="mi">2</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>xlin = np.linspace(-10,10, 100);
+klin = np.linspace(-10,10, 100);
+sigmax = 1;
+sigmak = 1/2/sigmax;
+# initial shape
+psiInit_x = 1/(2*np.pi*sigmax**2)**(1/4)*np.exp(-xlin**2/4/sigmax**2);
+psiInit_k = 1/(2*np.pi*sigmak**2)**(1/4)*np.exp(-klin**2/4/sigmak**2);
 
-<span class="c1"># normalization</span>
-<span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">psiInit_x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">xlin</span><span class="p">)</span>
+# normalization
+np.trapz(psiInit_x**2, xlin)
 
-<span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xlin</span><span class="p">,</span> <span class="n">psiInit_x</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;position $x$&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$\psi(x)$&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">klin</span><span class="p">,</span> <span class="n">psiInit_k</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;momentum $k$&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$\psi(k)$&#39;</span><span class="p">)</span>
-<span class="n">f</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+f, (ax1,ax2) = plt.subplots(2,1)
+ax1.plot(xlin, psiInit_x)
+ax1.set_xlabel(&#39;position $x$&#39;)
+ax1.set_ylabel(&#39;$\psi(x)$&#39;)
+ax2.plot(klin, psiInit_k)
+ax2.set_xlabel(&#39;momentum $k$&#39;)
+ax2.set_ylabel(&#39;$\psi(k)$&#39;)
+f.tight_layout()
 </pre></div>
 </div>
 </div>
@@ -864,44 +874,44 @@ H_{h.o.} = \frac{p^2}{2m}+\frac{m\omega^2}{2}x^2
 <p>It is of fundamental importance to recognize that we can now choose initial conditions in which the particle is in several initial conditions at the same time. As an example it is perfectly valid to have a particle which is centered at zero, but is in a super position of opposite velocities.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.fftpack</span> <span class="k">as</span> <span class="nn">ft</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import scipy.fftpack as ft
 
-<span class="n">Nx</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span><span class="n">Nk</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
-<span class="n">xlin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="n">Nx</span><span class="p">);</span>
+Nx = 256;Nk = 100;
+xlin = np.linspace(-10,10, Nx);
 
-<span class="c1"># size of the wavepackage</span>
-<span class="n">sigmax</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> 
-<span class="c1">#initial velocity</span>
-<span class="n">k0</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+# size of the wavepackage
+sigmax = 1; 
+#initial velocity
+k0 = 4;
 
-<span class="c1"># initial shape</span>
-<span class="n">psiInit_x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">sigmax</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">xlin</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">sigmax</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">k0</span><span class="o">*</span><span class="n">xlin</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">k0</span><span class="o">*</span><span class="n">xlin</span><span class="p">));</span>
+# initial shape
+psiInit_x = 1/(2*np.pi*sigmax**2)**(1/4)*np.exp(-xlin**2/4/sigmax**2)*1/np.sqrt(2)*(np.exp(1j*k0*xlin)+np.exp(-1j*k0*xlin));
 
-<span class="c1"># normalization</span>
-<span class="n">Nx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">psiInit_x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">xlin</span><span class="p">);</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">Nx</span><span class="p">)</span>
+# normalization
+Nx = np.trapz(abs(psiInit_x)**2, xlin);
+print(Nx)
 
 
-<span class="c1"># get its Fourier transform</span>
-<span class="n">dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">xlin</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-<span class="n">k_fft</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">xlin</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="n">d</span> <span class="o">=</span> <span class="n">dx</span><span class="p">)</span>
-<span class="n">k_fft</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">ft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">k_fft</span><span class="p">)</span>
-<span class="n">dk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">k_fft</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+# get its Fourier transform
+dx = np.diff(xlin).mean()
+k_fft = ft.fftfreq(xlin.size,d = dx)
+k_fft = 2*np.pi*ft.fftshift(k_fft)
+dk = np.diff(k_fft).mean()
 
-<span class="n">psiInit_fft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">psiInit_x</span><span class="p">));</span>
-<span class="c1"># normalization</span>
-<span class="n">Nk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">psiInit_fft</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">k_fft</span><span class="p">);</span>
-<span class="n">psiInit_fft</span> <span class="o">=</span> <span class="n">psiInit_fft</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Nk</span><span class="p">)</span>
+psiInit_fft = np.fft.fftshift(np.fft.fft(psiInit_x));
+# normalization
+Nk = np.trapz(abs(psiInit_fft)**2, k_fft);
+psiInit_fft = psiInit_fft/np.sqrt(Nk)
 
-<span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xlin</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">psiInit_x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;position $x$&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$\psi(x)$&#39;</span><span class="p">)</span>
-<span class="c1">#ax2.plot(klin, psiInit_k)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">k_fft</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">psiInit_fft</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;momentum $k$&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$\psi(k)$&#39;</span><span class="p">)</span>
-<span class="n">f</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+f, (ax1,ax2) = plt.subplots(2,1)
+ax1.plot(xlin, abs(psiInit_x)**2)
+ax1.set_xlabel(&#39;position $x$&#39;)
+ax1.set_ylabel(&#39;$\psi(x)$&#39;)
+#ax2.plot(klin, psiInit_k)
+ax2.plot(k_fft, abs(psiInit_fft)**2)
+ax2.set_xlabel(&#39;momentum $k$&#39;)
+ax2.set_ylabel(&#39;$\psi(k)$&#39;)
+f.tight_layout()
 </pre></div>
 </div>
 </div>
@@ -936,87 +946,87 @@ p(t) = \langle\psi_0| \hat{p}(t) |\psi_0\rangle
 \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linalg</span> <span class="k">as</span> <span class="n">LA</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from numpy import linalg as LA
 
-<span class="n">Nx</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span>
-<span class="n">xvec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="n">Nx</span><span class="p">);</span>
+Nx = 256;
+xvec = np.linspace(-10,10, Nx);
 
-<span class="n">omega</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">hbar</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+omega = 1; m = 1; hbar = 1;
 
-<span class="c1"># kinetic energy</span>
-<span class="n">dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">xvec</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+# kinetic energy
+dx = np.diff(xvec).mean()
 
-<span class="n">dia</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">Nx</span><span class="p">)</span>
-<span class="n">offdia</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">Nx</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">d2grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">dia</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">offdia</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">offdia</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="n">dx</span><span class="o">**</span><span class="mi">2</span>
-<span class="n">d2grid</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span><span class="o">=</span><span class="mi">0</span>
-<span class="n">d2grid</span><span class="p">[</span><span class="n">Nx</span><span class="o">-</span><span class="mi">1</span><span class="p">,:]</span><span class="o">=</span><span class="mi">0</span>
+dia = -2*np.ones(Nx)
+offdia = np.ones(Nx-1)
+d2grid = np.mat(np.diag(dia,0) + np.diag(offdia,-1) + np.diag(offdia,1))/dx**2
+d2grid[0,:]=0
+d2grid[Nx-1,:]=0
 
-<span class="n">Ekin</span> <span class="o">=</span> <span class="o">-</span><span class="n">hbar</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">)</span><span class="o">*</span><span class="n">d2grid</span>
-<span class="n">Ekin</span>
+Ekin = -hbar**2/(2*m)*d2grid
+Ekin
 
-<span class="c1"># potential energy</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">xvec</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
-<span class="n">Vx</span> <span class="o">=</span> <span class="n">m</span><span class="o">*</span><span class="n">omega</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">xvec</span><span class="o">**</span><span class="mi">2</span><span class="p">;</span>
-<span class="n">Epot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">Vx</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+# potential energy
+x = np.mat(np.diag(xvec,0))
+Vx = m*omega**2/2*xvec**2;
+Epot = np.mat(np.diag(Vx,0))
 
-<span class="n">H</span> <span class="o">=</span>  <span class="n">Ekin</span> <span class="o">+</span> <span class="n">Epot</span>
+H =  Ekin + Epot
 
-<span class="c1"># diagonalization</span>
-<span class="n">w</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">LA</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
-<span class="c1"># sort it such that things look nice later</span>
-<span class="n">sortinds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
-<span class="n">EigVecs</span> <span class="o">=</span> <span class="n">v</span><span class="p">[:,</span><span class="n">sortinds</span><span class="p">]</span>
-<span class="n">EigVals</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="n">sortinds</span><span class="p">]</span>
+# diagonalization
+w, v = LA.eig(H)
+# sort it such that things look nice later
+sortinds = np.argsort(w)
+EigVecs = v[:,sortinds]
+EigVals = w[sortinds]
 
-<span class="c1"># size of the wavepackage</span>
-<span class="n">sigmax</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> 
+# size of the wavepackage
+sigmax = 1; 
 
-<span class="c1">#initial velocity</span>
-<span class="n">k0</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+#initial velocity
+k0 = 4;
 
-<span class="c1"># initial shape</span>
-<span class="n">psiInit_x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">sigmax</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">xlin</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">sigmax</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">k0</span><span class="o">*</span><span class="n">xlin</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">k0</span><span class="o">*</span><span class="n">xlin</span><span class="p">));</span>
-<span class="c1">#psiInit_x = 1/(2*np.pi*sigmax**2)**(1/4)*np.exp(-xlin**2/4/sigmax**2)*np.exp(1j*k0*xlin);</span>
-<span class="c1">#psiInit_x = 1/(2*np.pi*sigmax**2)**(1/4)*np.exp(-xlin**2/4/sigmax**2)*np.exp(-1j*k0*xlin);</span>
-<span class="n">psiInit_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">psiInit_x</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
-<span class="c1">#transform to matrix</span>
-<span class="n">EigVals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">EigVals</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+# initial shape
+psiInit_x = 1/(2*np.pi*sigmax**2)**(1/4)*np.exp(-xlin**2/4/sigmax**2)*1/np.sqrt(2)*(np.exp(1j*k0*xlin)+np.exp(-1j*k0*xlin));
+#psiInit_x = 1/(2*np.pi*sigmax**2)**(1/4)*np.exp(-xlin**2/4/sigmax**2)*np.exp(1j*k0*xlin);
+#psiInit_x = 1/(2*np.pi*sigmax**2)**(1/4)*np.exp(-xlin**2/4/sigmax**2)*np.exp(-1j*k0*xlin);
+psiInit_x = np.mat(psiInit_x).T
+#transform to matrix
+EigVals = np.mat(EigVals).T
 
-<span class="c1"># EigVecs contains the Eigenvectors as columns, </span>
-<span class="c1"># conjugate transpose times Psi0 calculates the scalar product</span>
-<span class="c1"># of every energy-eigenvector with Psi0 (yields the representation in the energy-eigenbasis)</span>
-<span class="n">Psi0Eig</span> <span class="o">=</span> <span class="n">EigVecs</span><span class="o">.</span><span class="n">H</span> <span class="o">*</span> <span class="n">psiInit_x</span>
+# EigVecs contains the Eigenvectors as columns, 
+# conjugate transpose times Psi0 calculates the scalar product
+# of every energy-eigenvector with Psi0 (yields the representation in the energy-eigenbasis)
+Psi0Eig = EigVecs.H * psiInit_x
 
-<span class="n">tmax</span> <span class="o">=</span> <span class="mi">30</span>
-<span class="n">NSteps</span> <span class="o">=</span> <span class="mi">300</span>
-<span class="n">dt</span> <span class="o">=</span> <span class="n">tmax</span><span class="o">/</span><span class="n">NSteps</span>
-<span class="n">meanx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">NSteps</span><span class="p">)</span>
-<span class="n">xsq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">NSteps</span><span class="p">)</span>
-<span class="n">ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">NSteps</span><span class="p">)</span>
-<span class="n">psi_t</span> <span class="o">=</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">Nx</span><span class="p">,</span> <span class="n">NSteps</span><span class="p">))</span>
-<span class="n">n_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">Nx</span><span class="p">,</span> <span class="n">NSteps</span><span class="p">))</span>
-<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">NSteps</span><span class="p">):</span>
+tmax = 30
+NSteps = 300
+dt = tmax/NSteps
+meanx = np.zeros(NSteps)
+xsq = np.zeros(NSteps)
+ts = np.zeros(NSteps)
+psi_t = 1j*np.zeros((Nx, NSteps))
+n_t = np.zeros((Nx, NSteps))
+t = 0
+for k in range(0,NSteps):
     
-    <span class="c1"># Time evolution is just a phase evolution in the energy eigenbasis</span>
-    <span class="n">PsitEig</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">EigVals</span><span class="o">/</span><span class="n">hbar</span><span class="o">*</span><span class="n">t</span><span class="p">),</span><span class="n">Psi0Eig</span> <span class="p">)</span>
+    # Time evolution is just a phase evolution in the energy eigenbasis
+    PsitEig = np.multiply( np.exp(-1j*EigVals/hbar*t),Psi0Eig )
     
-    <span class="c1"># Transform back to the grid representation (calculate the time-evolved </span>
-    <span class="c1"># superposition of energy-eigenstates)</span>
-    <span class="n">Psit</span> <span class="o">=</span> <span class="n">EigVecs</span><span class="o">*</span><span class="n">PsitEig</span>
-    <span class="n">psi_t</span><span class="p">[:,</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">Psit</span><span class="o">.</span><span class="n">flatten</span><span class="p">();</span>
-    <span class="n">n_t</span><span class="p">[:,</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Psit</span><span class="o">.</span><span class="n">flatten</span><span class="p">()))</span><span class="o">**</span><span class="mi">2</span><span class="p">;</span>
-    <span class="c1"># calculate the mean position</span>
-    <span class="n">meanx</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">Psit</span><span class="o">.</span><span class="n">H</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">Psit</span><span class="p">);</span>
-    <span class="n">xsq</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">Psit</span><span class="o">.</span><span class="n">H</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">Psit</span><span class="p">);</span>
-    <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">+</span><span class="n">dt</span>
-    <span class="n">ts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">=</span><span class="n">t</span>
+    # Transform back to the grid representation (calculate the time-evolved 
+    # superposition of energy-eigenstates)
+    Psit = EigVecs*PsitEig
+    psi_t[:,k] = Psit.flatten();
+    n_t[:,k] = np.array(np.abs(Psit.flatten()))**2;
+    # calculate the mean position
+    meanx[k] = np.real(Psit.H*x*Psit);
+    xsq[k] = np.real(Psit.H*x**2*Psit);
+    t = t+dt
+    ts[k]=t
 
-<span class="n">xstd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">xsq</span><span class="o">-</span><span class="n">meanx</span><span class="o">**</span><span class="mi">2</span><span class="p">);</span>
+xstd = np.sqrt(xsq-meanx**2);
 
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">n_t</span><span class="p">);</span>
+f, ax = plt.subplots()
+ax.pcolormesh(ts, xvec, n_t);
 </pre></div>
 </div>
 </div>

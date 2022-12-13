@@ -215,6 +215,11 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/quantum_metrology.html">
+   Tutorial 2 - Quantum metrology
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../qtech_basics/bell_inequalities.html">
    Tutorial on the nobel prize 2022 - How to win Bell’s game
   </a>
@@ -249,6 +254,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../hardware_tutorial/quantum_hardware_104.html">
    Tutorial 4 - A few words about quantum computing with superconducting qubits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_105.html">
+   Tutorial 5 -Quantum simulation with cold atoms
   </a>
  </li>
 </ul>
@@ -453,36 +463,36 @@ const thebe_selector_output = ".output, .cell_output"
 <p>For simplicity we will start out with a simple problem, where each data set has only a single variable and extend it later to higher dimensional data sets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># only necessary on colab</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># only necessary on colab
 
-<span class="o">!</span>pip install qiskit
-<span class="o">!</span>pip install pylatexenc
+!pip install qiskit
+!pip install pylatexenc
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from typing import Union, List
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+import numpy as np
+import matplotlib.pyplot as plt
 
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+from tqdm import tqdm
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>np.random.seed(1)
+x = np.random.uniform(-np.pi, np.pi, 100)
+y = 1.0 * (abs(x) &gt; np.pi / 2)
 
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;input value&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">)</span>
+f, ax = plt.subplots()
+ax.plot(x, y, &quot;o&quot;)
+ax.set_xlabel(&quot;input value&quot;)
+ax.set_ylabel(&quot;label&quot;)
 </pre></div>
 </div>
 </div>
@@ -501,26 +511,26 @@ const thebe_selector_output = ".output, .cell_output"
 <p>The usual problem is here to find a good balance between a sufficient amount of training data, yet leaving enough test data to have a statistically significant test.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import train_test_split
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>x_train, x_test, y_train, y_test = train_test_split(
+    x, y, test_size=0.20, random_state=42
+)
 
-<span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;input value&quot;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot; given labels&quot;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;training data&quot;</span><span class="p">)</span>
+f, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 5), sharex=True, sharey=True)
+ax1.plot(x_train, y_train, &quot;o&quot;)
+ax1.set_xlabel(&quot;input value&quot;)
+ax1.set_ylabel(&quot; given labels&quot;)
+ax1.set_title(&quot;training data&quot;)
 
-<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;input value&quot;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;test data&quot;</span><span class="p">)</span>
+ax2.plot(x_test, y_test, &quot;o&quot;)
+ax2.set_xlabel(&quot;input value&quot;)
+ax2.set_title(&quot;test data&quot;)
 </pre></div>
 </div>
 </div>
@@ -543,22 +553,22 @@ const thebe_selector_output = ".output, .cell_output"
 <p>In the simplest of all cases, we might then just apply a single qubit rotation with the angle <span class="math notranslate nohighlight">\(w x_i\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span><span class="p">,</span> <span class="n">Parameter</span>
-<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">Aer</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from qiskit.circuit import QuantumCircuit, Parameter
+from qiskit import Aer
 
-<span class="n">sim</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s2">&quot;aer_simulator&quot;</span><span class="p">)</span>
+sim = Aer.get_backend(&quot;aer_simulator&quot;)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\theta$&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>theta = Parameter(r&quot;$\theta$&quot;)
 
-<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+qc = QuantumCircuit(1)
+qc.rx(theta, 0)
+qc.measure_all()
+qc.draw(&quot;mpl&quot;)
 </pre></div>
 </div>
 </div>
@@ -569,61 +579,61 @@ const thebe_selector_output = ".output, .cell_output"
 <p>We can now look at the performance of the code with some randomly initialized weight in predicting the appropiate label.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_accuracy</span><span class="p">(</span>
-    <span class="n">qc</span><span class="p">:</span> <span class="n">QuantumCircuit</span><span class="p">,</span> <span class="n">weight</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">xvals</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">yvals</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculates the accuracy of the circuit for a given set of data.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def get_accuracy(
+    qc: QuantumCircuit, weight: float, xvals: List[float], yvals: List[int]
+) -&gt; Union[float, List[int]]:
+    &quot;&quot;&quot;
+    Calculates the accuracy of the circuit for a given set of data.
 
-<span class="sd">    Args:</span>
-<span class="sd">      qc: the quantum circuit</span>
-<span class="sd">      weight: the training parameter</span>
-<span class="sd">      xvals: the input values</span>
-<span class="sd">      yvals: the labels</span>
-<span class="sd">    Returns:</span>
-<span class="sd">      The accuracy and the predicted labels.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">pred_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xvals</span><span class="p">))</span>
-    <span class="n">accurate_prediction</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">xinput</span><span class="p">,</span> <span class="n">yinput</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xvals</span><span class="p">)),</span> <span class="n">xvals</span><span class="p">,</span> <span class="n">yvals</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)):</span>
-        <span class="c1"># set the circuit parameter</span>
-        <span class="n">circuit</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span>
-            <span class="p">{</span><span class="n">theta</span><span class="p">:</span> <span class="n">weight</span> <span class="o">*</span> <span class="n">xinput</span><span class="p">},</span>
-            <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="c1"># run the job and obtain the counts</span>
-        <span class="n">job</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
-        <span class="n">counts1</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+    Args:
+      qc: the quantum circuit
+      weight: the training parameter
+      xvals: the input values
+      yvals: the labels
+    Returns:
+      The accuracy and the predicted labels.
+    &quot;&quot;&quot;
+    pred_labels = np.zeros(len(xvals))
+    accurate_prediction = 0
+    for ii, xinput, yinput in zip(range(len(xvals)), xvals, yvals.astype(int)):
+        # set the circuit parameter
+        circuit = qc.assign_parameters(
+            {theta: weight * xinput},
+            inplace=False,
+        )
+        # run the job and obtain the counts
+        job = sim.run(circuit, shots=1000)
+        counts1 = job.result().get_counts()
 
-        <span class="c1"># obtain the predicted label on average</span>
-        <span class="k">if</span> <span class="s2">&quot;0&quot;</span> <span class="ow">in</span> <span class="n">counts1</span><span class="p">:</span>
-            <span class="n">pred_label</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">counts1</span><span class="p">[</span><span class="s2">&quot;0&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">500</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">pred_label</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">pred_labels</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred_label</span>
-        <span class="k">if</span> <span class="n">yinput</span> <span class="o">==</span> <span class="n">pred_label</span><span class="p">:</span>
-            <span class="n">accurate_prediction</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">accurate_prediction</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">yvals</span><span class="p">),</span> <span class="n">pred_labels</span>
+        # obtain the predicted label on average
+        if &quot;0&quot; in counts1:
+            pred_label = 1 * (counts1[&quot;0&quot;] &lt; 500)
+        else:
+            pred_label = 1
+        pred_labels[ii] = pred_label
+        if yinput == pred_label:
+            accurate_prediction += 1
+    return accurate_prediction / len(yvals), pred_labels
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weight</span> <span class="o">=</span> <span class="mf">0.8</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>weight = 0.8
 
-<span class="n">accuracy</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">get_accuracy</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">,</span> <span class="n">xvals</span><span class="o">=</span><span class="n">x_train</span><span class="p">,</span> <span class="n">yvals</span><span class="o">=</span><span class="n">y_train</span><span class="p">)</span>
+accuracy, y_pred = get_accuracy(qc, weight=weight, xvals=x_train, yvals=y_train)
 
-<span class="n">false_label</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_train</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+false_label = abs(y_pred - y_train) &gt; 0
 
-<span class="n">x_false</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
-<span class="n">y_false</span> <span class="o">=</span> <span class="n">y_pred</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
+x_false = x_train[false_label]
+y_false = y_pred[false_label]
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The circuit has an accuracy of </span><span class="si">{</span><span class="n">accuracy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;predicted label&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_false</span><span class="p">,</span> <span class="n">y_false</span><span class="p">,</span> <span class="s2">&quot;ro&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;false label&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+print(f&quot;The circuit has an accuracy of {accuracy}&quot;)
+f, ax = plt.subplots()
+ax.plot(x_train, y_pred, &quot;o&quot;, label=&quot;predicted label&quot;)
+ax.plot(x_false, y_false, &quot;ro&quot;, label=&quot;false label&quot;)
+ax.legend()
 </pre></div>
 </div>
 </div>
@@ -643,12 +653,12 @@ const thebe_selector_output = ".output, .cell_output"
 <p>To improve the performance of the circuit, we have to train it. This basically involves the minimization of some loss function as a function of the circuit parameters <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>. In this example we can simply calculate the accuracy of the circuit as a function of the weight and obtain its minimimum.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-<span class="n">accuracies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>weights = np.linspace(0, 2, 50)
+accuracies = np.zeros(50)
 
-<span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">weight_val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tqdm</span><span class="p">(</span><span class="n">weights</span><span class="p">)):</span>
-    <span class="n">accuracy</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">get_accuracy</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight_val</span><span class="p">,</span> <span class="n">xvals</span><span class="o">=</span><span class="n">x_train</span><span class="p">,</span> <span class="n">yvals</span><span class="o">=</span><span class="n">y_train</span><span class="p">)</span>
-    <span class="n">accuracies</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">accuracy</span>
+for ii, weight_val in enumerate(tqdm(weights)):
+    accuracy, y_pred = get_accuracy(qc, weight=weight_val, xvals=x_train, yvals=y_train)
+    accuracies[ii] = accuracy
 </pre></div>
 </div>
 </div>
@@ -660,14 +670,14 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">opt_weight</span> <span class="o">=</span> <span class="n">weights</span><span class="p">[</span><span class="n">accuracies</span><span class="o">.</span><span class="n">argmax</span><span class="p">()]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>opt_weight = weights[accuracies.argmax()]
 
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">accuracies</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">opt_weight</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;optimal weight&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;accuracy&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;weights&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+f, ax = plt.subplots()
+ax.plot(weights, accuracies)
+ax.axvline(opt_weight, color=&quot;C1&quot;, label=&quot;optimal weight&quot;)
+ax.set_ylabel(&quot;accuracy&quot;)
+ax.set_xlabel(&quot;weights&quot;)
+ax.legend()
 </pre></div>
 </div>
 </div>
@@ -681,20 +691,20 @@ const thebe_selector_output = ".output, .cell_output"
 <p>We can now test the accuracy on the optimal value of the weights again to obtain.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">get_accuracy</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">opt_weight</span><span class="p">,</span> <span class="n">xvals</span><span class="o">=</span><span class="n">x_train</span><span class="p">,</span> <span class="n">yvals</span><span class="o">=</span><span class="n">y_train</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>accuracy, y_pred = get_accuracy(qc, weight=opt_weight, xvals=x_train, yvals=y_train)
 
-<span class="n">false_label</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_train</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+false_label = abs(y_pred - y_train) &gt; 0
 
-<span class="n">x_false</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
-<span class="n">y_false</span> <span class="o">=</span> <span class="n">y_pred</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
+x_false = x_train[false_label]
+y_false = y_pred[false_label]
 
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;predicted label&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_false</span><span class="p">,</span> <span class="n">y_false</span><span class="p">,</span> <span class="s2">&quot;ro&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;false label&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+f, ax = plt.subplots()
+ax.plot(x_train, y_pred, &quot;o&quot;, label=&quot;predicted label&quot;)
+ax.plot(x_false, y_false, &quot;ro&quot;, label=&quot;false label&quot;)
+ax.legend()
 
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The trained circuit has an accuracy of </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;The trained circuit has an accuracy of {accuracy:.2}&quot;)
 </pre></div>
 </div>
 </div>
@@ -711,20 +721,20 @@ const thebe_selector_output = ".output, .cell_output"
 <p>Having finished the training, we can test the circuit now on data points that it has never seen.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_accuracy</span><span class="p">,</span> <span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">get_accuracy</span><span class="p">(</span>
-    <span class="n">qc</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">opt_weight</span><span class="p">,</span> <span class="n">xvals</span><span class="o">=</span><span class="n">x_test</span><span class="p">,</span> <span class="n">yvals</span><span class="o">=</span><span class="n">y_test</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>test_accuracy, y_test_pred = get_accuracy(
+    qc, weight=opt_weight, xvals=x_test, yvals=y_test
+)
 
-<span class="n">false_label</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y_test_pred</span> <span class="o">-</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+false_label = abs(y_test_pred - y_test) &gt; 0
 
-<span class="n">x_false</span> <span class="o">=</span> <span class="n">x_test</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
-<span class="n">y_false</span> <span class="o">=</span> <span class="n">y_test_pred</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
+x_false = x_test[false_label]
+y_false = y_test_pred[false_label]
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The circuit has a test accuracy of </span><span class="si">{</span><span class="n">test_accuracy</span><span class="si">:</span><span class="s2">.2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;predicted label&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_false</span><span class="p">,</span> <span class="n">y_false</span><span class="p">,</span> <span class="s2">&quot;ro&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;false label&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+print(f&quot;The circuit has a test accuracy of {test_accuracy:.2}&quot;)
+f, ax = plt.subplots()
+ax.plot(x_test, y_test_pred, &quot;o&quot;, label=&quot;predicted label&quot;)
+ax.plot(x_false, y_false, &quot;ro&quot;, label=&quot;false label&quot;)
+ax.legend()
 </pre></div>
 </div>
 </div>

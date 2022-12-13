@@ -215,6 +215,11 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/quantum_metrology.html">
+   Tutorial 2 - Quantum metrology
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../qtech_basics/bell_inequalities.html">
    Tutorial on the nobel prize 2022 - How to win Bell’s game
   </a>
@@ -249,6 +254,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../hardware_tutorial/quantum_hardware_104.html">
    Tutorial 4 - A few words about quantum computing with superconducting qubits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_105.html">
+   Tutorial 5 -Quantum simulation with cold atoms
   </a>
  </li>
 </ul>
@@ -453,26 +463,26 @@ const thebe_selector_output = ".output, .cell_output"
 <p>For simplicity we will start out with a simple problem, where each data set has only a single variable and extend it later to higher dimensional data sets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from typing import Union, List
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+import numpy as np
+import matplotlib.pyplot as plt
 
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+from tqdm import tqdm
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span>  <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>np.random.seed(1)
+x = np.random.uniform(-np.pi, np.pi, 100)
+y = 1.0* (x &lt;  1)
 
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;input value $x_i$&quot;</span><span class="p">);</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;label $y_i$&quot;</span><span class="p">);</span>
+f, ax = plt.subplots()
+ax.plot(x, y, &quot;o&quot;)
+ax.set_xlabel(r&quot;input value $x_i$&quot;);
+ax.set_ylabel(r&quot;label $y_i$&quot;);
 </pre></div>
 </div>
 </div>
@@ -488,26 +498,26 @@ const thebe_selector_output = ".output, .cell_output"
 <p>The usual problem is here to find a good balance between a sufficient amount of training data, yet leaving enough test data to have a statistically significant test.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import train_test_split
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>x_train, x_test, y_train, y_test = train_test_split(
+    x, y, test_size=0.20, random_state=42
+)
 
-<span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;input value&quot;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot; given labels&quot;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;training data&quot;</span><span class="p">)</span>
+f, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 5), sharex=True, sharey=True)
+ax1.plot(x_train, y_train, &quot;o&quot;)
+ax1.set_xlabel(&quot;input value&quot;)
+ax1.set_ylabel(&quot; given labels&quot;)
+ax1.set_title(&quot;training data&quot;)
 
-<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;input value&quot;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;test data&quot;</span><span class="p">)</span>
+ax2.plot(x_test, y_test, &quot;o&quot;)
+ax2.set_xlabel(&quot;input value&quot;)
+ax2.set_title(&quot;test data&quot;)
 </pre></div>
 </div>
 </div>
@@ -535,15 +545,15 @@ p(x) = \frac{1}{1+e^{-(W\cdot x+b)}}
 <p>Below you can find a general example of such a logistic regression.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weight</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">bias</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>weight = 3
+bias = 1
 
-<span class="n">y_log</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">weight</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">bias</span><span class="p">)))</span>
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_log</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x_i&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;p(x)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;logistic regression&quot;</span><span class="p">);</span>
+y_log = 1/(1+np.exp(-(weight*x+bias)))
+f, ax = plt.subplots()
+ax.plot(x, y_log, &#39;o&#39;)
+ax.set_xlabel(&#39;x_i&#39;)
+ax.set_ylabel(&#39;p(x)&#39;)
+ax.set_title(&quot;logistic regression&quot;);
 </pre></div>
 </div>
 </div>
@@ -554,29 +564,29 @@ p(x) = \frac{1}{1+e^{-(W\cdot x+b)}}
 <p>We can use this logistic regression for labelling, but simply deciding that the label is 0, if <span class="math notranslate nohighlight">\(p(x) &lt;\frac{1}{2}\)</span> and and 1 if <span class="math notranslate nohighlight">\(p(x) &gt; \frac{1}{2}\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_accuracy</span><span class="p">(</span><span class="n">weight</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">bias</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">xvals</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">yvals</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculates the accuracy of the logistic regression for a given set of data.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def get_accuracy(weight: float, bias: float, xvals: List[float], yvals: List[int]
+) -&gt; Union[float, List[int]]:
+    &quot;&quot;&quot;
+    Calculates the accuracy of the logistic regression for a given set of data.
 
-<span class="sd">    Args:</span>
-<span class="sd">      weight: the training parameter for the weight</span>
-<span class="sd">      bias: the training parameter for the bias</span>
-<span class="sd">      xvals: the input values</span>
-<span class="sd">      yvals: the labels</span>
-<span class="sd">    Returns:</span>
-<span class="sd">      The accuracy and the predicted labels.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">pred_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xvals</span><span class="p">))</span>
-    <span class="n">accurate_prediction</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">xinput</span><span class="p">,</span> <span class="n">yinput</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xvals</span><span class="p">)),</span> <span class="n">xvals</span><span class="p">,</span> <span class="n">yvals</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)):</span>
-        <span class="c1"># set the circuit parameter</span>
-        <span class="n">y_log</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">weight</span><span class="o">*</span><span class="n">xinput</span><span class="o">+</span><span class="n">bias</span><span class="p">)))</span>
-        <span class="n">pred_label</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">*</span><span class="p">(</span><span class="n">y_log</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">pred_labels</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred_label</span>
-        <span class="k">if</span> <span class="n">yinput</span> <span class="o">==</span> <span class="n">pred_label</span><span class="p">:</span>
-            <span class="n">accurate_prediction</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">accurate_prediction</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">yvals</span><span class="p">),</span> <span class="n">pred_labels</span>
+    Args:
+      weight: the training parameter for the weight
+      bias: the training parameter for the bias
+      xvals: the input values
+      yvals: the labels
+    Returns:
+      The accuracy and the predicted labels.
+    &quot;&quot;&quot;
+    pred_labels = np.zeros(len(xvals))
+    accurate_prediction = 0
+    for ii, xinput, yinput in zip(range(len(xvals)), xvals, yvals.astype(int)):
+        # set the circuit parameter
+        y_log = 1/(1+np.exp(-(weight*xinput+bias)))
+        pred_label = 1.0*(y_log&gt;1/2)
+        pred_labels[ii] = pred_label
+        if yinput == pred_label:
+            accurate_prediction += 1
+    return accurate_prediction / len(yvals), pred_labels
 </pre></div>
 </div>
 </div>
@@ -584,20 +594,20 @@ p(x) = \frac{1}{1+e^{-(W\cdot x+b)}}
 <p>And now we can have a look at the labeling with some randomly guessed initial values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weight</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.8</span>
-<span class="n">bias</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">accuracy</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">get_accuracy</span><span class="p">(</span><span class="n">bias</span> <span class="o">=</span> <span class="n">bias</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">,</span> <span class="n">xvals</span><span class="o">=</span><span class="n">x_train</span><span class="p">,</span> <span class="n">yvals</span><span class="o">=</span><span class="n">y_train</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>weight = -0.8
+bias = 0
+accuracy, y_pred = get_accuracy(bias = bias, weight=weight, xvals=x_train, yvals=y_train)
 
-<span class="n">false_label</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_train</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+false_label = abs(y_pred - y_train) &gt; 0
 
-<span class="n">x_false</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
-<span class="n">y_false</span> <span class="o">=</span> <span class="n">y_pred</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
+x_false = x_train[false_label]
+y_false = y_pred[false_label]
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The circuit has an accuracy of </span><span class="si">{</span><span class="n">accuracy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;predicted label&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_false</span><span class="p">,</span> <span class="n">y_false</span><span class="p">,</span> <span class="s2">&quot;ro&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;false label&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+print(f&quot;The circuit has an accuracy of {accuracy}&quot;)
+f, ax = plt.subplots()
+ax.plot(x_train, y_pred, &quot;o&quot;, label=&quot;predicted label&quot;)
+ax.plot(x_false, y_false, &quot;ro&quot;, label=&quot;false label&quot;)
+ax.legend()
 </pre></div>
 </div>
 </div>
@@ -618,15 +628,15 @@ p(x) = \frac{1}{1+e^{-(W\cdot x+b)}}
 <p>To improve the performance of the circuit, we have to train it. This basically involves the minimization of some loss function as a function of the circuit parameters <span class="math notranslate nohighlight">\(W\)</span> and <span class="math notranslate nohighlight">\(b\)</span>. In this example, we can simply calculate the accuracy of the circuit as a function of the bias and obtain its minimimum.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weight</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>weight = -1
 
-<span class="n">Nbias</span> <span class="o">=</span> <span class="mi">101</span>
-<span class="n">biases</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">Nbias</span><span class="p">)</span>
-<span class="n">accuracies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Nbias</span><span class="p">)</span>
+Nbias = 101
+biases = np.linspace(-2, 2, Nbias)
+accuracies = np.zeros(Nbias)
 
-<span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">bias_val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tqdm</span><span class="p">(</span><span class="n">biases</span><span class="p">)):</span>
-    <span class="n">accuracy</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">get_accuracy</span><span class="p">(</span><span class="n">bias</span> <span class="o">=</span> <span class="n">bias_val</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">,</span> <span class="n">xvals</span><span class="o">=</span><span class="n">x_train</span><span class="p">,</span> <span class="n">yvals</span><span class="o">=</span><span class="n">y_train</span><span class="p">)</span>
-    <span class="n">accuracies</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">accuracy</span>
+for ii, bias_val in enumerate(tqdm(biases)):
+    accuracy, y_pred = get_accuracy(bias = bias_val, weight=weight, xvals=x_train, yvals=y_train)
+    accuracies[ii] = accuracy
 </pre></div>
 </div>
 </div>
@@ -638,14 +648,14 @@ p(x) = \frac{1}{1+e^{-(W\cdot x+b)}}
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">opt_bias</span> <span class="o">=</span> <span class="n">biases</span><span class="p">[</span><span class="n">accuracies</span><span class="o">.</span><span class="n">argmax</span><span class="p">()]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>opt_bias = biases[accuracies.argmax()]
 
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">biases</span><span class="p">,</span> <span class="n">accuracies</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">opt_bias</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;optimal bias&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;accuracy&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;biases&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+f, ax = plt.subplots()
+ax.plot(biases, accuracies)
+ax.axvline(opt_bias, color=&quot;C1&quot;, label=&quot;optimal bias&quot;)
+ax.set_ylabel(&quot;accuracy&quot;)
+ax.set_xlabel(&quot;biases&quot;)
+ax.legend()
 </pre></div>
 </div>
 </div>
@@ -659,20 +669,20 @@ p(x) = \frac{1}{1+e^{-(W\cdot x+b)}}
 <p>We clearly identify a optimal value for the bias at which the accuracy is maximal. This allows to test the accuracy on the optimal value of the weights again to obtain.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">get_accuracy</span><span class="p">(</span><span class="n">bias</span> <span class="o">=</span> <span class="n">opt_bias</span> <span class="p">,</span> <span class="n">weight</span><span class="o">=</span> <span class="n">weight</span><span class="p">,</span> <span class="n">xvals</span><span class="o">=</span><span class="n">x_train</span><span class="p">,</span> <span class="n">yvals</span><span class="o">=</span><span class="n">y_train</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>accuracy, y_pred = get_accuracy(bias = opt_bias , weight= weight, xvals=x_train, yvals=y_train)
 
-<span class="n">false_label</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_train</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+false_label = abs(y_pred - y_train) &gt; 0
 
-<span class="n">x_false</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
-<span class="n">y_false</span> <span class="o">=</span> <span class="n">y_pred</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
+x_false = x_train[false_label]
+y_false = y_pred[false_label]
 
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;predicted label&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_false</span><span class="p">,</span> <span class="n">y_false</span><span class="p">,</span> <span class="s2">&quot;ro&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;false label&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+f, ax = plt.subplots()
+ax.plot(x_train, y_pred, &quot;o&quot;, label=&quot;predicted label&quot;)
+ax.plot(x_false, y_false, &quot;ro&quot;, label=&quot;false label&quot;)
+ax.legend()
 
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The trained circuit has an accuracy of </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;The trained circuit has an accuracy of {accuracy:.2}&quot;)
 </pre></div>
 </div>
 </div>
@@ -689,20 +699,20 @@ p(x) = \frac{1}{1+e^{-(W\cdot x+b)}}
 <p>Having finished the training, we can test the circuit now on data points that it has never seen.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_accuracy</span><span class="p">,</span> <span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">get_accuracy</span><span class="p">(</span>
-    <span class="n">bias</span> <span class="o">=</span> <span class="n">opt_bias</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">,</span> <span class="n">xvals</span><span class="o">=</span><span class="n">x_test</span><span class="p">,</span> <span class="n">yvals</span><span class="o">=</span><span class="n">y_test</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>test_accuracy, y_test_pred = get_accuracy(
+    bias = opt_bias, weight=weight, xvals=x_test, yvals=y_test
+)
 
-<span class="n">false_label</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y_test_pred</span> <span class="o">-</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+false_label = abs(y_test_pred - y_test) &gt; 0
 
-<span class="n">x_false</span> <span class="o">=</span> <span class="n">x_test</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
-<span class="n">y_false</span> <span class="o">=</span> <span class="n">y_test_pred</span><span class="p">[</span><span class="n">false_label</span><span class="p">]</span>
+x_false = x_test[false_label]
+y_false = y_test_pred[false_label]
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The circuit has a test accuracy of </span><span class="si">{</span><span class="n">test_accuracy</span><span class="si">:</span><span class="s2">.2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;predicted label&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_false</span><span class="p">,</span> <span class="n">y_false</span><span class="p">,</span> <span class="s2">&quot;ro&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;false label&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+print(f&quot;The circuit has a test accuracy of {test_accuracy:.2}&quot;)
+f, ax = plt.subplots()
+ax.plot(x_test, y_test_pred, &quot;o&quot;, label=&quot;predicted label&quot;)
+ax.plot(x_false, y_false, &quot;ro&quot;, label=&quot;false label&quot;)
+ax.legend();
 </pre></div>
 </div>
 </div>

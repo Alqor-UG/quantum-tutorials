@@ -90,7 +90,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Course summary for introduction to quantum hardware" href="../hardware_tutorial/qhw_intro.html" />
-    <link rel="prev" title="Tutorial 1 - Basic concepts of quantum technologies" href="qtech_intro.html" />
+    <link rel="prev" title="Tutorial 2 - Quantum metrology" href="quantum_metrology.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -214,6 +214,11 @@ const thebe_selector_output = ".output, .cell_output"
    Tutorial 1 - Basic concepts of quantum technologies
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantum_metrology.html">
+   Tutorial 2 - Quantum metrology
+  </a>
+ </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Tutorial on the nobel prize 2022 - How to win Bell’s game
@@ -249,6 +254,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../hardware_tutorial/quantum_hardware_104.html">
    Tutorial 4 - A few words about quantum computing with superconducting qubits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_105.html">
+   Tutorial 5 -Quantum simulation with cold atoms
   </a>
  </li>
 </ul>
@@ -453,14 +463,14 @@ const thebe_selector_output = ".output, .cell_output"
 <p>To make the discussion very direct and hands-on we will implement it in some simple <code class="docutils literal notranslate"><span class="pre">qiskit</span></code> circuits such that you can test them directly on your own.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import random
 
-<span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span>
-<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">Aer</span>
+from qiskit.circuit import QuantumCircuit
+from qiskit import Aer
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">trange</span>
+import numpy as np
+import matplotlib.pyplot as plt
+from tqdm import trange
 </pre></div>
 </div>
 </div>
@@ -480,29 +490,29 @@ const thebe_selector_output = ".output, .cell_output"
 <p>Let us simply translate these rules into python code.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bell_game</span><span class="p">(</span><span class="n">color_a</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">color_b</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">choice_a</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">choice_b</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The bell casino game translated into python</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def bell_game(color_a: str, color_b: str, choice_a: str, choice_b: str) -&gt; str:
+    &quot;&quot;&quot;
+    The bell casino game translated into python
 
-<span class="sd">    Args:</span>
-<span class="sd">      color_a: the color that Alice sees (either `black` or `white`)</span>
-<span class="sd">      color_b: the color that Alice sees (either `black` or `white`)</span>
-<span class="sd">      choice_a: the choice the Alice makes (`keep` or `sell`)</span>
-<span class="sd">      choice_b: the choice the Bob makes (`keep` or `sell`)</span>
+    Args:
+      color_a: the color that Alice sees (either `black` or `white`)
+      color_b: the color that Alice sees (either `black` or `white`)
+      choice_a: the choice the Alice makes (`keep` or `sell`)
+      choice_b: the choice the Bob makes (`keep` or `sell`)
 
-<span class="sd">    Returns:</span>
-<span class="sd">      A sring that says if Alice and Bob &quot;won&quot; or &quot;lost&quot;</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># the one case where Alice and Bob have to have different results</span>
-    <span class="k">if</span> <span class="n">color_a</span> <span class="o">==</span> <span class="s2">&quot;white&quot;</span> <span class="ow">and</span> <span class="n">color_b</span> <span class="o">==</span> <span class="s2">&quot;white&quot;</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">choice_a</span> <span class="o">==</span> <span class="s2">&quot;keep&quot;</span> <span class="ow">and</span> <span class="n">choice_b</span> <span class="o">==</span> <span class="s2">&quot;sell&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;won&quot;</span>
-        <span class="k">if</span> <span class="n">choice_a</span> <span class="o">==</span> <span class="s2">&quot;sell&quot;</span> <span class="ow">and</span> <span class="n">choice_b</span> <span class="o">==</span> <span class="s2">&quot;keep&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;won&quot;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">choice_a</span> <span class="o">==</span> <span class="n">choice_b</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;won&quot;</span>
-    <span class="k">return</span> <span class="s2">&quot;lost&quot;</span>
+    Returns:
+      A sring that says if Alice and Bob &quot;won&quot; or &quot;lost&quot;
+    &quot;&quot;&quot;
+    # the one case where Alice and Bob have to have different results
+    if color_a == &quot;white&quot; and color_b == &quot;white&quot;:
+        if choice_a == &quot;keep&quot; and choice_b == &quot;sell&quot;:
+            return &quot;won&quot;
+        if choice_a == &quot;sell&quot; and choice_b == &quot;keep&quot;:
+            return &quot;won&quot;
+    else:
+        if choice_a == choice_b:
+            return &quot;won&quot;
+    return &quot;lost&quot;
 </pre></div>
 </div>
 </div>
@@ -513,28 +523,28 @@ const thebe_selector_output = ".output, .cell_output"
 <p>It turns out that the best way to win for Alice and Bob is to cooperate and decide before if they would like to “keep” or “sell” the watch. Then they will get their wish in 75% of the cases and only lose if both see a white watch. We can even simulate this casino session in simple python code</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_games</span> <span class="o">=</span> <span class="mi">10000</span>
-<span class="n">wins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_games</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n_games = 10000
+wins = np.zeros(n_games)
 
-<span class="c1"># Alice and Bob decided to cooperate and always say &quot;sell&quot;</span>
-<span class="n">choice_alice</span> <span class="o">=</span> <span class="s2">&quot;sell&quot;</span>
-<span class="n">choice_bob</span> <span class="o">=</span> <span class="s2">&quot;sell&quot;</span>
+# Alice and Bob decided to cooperate and always say &quot;sell&quot;
+choice_alice = &quot;sell&quot;
+choice_bob = &quot;sell&quot;
 
-<span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_games</span><span class="p">):</span>
+for ii in range(n_games):
 
-    <span class="c1"># get the colors</span>
-    <span class="n">color_alice</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">])</span>
-    <span class="n">color_bob</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">])</span>
+    # get the colors
+    color_alice = random.choice([&quot;black&quot;, &quot;white&quot;])
+    color_bob = random.choice([&quot;black&quot;, &quot;white&quot;])
 
-    <span class="n">result</span> <span class="o">=</span> <span class="n">bell_game</span><span class="p">(</span><span class="n">color_alice</span><span class="p">,</span> <span class="n">color_bob</span><span class="p">,</span> <span class="n">choice_alice</span><span class="p">,</span> <span class="n">choice_bob</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;won&quot;</span><span class="p">:</span>
-        <span class="n">wins</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    result = bell_game(color_alice, color_bob, choice_alice, choice_bob)
+    if result == &quot;won&quot;:
+        wins[ii] = 1
 
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Alice and Bob won </span><span class="si">{}</span><span class="s2"> games out of </span><span class="si">{}</span><span class="s2">. Hence a win rate of </span><span class="si">{:.2f}</span><span class="s2"> %&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-        <span class="n">wins</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">n_games</span><span class="p">,</span> <span class="n">wins</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">n_games</span> <span class="o">*</span> <span class="mi">100</span>
-    <span class="p">)</span>
-<span class="p">)</span>
+print(
+    &quot;Alice and Bob won {} games out of {}. Hence a win rate of {:.2f} %&quot;.format(
+        wins.sum(), n_games, wins.sum() / n_games * 100
+    )
+)
 </pre></div>
 </div>
 </div>
@@ -547,14 +557,14 @@ const thebe_selector_output = ".output, .cell_output"
 <p>We can see this makes the game fair as Bob and Alice have an expectation value of exactly 300€, so the casino and the players will have just an enjoyable time if we look at the wins and losses over the games.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">profit</span> <span class="o">=</span> <span class="n">wins</span> <span class="o">*</span> <span class="mi">400</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_games</span><span class="p">)</span> <span class="o">*</span> <span class="mi">300</span>
-<span class="n">accu_profit</span> <span class="o">=</span> <span class="n">profit</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>profit = wins * 400 - np.ones(n_games) * 300
+accu_profit = profit.cumsum()
 
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">accu_profit</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;profit in €&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;number of games&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+f, ax = plt.subplots()
+ax.plot(accu_profit)
+ax.set_ylabel(&quot;profit in €&quot;)
+ax.set_xlabel(&quot;number of games&quot;)
+ax.axhline(0, color=&quot;k&quot;)
 </pre></div>
 </div>
 </div>
@@ -571,12 +581,12 @@ const thebe_selector_output = ".output, .cell_output"
 <p>Quite interestingly Alice and Bob could win more often if they have access to quantum technologies. So we just assume that Alice and Bob are really good techies and had access to a quantum computer, which allows them to entangle two qubits. Let us first plot up the kind of instructions that Alice and Bob have to give the quantum computer to obtain the entangled pair.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sim</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s2">&quot;aer_simulator&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sim = Aer.get_backend(&quot;aer_simulator&quot;)
 
-<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+qc = QuantumCircuit(2)
+qc.h(0)
+qc.cx(0, 1)
+qc.draw(&quot;mpl&quot;)
 </pre></div>
 </div>
 </div>
@@ -597,41 +607,41 @@ const thebe_selector_output = ".output, .cell_output"
 <p>We can just implement this once as a <code class="docutils literal notranslate"><span class="pre">qiskit</span></code> circuit and look at the result.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_games</span> <span class="o">=</span> <span class="mi">10000</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n_games = 10000
 
-<span class="n">naive_q_wins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_games</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">trange</span><span class="p">(</span><span class="n">n_games</span><span class="p">):</span>
+naive_q_wins = np.zeros(n_games)
+for ii in trange(n_games):
 
-    <span class="n">color_alice</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">])</span>
-    <span class="n">color_bob</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">])</span>
+    color_alice = random.choice([&quot;black&quot;, &quot;white&quot;])
+    color_bob = random.choice([&quot;black&quot;, &quot;white&quot;])
 
-    <span class="c1"># time to prepare the Bell pair</span>
-    <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    # time to prepare the Bell pair
+    qc = QuantumCircuit(2)
+    qc.h(0)
+    qc.cx(0, 1)
 
-    <span class="c1"># both measure</span>
-    <span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+    # both measure
+    qc.measure_all()
 
-    <span class="c1"># now run the circuit</span>
-    <span class="n">job</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">outcome</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+    # now run the circuit
+    job = sim.run(qc, shots=1)
+    outcome = job.result().get_counts()
 
-    <span class="c1"># a horribly intransparent way to get the value of the outcome</span>
-    <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="n">outcome</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">choice_alice</span> <span class="o">=</span> <span class="s2">&quot;sell&quot;</span> <span class="k">if</span> <span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span> <span class="k">else</span> <span class="s2">&quot;keep&quot;</span>
-    <span class="n">choice_bob</span> <span class="o">=</span> <span class="s2">&quot;sell&quot;</span> <span class="k">if</span> <span class="n">keys</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span> <span class="k">else</span> <span class="s2">&quot;keep&quot;</span>
+    # a horribly intransparent way to get the value of the outcome
+    keys = [*outcome][0]
+    choice_alice = &quot;sell&quot; if keys[0] == &quot;0&quot; else &quot;keep&quot;
+    choice_bob = &quot;sell&quot; if keys[1] == &quot;0&quot; else &quot;keep&quot;
 
-    <span class="n">result</span> <span class="o">=</span> <span class="n">bell_game</span><span class="p">(</span><span class="n">color_alice</span><span class="p">,</span> <span class="n">color_bob</span><span class="p">,</span> <span class="n">choice_alice</span><span class="p">,</span> <span class="n">choice_bob</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;won&quot;</span><span class="p">:</span>
-        <span class="n">naive_q_wins</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    result = bell_game(color_alice, color_bob, choice_alice, choice_bob)
+    if result == &quot;won&quot;:
+        naive_q_wins[ii] = 1
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Alice and Bob won </span><span class="si">{}</span><span class="s2"> games out of </span><span class="si">{}</span><span class="s2">. Hence a win rate of </span><span class="si">{:.2f}</span><span class="s2"> %&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-        <span class="n">naive_q_wins</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">n_games</span><span class="p">,</span> <span class="n">naive_q_wins</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">n_games</span> <span class="o">*</span> <span class="mi">100</span>
-    <span class="p">)</span>
-<span class="p">)</span>
+print(&quot;&quot;)
+print(
+    &quot;Alice and Bob won {} games out of {}. Hence a win rate of {:.2f} %&quot;.format(
+        naive_q_wins.sum(), n_games, naive_q_wins.sum() / n_games * 100
+    )
+)
 </pre></div>
 </div>
 </div>
@@ -664,54 +674,54 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_games</span> <span class="o">=</span> <span class="mi">10000</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n_games = 10000
 
-<span class="n">fancy_q_wins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_games</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">trange</span><span class="p">(</span><span class="n">n_games</span><span class="p">):</span>
+fancy_q_wins = np.zeros(n_games)
+for ii in trange(n_games):
 
-    <span class="c1"># get the numbers that tell us if Alice and Bob obtained</span>
-    <span class="c1"># a white or a black watch</span>
-    <span class="n">color_alice</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">])</span>
-    <span class="n">color_bob</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">])</span>
+    # get the numbers that tell us if Alice and Bob obtained
+    # a white or a black watch
+    color_alice = random.choice([&quot;black&quot;, &quot;white&quot;])
+    color_bob = random.choice([&quot;black&quot;, &quot;white&quot;])
 
-    <span class="c1"># time to prepare the Bell pair</span>
-    <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    # time to prepare the Bell pair
+    qc = QuantumCircuit(2)
+    qc.h(0)
+    qc.cx(0, 1)
 
-    <span class="c1"># Alice acts her qubit</span>
-    <span class="k">if</span> <span class="n">color_alice</span> <span class="o">==</span> <span class="s2">&quot;white&quot;</span><span class="p">:</span>
-        <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    # Alice acts her qubit
+    if color_alice == &quot;white&quot;:
+        qc.h(0)
 
-    <span class="c1"># Bob acts on his qubit</span>
-    <span class="k">if</span> <span class="n">color_bob</span> <span class="o">==</span> <span class="s2">&quot;white&quot;</span><span class="p">:</span>
-        <span class="n">qc</span><span class="o">.</span><span class="n">ry</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">qc</span><span class="o">.</span><span class="n">ry</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    # Bob acts on his qubit
+    if color_bob == &quot;white&quot;:
+        qc.ry(np.pi / 8, 1)
+    else:
+        qc.ry(-np.pi / 8, 1)
 
-    <span class="c1"># both measure</span>
-    <span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+    # both measure
+    qc.measure_all()
 
-    <span class="c1"># now run the circuit</span>
-    <span class="n">job</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">outcome</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;lost&quot;</span>
+    # now run the circuit
+    job = sim.run(qc, shots=1)
+    outcome = job.result().get_counts()
+    result = &quot;lost&quot;
 
-    <span class="c1"># a horribly intransparent way to get the value of the outcome</span>
-    <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="n">outcome</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">choice_alice</span> <span class="o">=</span> <span class="s2">&quot;sell&quot;</span> <span class="k">if</span> <span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span> <span class="k">else</span> <span class="s2">&quot;keep&quot;</span>
-    <span class="n">choice_bob</span> <span class="o">=</span> <span class="s2">&quot;sell&quot;</span> <span class="k">if</span> <span class="n">keys</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span> <span class="k">else</span> <span class="s2">&quot;keep&quot;</span>
+    # a horribly intransparent way to get the value of the outcome
+    keys = [*outcome][0]
+    choice_alice = &quot;sell&quot; if keys[0] == &quot;0&quot; else &quot;keep&quot;
+    choice_bob = &quot;sell&quot; if keys[1] == &quot;0&quot; else &quot;keep&quot;
 
-    <span class="n">result</span> <span class="o">=</span> <span class="n">bell_game</span><span class="p">(</span><span class="n">color_alice</span><span class="p">,</span> <span class="n">color_bob</span><span class="p">,</span> <span class="n">choice_alice</span><span class="p">,</span> <span class="n">choice_bob</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;won&quot;</span><span class="p">:</span>
-        <span class="n">fancy_q_wins</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    result = bell_game(color_alice, color_bob, choice_alice, choice_bob)
+    if result == &quot;won&quot;:
+        fancy_q_wins[ii] = 1
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Alice and Bob won </span><span class="si">{}</span><span class="s2"> games out of </span><span class="si">{}</span><span class="s2">. Hence a win rate of </span><span class="si">{:.2f}</span><span class="s2"> %&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-        <span class="n">fancy_q_wins</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">n_games</span><span class="p">,</span> <span class="n">fancy_q_wins</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">n_games</span> <span class="o">*</span> <span class="mi">100</span>
-    <span class="p">)</span>
-<span class="p">)</span>
+print(&quot;&quot;)
+print(
+    &quot;Alice and Bob won {} games out of {}. Hence a win rate of {:.2f} %&quot;.format(
+        fancy_q_wins.sum(), n_games, fancy_q_wins.sum() / n_games * 100
+    )
+)
 </pre></div>
 </div>
 </div>
@@ -729,17 +739,17 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fancy_profit</span> <span class="o">=</span> <span class="n">fancy_q_wins</span> <span class="o">*</span> <span class="mi">400</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_games</span><span class="p">)</span> <span class="o">*</span> <span class="mi">300</span>
-<span class="n">fancy_accu_profit</span> <span class="o">=</span> <span class="n">fancy_profit</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fancy_profit = fancy_q_wins * 400 - np.ones(n_games) * 300
+fancy_accu_profit = fancy_profit.cumsum()
 
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">accu_profit</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;classical tech&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fancy_accu_profit</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;quantum tech&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;profit in €&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;number of games&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_games</span><span class="p">)</span>
+f, ax = plt.subplots()
+ax.plot(accu_profit, label=&quot;classical tech&quot;, lw=3, alpha=0.5)
+ax.plot(fancy_accu_profit, label=&quot;quantum tech&quot;, lw=3)
+ax.axhline(0, color=&quot;k&quot;)
+ax.set_ylabel(&quot;profit in €&quot;)
+ax.set_xlabel(&quot;number of games&quot;)
+ax.legend()
+ax.set_xlim(0, n_games)
 </pre></div>
 </div>
 </div>
@@ -784,11 +794,11 @@ const thebe_selector_output = ".output, .cell_output"
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="qtech_intro.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="quantum_metrology.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Tutorial 1 - Basic concepts of quantum technologies</p>
+            <p class="prev-next-title">Tutorial 2 - Quantum metrology</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="../hardware_tutorial/qhw_intro.html" title="next page">

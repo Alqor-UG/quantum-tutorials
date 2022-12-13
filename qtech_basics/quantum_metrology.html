@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Course summary for introduction to quantum technologies &#8212; Quantum Tutorials</title>
+    <title>Tutorial 2 - Quantum metrology &#8212; Quantum Tutorials</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -85,10 +85,12 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Tutorial 1 - Basic concepts of quantum technologies" href="qtech_intro.html" />
-    <link rel="prev" title="Tutorial 4 – A trained generative model with a few qubits" href="../generative_modeling/generative_modeling_104.html" />
+    <link rel="next" title="Tutorial on the nobel prize 2022 - How to win Bell’s game" href="bell_inequalities.html" />
+    <link rel="prev" title="Tutorial 1 - Basic concepts of quantum technologies" href="qtech_intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -202,8 +204,8 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="qtech_summary.html">
    Course summary for introduction to quantum technologies
   </a>
  </li>
@@ -212,8 +214,8 @@ const thebe_selector_output = ".output, .cell_output"
    Tutorial 1 - Basic concepts of quantum technologies
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="quantum_metrology.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Tutorial 2 - Quantum metrology
   </a>
  </li>
@@ -300,7 +302,7 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/qtech_basics/qtech_summary.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/qtech_basics/quantum_metrology.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -320,7 +322,7 @@ const thebe_selector_output = ".output, .cell_output"
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/Alqor-UG/quantum-tutorials/issues/new?title=Issue%20on%20page%20%2Fqtech_basics/qtech_summary.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/Alqor-UG/quantum-tutorials/issues/new?title=Issue%20on%20page%20%2Fqtech_basics/quantum_metrology.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -347,8 +349,28 @@ const thebe_selector_output = ".output, .cell_output"
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#requirements">
-   Requirements
+  <a class="reference internal nav-link" href="#measuring-time-with-atomic-clocks">
+   Measuring time with atomic clocks
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-do-atomic-clocks-roughly">
+   How do atomic clocks roughly ?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#measuring-magnetic-fields">
+   Measuring magnetic fields
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#measuring-forces">
+   Measuring forces
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
   </a>
  </li>
 </ul>
@@ -361,7 +383,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Course summary for introduction to quantum technologies</h1>
+                <h1>Tutorial 2 - Quantum metrology</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -372,8 +394,28 @@ const thebe_selector_output = ".output, .cell_output"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#requirements">
-   Requirements
+  <a class="reference internal nav-link" href="#measuring-time-with-atomic-clocks">
+   Measuring time with atomic clocks
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-do-atomic-clocks-roughly">
+   How do atomic clocks roughly ?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#measuring-magnetic-fields">
+   Measuring magnetic fields
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#measuring-forces">
+   Measuring forces
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
   </a>
  </li>
 </ul>
@@ -385,12 +427,49 @@ const thebe_selector_output = ".output, .cell_output"
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="course-summary-for-introduction-to-quantum-technologies">
-<h1>Course summary for introduction to quantum technologies<a class="headerlink" href="#course-summary-for-introduction-to-quantum-technologies" title="Permalink to this headline">¶</a></h1>
-<p>The hipster role is rather new to the quantum sector which has largely evolved under the radar to the greater public for the last one hundred years. To bring this into context, we will summarize some basic concepts of quantum physics and then  discuss the four pillars of quantum technologies. Finishing this series of tutorials, will provide you a better background on large government programs like the European flagship on quantum technologies.</p>
-<div class="section" id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<p>The whole course will be conducted without the need of any math or programming skills. We therefore think that it should be the most accessible to the broader public.</p>
+  <div class="tex2jax_ignore mathjax_ignore section" id="tutorial-2-quantum-metrology">
+<h1>Tutorial 2 - Quantum metrology<a class="headerlink" href="#tutorial-2-quantum-metrology" title="Permalink to this headline">¶</a></h1>
+<p>Welcome back to our second lesson on quantum technologies. In this lesson, we will discuss how quantum systems are used for precise measurements in a variety of situations. We saw in the last lesson, that quantum physics was initially developed to explain some observations in the laboratory. However, in the 1960s and 1970s more and more lasers became accessible as a new tool for experimental physicists. They allowed brave pioneers to cool and trap individual particles. This work was purely curiosity-driven and was launched in a tiny number of university and government laboratories. It suddenly allowed people like Dave Wineland, Bill Phillipps or Claude Cohen-Tannoudji a previously unimaginable degree of control over atoms and ions. This kind of work had such an important impact on physics that it was recognized with several nobel prizes and is now used to define our measurement units like the second, the meter etc.</p>
+<p>We will go through three specific examples and see how quantum technologies are used there.</p>
+<ol class="simple">
+<li><p>The measurement of time is nowadays done with atomic clocks and so precise that clocks can be used for the measurement of height.</p></li>
+<li><p>The measurement of magnetic fields is getting more and more precise thanks to quantum technologies. We are now even able to measure the magnetic fields that are created by brain activity.</p></li>
+<li><p>Measurement of forces are essential for navigation of planes and large ships. Quantum technologies are an essential tool to improve these measurement to a stage where satellites are not needed anymore.</p></li>
+</ol>
+<div class="section" id="measuring-time-with-atomic-clocks">
+<h2>Measuring time with atomic clocks<a class="headerlink" href="#measuring-time-with-atomic-clocks" title="Permalink to this headline">¶</a></h2>
+<p>Precise time keeping is essential to mondern industry. Financial services are highly timed, navigation depends on the precise timing of the GPS satellites and we are all following the same time of the network time protocol. And nowadays time is kept with increasingly precise atomic clocks, which are one of the earliest quantum technologies we have. A few reasons which atomic clocks are such marvelous time keepers are:</p>
+<ul class="simple">
+<li><p>No need to get the american, chinese or european atom as they are all equal. Once we agreed with other how we measure time with atoms we all have exactly the tools at hand.</p></li>
+<li><p>Atomic clocks a extremely precise. Commercially available rubidium clocks (for a few thousand euros) are precise to within 10^{-11}. Modern research has push this to 10^{-21} as described in this paper.</p></li>
+</ul>
+</div>
+<div class="section" id="how-do-atomic-clocks-roughly">
+<h2>How do atomic clocks roughly ?<a class="headerlink" href="#how-do-atomic-clocks-roughly" title="Permalink to this headline">¶</a></h2>
+<p>You might have heard that atoms consist of a nucleus which is positively charged and a bunch of negatively charged electrons circling around this nucleus. And as for satellites that orbit around earth, their speed is different in different orbits. So, electrons that are closer to the core, in a lower orbit, take less time to circle around the core than electrons that that further away, in a higher orbit. And it was one of the first discoveries by quantum mechanics that only a number of very specific orbits with sharply defined frequencies are allowed.</p>
+<p><img alt="Atoms" src="../_images/AtomWithOrbits.png" /></p>
+<p>And then then electrons can then jump from one orbit to another if you shine in microwave radiation at the corresponding frequency. Yes, it is the same kind of radiation that heats up your food in the microwave oven. Except that here the radiation does not heat the atom it just makes the electron jump to another orbit. And this highly controlled transition of the electron between two orbits is what atomic clocks are building upon. Actually, we have now defined the second based on this idea. The definition reads:</p>
+<blockquote>
+<div><p>The second, symbol <span class="math notranslate nohighlight">\(s\)</span>, is the SI unit of time. It is defined by taking the fixed numerical value of the caesium frequency <span class="math notranslate nohighlight">\(\Delta \nu_\text{Cs}\)</span>, the unperturbed ground-state hyperfine transition frequency of the caesium-133 atom, to be 9 192 631 770 when expressed in the &gt; unit Hz, which is equal to <span class="math notranslate nohighlight">\(s^{-1}\)</span>.</p>
+<p>From the website of the <a class="reference external" href="https://www.bipm.org/en/si-base-units/second">bureau international des poids et des measures</a>.</p>
+</div></blockquote>
+<p>If you have some time, we also recommend you to have a look into the <a class="reference external" href="https://youtu.be/8WWQrD_TzaY">talk by Nobel prize Bill Philipps</a>, where he gives a highly entertaining introduction.</p>
+<p>A more scientific discussion can be found in this <a class="reference external" href="https://arxiv.org/abs/1407.3493">detailled review</a> paper.</p>
+</div>
+<div class="section" id="measuring-magnetic-fields">
+<h2>Measuring magnetic fields<a class="headerlink" href="#measuring-magnetic-fields" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/History_of_the_compass">Compasses</a> have been used for navigation of 2000 years now. This makes the measurement of magnetic field is one of the long standing tools of navigation that we have. And the precise measurement of magnetic fields remains a major industrial challenge, where the most precise magnetometers are nowadays based on quantum technologies. Most of them of a similar approach as they measure the influence of the magnetic field on electrons. The existence of the magnetic field slightly changes how the electrons would like to move. So looking back to the electrons in an atom, it means that the frequency of each orbit is shifted slightly. And as all the orbits are slightly different, each of them experiences a slightly different energy shift.</p>
+<p><img alt="AtomsWithField" src="../_images/AtomWithOrbitsUnderMagneticField.png" /></p>
+<p>We can measure this energy shifts very precisely. And hence we can use very precise frequency measurements for very precise magnetometry. They are nowadays pushing the frontiers of nanotechnology, brain studies and space science as you might read in <a class="reference external" href="https://arxiv.org/pdf/1905.00618.pdf">this review</a>. The described principle is not limited to atoms. Similiar approaches are used in magnetometers which are based on diamonds, commercialized by companies like <a class="reference external" href="https://wainvam-e.com/">Wainvam-e</a>, or superconducting loops, commercialized by companies like <a class="reference external" href="https://qd-europe.com/de/en/products/magnetism/magnetometers/">QuantumDesign</a>. The magnetic field always slightly shifts around a frequency and we measure this shift precisely.</p>
+</div>
+<div class="section" id="measuring-forces">
+<h2>Measuring forces<a class="headerlink" href="#measuring-forces" title="Permalink to this headline">¶</a></h2>
+<p>This kind of precision measurements is also available for the measurement of forces. Whenever, you change your speed or direction, this means that a force is applied onto you. So if you are able to precisely measure the forces that you experience at a certain moment in time, you always know where you are compared to your starting point. Suppose that you would like to take a ship that travels the Atlantic. Then you could theoretically do the whole travel only based on your force measurements. Unfortunately, these measurements have to be extremely precise and we currently have to rely on satellite navigation (which relies on atomic clocks).</p>
+<p>However, some well established companies like <a class="reference external" href="https://www.ixblue.com/quantum-gravimeter/">iXBlue</a> in France or <a class="reference external" href="https://aosense.com/">AOSense</a> in the US can offer ultraprecise sensors to their customers. These sensors are based on the <a class="reference external" href="https://www.ixblue.com/first-3-axis-quantum-inertial-sensor/">movement of ultracold atoms</a>. The sensing power is so high that it provides new possibilities for navigation of vessels that might have no access to satellite navigation, i.e. submarines. In other words, it makes for an interesting technology for the military which is one of the bigger investors and clients into quantum sensors. However, the hefty price tag and the close connection to military applications explain why this sector still remains fairly unknown to the public despite its clearly established use-cases and growing importance to various important industries.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In this lesson, we have discussed three very distinct examples of quantum metrology. We also discussed how this enables new industrial measurements already today. However, given the fairly high price of those tools, they are often only understood by a group of experts.</p>
 </div>
 </div>
 
@@ -419,17 +498,17 @@ const thebe_selector_output = ".output, .cell_output"
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="../generative_modeling/generative_modeling_104.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="qtech_intro.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Tutorial 4 – A trained generative model with a few qubits</p>
+            <p class="prev-next-title">Tutorial 1 - Basic concepts of quantum technologies</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="qtech_intro.html" title="next page">
+    <a class='right-next' id="next-link" href="bell_inequalities.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Tutorial 1 - Basic concepts of quantum technologies</p>
+        <p class="prev-next-title">Tutorial on the nobel prize 2022 - How to win Bell’s game</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

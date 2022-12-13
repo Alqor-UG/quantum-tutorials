@@ -215,6 +215,11 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/quantum_metrology.html">
+   Tutorial 2 - Quantum metrology
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../qtech_basics/bell_inequalities.html">
    Tutorial on the nobel prize 2022 - How to win Bell’s game
   </a>
@@ -249,6 +254,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="quantum_hardware_104.html">
    Tutorial 4 - A few words about quantum computing with superconducting qubits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantum_hardware_105.html">
+   Tutorial 5 -Quantum simulation with cold atoms
   </a>
  </li>
 </ul>
@@ -560,22 +570,22 @@ E_{\pm} = \pm\frac{\hbar}{2}\Omega\\
 \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+import numpy as np
 
-<span class="n">deltaMax</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">deltaMax</span><span class="p">,</span> <span class="n">deltaMax</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">omega</span> <span class="o">=</span> <span class="mi">1</span>
+deltaMax = 5
+delta = np.linspace(-deltaMax, deltaMax, 100)
+omega = 1
 
-<span class="n">Eplus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">omega</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
-<span class="n">Eminus</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">omega</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+Eplus = np.sqrt(delta**2+omega**2)/2
+Eminus = -np.sqrt(delta**2+omega**2)/2
 
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">Eplus</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$E_+$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">Eminus</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$E_+$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;detuning $\Delta$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;energy $E$&quot;</span><span class="p">);</span>
+f, ax = plt.subplots()
+ax.plot(delta, Eplus, label=&quot;$E_+$&quot;)
+ax.plot(delta, Eminus, label=&quot;$E_+$&quot;)
+ax.legend()
+ax.set_xlabel(&quot;detuning $\Delta$&quot;)
+ax.set_ylabel(&quot;energy $E$&quot;);
 </pre></div>
 </div>
 </div>
@@ -649,35 +659,35 @@ P_1(t)=\left|\langle 1|\psi(t)\rangle\right|^2.
 \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rabi_osc</span><span class="p">(</span><span class="n">time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">omega</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-  <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  time evolution in the Rabi oscillation</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def rabi_osc(time: float, omega: float, delta: float) -&gt; float:
+  &quot;&quot;&quot;
+  time evolution in the Rabi oscillation
 
-<span class="sd">  Args:</span>
-<span class="sd">    time: time at which we measure</span>
-<span class="sd">    omega: coupling strength</span>
-<span class="sd">    delta: detuning</span>
-<span class="sd">  </span>
-<span class="sd">  Returns:</span>
-<span class="sd">    float: probability to be in the excited state</span>
-<span class="sd">  &quot;&quot;&quot;</span>
-  <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="p">(</span><span class="n">delta</span><span class="o">/</span><span class="n">omega</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">omega</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">delta</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">time</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
-
-
-<span class="n">omega</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">1</span>
-<span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+  Args:
+    time: time at which we measure
+    omega: coupling strength
+    delta: detuning
+  
+  Returns:
+    float: probability to be in the excited state
+  &quot;&quot;&quot;
+  return 1/(1+(delta/omega)**2)*np.sin(np.sqrt(omega**2+delta**2)*time/2)**2
 
 
+omega = 2*np.pi*1
+time = np.linspace(0,2, 100)
 
-<span class="n">delta</span> <span class="o">=</span> <span class="mi">0</span>
 
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">rabi_osc</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;$\Delta = 0$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">rabi_osc</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">omega</span><span class="p">),</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;$\Delta = \Omega$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">rabi_osc</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="n">omega</span><span class="p">),</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;$\Delta = 10\cdot\Omega$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;time $t$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;probability $P_1$&quot;</span><span class="p">)</span>
+
+delta = 0
+
+f, ax = plt.subplots()
+ax.plot(time, rabi_osc(time, omega, 0), label = &quot;$\Delta = 0$&quot;)
+ax.plot(time, rabi_osc(time, omega, omega), label = &quot;$\Delta = \Omega$&quot;)
+ax.plot(time, rabi_osc(time, omega, 10*omega), label = &quot;$\Delta = 10\cdot\Omega$&quot;)
+ax.legend()
+ax.set_xlabel(&quot;time $t$&quot;)
+ax.set_ylabel(&quot;probability $P_1$&quot;)
 </pre></div>
 </div>
 </div>

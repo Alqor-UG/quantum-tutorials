@@ -215,6 +215,11 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/quantum_metrology.html">
+   Tutorial 2 - Quantum metrology
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../qtech_basics/bell_inequalities.html">
    Tutorial on the nobel prize 2022 - How to win Bell’s game
   </a>
@@ -249,6 +254,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../hardware_tutorial/quantum_hardware_104.html">
    Tutorial 4 - A few words about quantum computing with superconducting qubits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_105.html">
+   Tutorial 5 -Quantum simulation with cold atoms
   </a>
  </li>
 </ul>
@@ -452,11 +462,11 @@ The moving pieces are:</p>
 <p>Lets first install <strong>qiskit</strong> and import the necessary Python libraries.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+import matplotlib.pyplot as plt
 
-<span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span><span class="p">,</span> <span class="n">Parameter</span>
-<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">Aer</span>
+from qiskit.circuit import QuantumCircuit, Parameter
+from qiskit import Aer
 </pre></div>
 </div>
 </div>
@@ -466,17 +476,17 @@ The moving pieces are:</p>
 <p>In our <a class="reference internal" href="../beginner_qml/qml_101.html#qml101"><span class="std std-ref">Quantum Machine Learning Tutorial 101</span></a>, we presented this minimal example of a quantum circuit with one qubit and one parameter <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a symbolic parameter theta</span>
-<span class="n">theta</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\theta$&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># define a symbolic parameter theta
+theta = Parameter(r&quot;$\theta$&quot;)
 
-<span class="c1"># create a quantum circuit with one qubit</span>
-<span class="n">circuit</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="c1"># apply an X rotation with the symbolic parameter theta</span>
-<span class="n">circuit</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="c1"># define the measurement</span>
-<span class="n">circuit</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
-<span class="c1"># draw the resulting circuit</span>
-<span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+# create a quantum circuit with one qubit
+circuit = QuantumCircuit(1)
+# apply an X rotation with the symbolic parameter theta
+circuit.rx(theta, 0)
+# define the measurement
+circuit.measure_all()
+# draw the resulting circuit
+circuit.draw(&quot;mpl&quot;)
 </pre></div>
 </div>
 </div>
@@ -488,46 +498,46 @@ The moving pieces are:</p>
 <p>To run the circuit, we need to import and initialize a simulator backend:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simulator</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s2">&quot;aer_simulator&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>simulator = Aer.get_backend(&quot;aer_simulator&quot;)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># to plot it up</span>
-<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># to plot it up
+fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(22, 4))
 
-<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">theta</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">((</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">),</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">4</span><span class="p">]):</span>
+for ax, theta in zip((ax1, ax2, ax3), [np.pi * 1 / 4, np.pi * 1 / 2, np.pi * 3 / 4]):
 
-    <span class="c1"># bind the parameter theta of the circuit to pi/4</span>
-    <span class="n">circuit_with_params</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">bind_parameters</span><span class="p">([</span><span class="n">theta</span><span class="p">])</span>
+    # bind the parameter theta of the circuit to pi/4
+    circuit_with_params = circuit.bind_parameters([theta])
 
-    <span class="c1"># run the circuit and get the result</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circuit_with_params</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+    # run the circuit and get the result
+    result = simulator.run(circuit_with_params, shots=1000).result()
 
-    <span class="c1"># extract the measurement counts as a python dictionary</span>
-    <span class="n">count_dict</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+    # extract the measurement counts as a python dictionary
+    count_dict = result.get_counts()
 
-    <span class="c1"># for convenience sort by binary order</span>
-    <span class="n">count_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">count_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+    # for convenience sort by binary order
+    count_dict = dict(sorted(count_dict.items()))
 
-    <span class="c1"># print the counts</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The results for theta = </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> was:&quot;</span><span class="p">,</span> <span class="n">count_dict</span><span class="p">)</span>
+    # print the counts
+    print(f&quot;The results for theta = {round(theta, 3)} was:&quot;, count_dict)
 
-    <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
-        <span class="n">count_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
-        <span class="n">count_dict</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
-        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span>
-        <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
-        <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;$\theta =$</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Counts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Outcome&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    ax.bar(
+        count_dict.keys(),
+        count_dict.values(),
+        alpha=0.5,
+        color=&quot;tab:orange&quot;,
+        edgecolor=&quot;red&quot;,
+        linewidth=2,
+    )
+    ax.set_title(rf&quot;$\theta =${round(theta, 3)}&quot;, fontsize=16)
+    ax.set_ylabel(&quot;Counts&quot;, fontsize=16)
+    ax.set_xlabel(&quot;Outcome&quot;, fontsize=16)
+    ax.tick_params(labelsize=14)
+plt.show()
 </pre></div>
 </div>
 </div>
@@ -547,37 +557,37 @@ The results for theta = 2.356 was: {&#39;0&#39;: 143, &#39;1&#39;: 857}
 <p>Let us now write a function that returns a <strong>qiskit</strong> circuit with a flexible number of qubits <span class="math notranslate nohighlight">\(n\)</span>, and with varying <em>depth</em> <span class="math notranslate nohighlight">\(d\)</span>. The <em>depth</em> of a quantum circuit is a vague term for the number of gates in a quantum circuit, or, more commonly, how often a fixed structure of gates is repeated. These structures are commonly called circuit <em>layers</em>. Because we will be working with multiple qubits, the quantum circuit should also contain two-qubit <em>CNOT</em> gates. In addition to the <span class="math notranslate nohighlight">\(\theta\)</span> values of single-qubit gates controlling the measurement probabilities for each qubit, the <em>CNOT</em> gates correlate the measurement outcomes and create <em>entanglement</em> in the prepared quantum state. See our tutorial on <a class="reference external" href="https://alqor.io/tutorials/introduction-to-quantum-technologies/featured-tutorial-on-the-nobel-prize-2022-how-to-win-bells-game">Bell’s Game</a>, which highlights the power of entanglement in light of the recent Nobel Prices in Physics.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_circuit</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">,</span> <span class="n">number_of_layers</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def get_circuit(number_of_qubits, number_of_layers):
 
-    <span class="n">number_of_parameters</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">number_of_qubits</span> <span class="o">*</span> <span class="n">number_of_layers</span>
-    <span class="n">thetas</span> <span class="o">=</span> <span class="p">[</span><span class="n">Parameter</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\theta$&quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ii</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_parameters</span><span class="p">)]</span>
+    number_of_parameters = 2 * number_of_qubits * number_of_layers
+    thetas = [Parameter(r&quot;$\theta$&quot; + f&quot;{ii+1}&quot;) for ii in range(number_of_parameters)]
 
-    <span class="c1"># initialize the qiskit circuit</span>
-    <span class="n">circuit</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">)</span>
+    # initialize the qiskit circuit
+    circuit = QuantumCircuit(number_of_qubits)
 
-    <span class="n">parameter_counter</span> <span class="o">=</span> <span class="mi">0</span>
+    parameter_counter = 0
 
-    <span class="c1"># loop over the layers of the quantum circuit</span>
-    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_layers</span><span class="p">):</span>
+    # loop over the layers of the quantum circuit
+    for l in range(number_of_layers):
 
-        <span class="c1"># apply a layer of RX rotations</span>
-        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">):</span>
-            <span class="n">circuit</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="n">parameter_counter</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span>
-            <span class="n">parameter_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+        # apply a layer of RX rotations
+        for n in range(number_of_qubits):
+            circuit.rx(thetas[parameter_counter], n)
+            parameter_counter += 1
 
-        <span class="c1"># apply a layer of RZ rotations</span>
-        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">):</span>
-            <span class="n">circuit</span><span class="o">.</span><span class="n">rz</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="n">parameter_counter</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span>
-            <span class="n">parameter_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+        # apply a layer of RZ rotations
+        for n in range(number_of_qubits):
+            circuit.rz(thetas[parameter_counter], n)
+            parameter_counter += 1
 
-        <span class="c1"># apply a layer of CNOTs</span>
-        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_qubits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="n">circuit</span><span class="o">.</span><span class="n">cnot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        # apply a layer of CNOTs
+        for n in range(number_of_qubits - 1):
+            circuit.cnot(n, n + 1)
 
-    <span class="c1"># instructions to measure all qubits</span>
-    <span class="n">circuit</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+    # instructions to measure all qubits
+    circuit.measure_all()
 
-    <span class="k">return</span> <span class="n">circuit</span>
+    return circuit
 </pre></div>
 </div>
 </div>
@@ -585,11 +595,11 @@ The results for theta = 2.356 was: {&#39;0&#39;: 143, &#39;1&#39;: 857}
 <p>For <span class="math notranslate nohighlight">\(n=4\)</span> qubits and <span class="math notranslate nohighlight">\(d=2\)</span> layers, the quantum circuit looks like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">number_of_qubits</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">number_of_layers</span> <span class="o">=</span> <span class="mi">2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>number_of_qubits = 4
+number_of_layers = 2
 
-<span class="n">circuit</span> <span class="o">=</span> <span class="n">get_circuit</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">,</span> <span class="n">number_of_layers</span><span class="p">)</span>
-<span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+circuit = get_circuit(number_of_qubits, number_of_layers)
+circuit.draw(&quot;mpl&quot;)
 </pre></div>
 </div>
 </div>
@@ -600,45 +610,45 @@ The results for theta = 2.356 was: {&#39;0&#39;: 143, &#39;1&#39;: 857}
 <p>You can see that there are <span class="math notranslate nohighlight">\(16\)</span> <span class="math notranslate nohighlight">\(\theta\)</span> parameters <span class="math notranslate nohighlight">\(\theta_1, \dots \theta_{16}\)</span> in the circuit. In fact, the circuit has <span class="math notranslate nohighlight">\(2\cdot n \cdot d\)</span> parameters in general. Let us select random parameters <span class="math notranslate nohighlight">\(\theta_i \in [0, 2\pi]\)</span> and observe the measurement outcome distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>np.random.seed(42)
 
-<span class="c1"># the quantum circuit has 2*n*d parameters</span>
-<span class="n">number_of_parameters</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">number_of_qubits</span> <span class="o">*</span> <span class="n">number_of_layers</span>
+# the quantum circuit has 2*n*d parameters
+number_of_parameters = 2 * number_of_qubits * number_of_layers
 
-<span class="c1"># define value for the initial parameters</span>
-<span class="n">parameters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">number_of_parameters</span><span class="p">)</span>
+# define value for the initial parameters
+parameters = np.random.uniform(0, 2 * np.pi, size=number_of_parameters)
 
-<span class="c1"># bind the circuit parameters to numbers</span>
-<span class="n">circuit_with_params</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">bind_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+# bind the circuit parameters to numbers
+circuit_with_params = circuit.bind_parameters(parameters)
 
-<span class="c1"># run the circuit and get the result</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circuit_with_params</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+# run the circuit and get the result
+result = simulator.run(circuit_with_params, shots=1000).result()
 
-<span class="c1"># extract the measurement counts as a python dictionary</span>
-<span class="n">model_dict</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+# extract the measurement counts as a python dictionary
+model_dict = result.get_counts()
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The results was:&quot;</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">)</span>
+print(&quot;The results was:&quot;, model_dict)
 
-<span class="c1"># for convenience sort by binary order</span>
-<span class="n">model_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+# for convenience sort by binary order
+model_dict = dict(sorted(model_dict.items()))
 
-<span class="c1"># do the plotting</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+# do the plotting
+fig, ax = plt.subplots(1, 1)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
-    <span class="n">model_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
-    <span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-<span class="p">)</span>
+plt.bar(
+    model_dict.keys(),
+    model_dict.values(),
+    alpha=0.5,
+    color=&quot;tab:orange&quot;,
+    edgecolor=&quot;red&quot;,
+    linewidth=2,
+)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Counts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Outcome&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+plt.xticks(rotation=&quot;vertical&quot;)
+ax.set_ylabel(&quot;Counts&quot;, fontsize=16)
+ax.set_xlabel(&quot;Outcome&quot;, fontsize=16)
+ax.tick_params(labelsize=14)
+plt.show()
 </pre></div>
 </div>
 </div>
@@ -657,35 +667,35 @@ The results for theta = 2.356 was: {&#39;0&#39;: 143, &#39;1&#39;: 857}
 <p>So lets think about a potential dataset for our quantum generative model. Last time, the data looked like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fmt: off</span>
-<span class="n">data_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-      <span class="p">[</span><span class="o">-</span><span class="mf">3.61078109e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.29291442e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.82588388e-02</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.58432923e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">4.97863965e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.78795061e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.10663163e-01</span><span class="p">,</span>  <span class="mf">4.36223299e-02</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">1.01858250e-02</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.57657880e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.61011437e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.63656495e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">5.00136079e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.30125377e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.12999295e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.22838879e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">7.75881873e-01</span><span class="p">,</span>  <span class="mf">1.68190537e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.69496934e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.04754810e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">2.62099948e-01</span><span class="p">,</span>  <span class="mf">1.36922064e-01</span><span class="p">,</span>  <span class="mf">3.93391710e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.12181958e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">3.15903057e-01</span><span class="p">,</span>  <span class="mf">1.10533721e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.50864695e-01</span><span class="p">,</span>  <span class="mf">6.56386891e-02</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">2.37497275e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.04398679e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.32560555e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.62669444e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">4.45701188e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.67952827e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.07722157e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.51854037e-02</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">1.35821066e+00</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.39440908e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.41656480e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.51452941e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">8.23083293e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.69844420e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.04400576e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.71350420e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">8.65458568e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.64222047e-01</span><span class="p">,</span>  <span class="mf">8.06578890e-04</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.68337779e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">6.25077227e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.00012510e+00</span><span class="p">,</span>  <span class="mf">7.59518951e-01</span><span class="p">,</span>  <span class="mf">2.46827712e-01</span><span class="p">,</span>
-        <span class="mf">5.70561107e-01</span><span class="p">,</span>  <span class="mf">6.52003162e-01</span><span class="p">,</span>  <span class="mf">6.73384341e-01</span><span class="p">,</span>  <span class="mf">8.04894781e-01</span><span class="p">,</span>
-        <span class="mf">6.34541410e-01</span><span class="p">,</span>  <span class="mf">3.63315273e-01</span><span class="p">,</span>  <span class="mf">4.36242632e-01</span><span class="p">,</span>  <span class="mf">3.31473086e-01</span><span class="p">,</span>
-        <span class="mf">5.18170902e-01</span><span class="p">,</span>  <span class="mf">6.00943305e-01</span><span class="p">,</span>  <span class="mf">7.09919182e-01</span><span class="p">,</span>  <span class="mf">5.42156544e-01</span><span class="p">,</span>
-        <span class="mf">5.96010036e-01</span><span class="p">,</span>  <span class="mf">6.32350524e-01</span><span class="p">,</span>  <span class="mf">5.11792431e-01</span><span class="p">,</span>  <span class="mf">7.26352234e-01</span><span class="p">,</span>
-        <span class="mf">5.24889933e-01</span><span class="p">,</span>  <span class="mf">6.33500447e-01</span><span class="p">,</span>  <span class="mf">7.76251971e-01</span><span class="p">,</span>  <span class="mf">7.53647980e-01</span><span class="p">,</span>
-        <span class="mf">3.36153030e-01</span><span class="p">,</span>  <span class="mf">8.15441364e-01</span><span class="p">,</span>  <span class="mf">5.57272462e-01</span><span class="p">,</span>  <span class="mf">1.44661947e-01</span><span class="p">,</span>
-        <span class="mf">6.16792976e-01</span><span class="p">,</span>  <span class="mf">6.91086153e-01</span><span class="p">,</span>  <span class="mf">6.87286823e-01</span><span class="p">,</span>  <span class="mf">3.98429153e-01</span><span class="p">,</span>
-        <span class="mf">1.07054311e+00</span><span class="p">,</span>  <span class="mf">6.24690432e-01</span><span class="p">,</span>  <span class="mf">6.84406406e-01</span><span class="p">,</span>  <span class="mf">7.26905590e-01</span><span class="p">,</span>
-        <span class="mf">3.09651946e-01</span><span class="p">,</span>  <span class="mf">7.78085930e-01</span><span class="p">,</span>  <span class="mf">3.60425786e-01</span><span class="p">,</span>  <span class="mf">6.33481589e-01</span><span class="p">,</span>
-        <span class="mf">3.17310855e-01</span><span class="p">,</span>  <span class="mf">6.56363955e-01</span><span class="p">,</span>  <span class="mf">6.10979533e-01</span><span class="p">,</span>  <span class="mf">8.08938177e-01</span><span class="p">,</span>
-        <span class="mf">7.71336408e-01</span><span class="p">,</span>  <span class="mf">6.11452930e-01</span><span class="p">,</span>  <span class="mf">5.03192825e-01</span><span class="p">,</span>  <span class="mf">5.66868324e-01</span><span class="p">,</span>
-        <span class="mf">7.22434360e-01</span><span class="p">,</span>  <span class="mf">5.64687162e-01</span><span class="p">,</span>  <span class="mf">5.11510302e-01</span><span class="p">,</span>  <span class="mf">7.02255988e-01</span><span class="p">]</span>
-<span class="p">)</span>
-<span class="c1"># fmt: on</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># fmt: off
+data_samples = np.array(
+      [-3.61078109e-01, -1.29291442e-01, -9.82588388e-02, -2.58432923e-01,
+       -4.97863965e-01, -4.78795061e-01, -5.10663163e-01,  4.36223299e-02,
+       -1.01858250e-02, -5.57657880e-01, -5.61011437e-01, -2.63656495e-01,
+       -5.00136079e-01, -6.30125377e-01, -1.12999295e-01, -3.22838879e-01,
+       -7.75881873e-01,  1.68190537e-01, -2.69496934e-01, -3.04754810e-01,
+       -2.62099948e-01,  1.36922064e-01,  3.93391710e-01, -8.12181958e-01,
+       -3.15903057e-01,  1.10533721e-01, -2.50864695e-01,  6.56386891e-02,
+       -2.37497275e-01, -6.04398679e-01, -5.32560555e-01, -1.62669444e-01,
+       -4.45701188e-01, -1.67952827e-01, -5.07722157e-01, -8.51854037e-02,
+       -1.35821066e+00, -3.39440908e-01, -6.41656480e-01, -9.51452941e-01,
+       -8.23083293e-01, -5.69844420e-01, -1.04400576e-01, -3.71350420e-01,
+       -8.65458568e-01, -2.64222047e-01,  8.06578890e-04, -5.68337779e-01,
+       -6.25077227e-01, -1.00012510e+00,  7.59518951e-01,  2.46827712e-01,
+        5.70561107e-01,  6.52003162e-01,  6.73384341e-01,  8.04894781e-01,
+        6.34541410e-01,  3.63315273e-01,  4.36242632e-01,  3.31473086e-01,
+        5.18170902e-01,  6.00943305e-01,  7.09919182e-01,  5.42156544e-01,
+        5.96010036e-01,  6.32350524e-01,  5.11792431e-01,  7.26352234e-01,
+        5.24889933e-01,  6.33500447e-01,  7.76251971e-01,  7.53647980e-01,
+        3.36153030e-01,  8.15441364e-01,  5.57272462e-01,  1.44661947e-01,
+        6.16792976e-01,  6.91086153e-01,  6.87286823e-01,  3.98429153e-01,
+        1.07054311e+00,  6.24690432e-01,  6.84406406e-01,  7.26905590e-01,
+        3.09651946e-01,  7.78085930e-01,  3.60425786e-01,  6.33481589e-01,
+        3.17310855e-01,  6.56363955e-01,  6.10979533e-01,  8.08938177e-01,
+        7.71336408e-01,  6.11452930e-01,  5.03192825e-01,  5.66868324e-01,
+        7.22434360e-01,  5.64687162e-01,  5.11510302e-01,  7.02255988e-01]
+)
+# fmt: on
 </pre></div>
 </div>
 </div>
@@ -693,24 +703,24 @@ The results for theta = 2.356 was: {&#39;0&#39;: 143, &#39;1&#39;: 857}
 <p>Plot it up:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots(1, 1)
 
-<span class="n">x_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+x_points = np.linspace(-1.5, 1.5, 1000)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
-    <span class="n">data_samples</span><span class="p">,</span>
-    <span class="n">bins</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Data&quot;</span><span class="p">,</span>
-<span class="p">)</span>
+plt.hist(
+    data_samples,
+    bins=16,
+    alpha=0.5,
+    edgecolor=&quot;royalblue&quot;,
+    linewidth=2,
+    label=&quot;Training Data&quot;,
+)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Counts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Data Value&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+plt.legend(fontsize=15)
+ax.set_ylabel(&quot;Counts&quot;, fontsize=16)
+ax.set_xlabel(&quot;Data Value&quot;, fontsize=16)
+ax.tick_params(labelsize=14)
+plt.show()
 </pre></div>
 </div>
 </div>
@@ -721,18 +731,18 @@ The results for theta = 2.356 was: {&#39;0&#39;: 143, &#39;1&#39;: 857}
 <p>We already suggestively plotted a histogram of the continuous data with <span class="math notranslate nohighlight">\(16\)</span> bins. What we are going to do now is to count the number of data samples in each bin, and assign each bin to one of the <span class="math notranslate nohighlight">\(16\)</span> possible binary outcomes of a quantum circuit. It is most comforable to assign them in the order of ascending binary numbers, i.e., <span class="math notranslate nohighlight">\(0000, 0001, 0010, \dots, 1110, 1111\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the data in 16 bins and extract the counts</span>
-<span class="n">counts</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">data_samples</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># get the data in 16 bins and extract the counts
+counts, bins = np.histogram(data_samples, bins=16)
 
-<span class="c1"># generate the 2^4 = 16 discrete outcomes as bitstrings</span>
-<span class="n">string_outcomes</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="nb">bin</span><span class="p">(</span><span class="n">ii</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">)</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">number_of_qubits</span><span class="p">)</span>
-<span class="p">]</span>
+# generate the 2^4 = 16 discrete outcomes as bitstrings
+string_outcomes = [
+    bin(ii)[2:].zfill(number_of_qubits) for ii in range(2**number_of_qubits)
+]
 
-<span class="c1"># group counts and strings into a dictionary</span>
-<span class="n">training_data_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">string_outcomes</span><span class="p">,</span> <span class="n">counts</span><span class="p">))</span>
+# group counts and strings into a dictionary
+training_data_dict = dict(zip(string_outcomes, counts))
 
-<span class="nb">print</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">)</span>
+print(training_data_dict)
 </pre></div>
 </div>
 </div>
@@ -745,35 +755,35 @@ The results for theta = 2.356 was: {&#39;0&#39;: 143, &#39;1&#39;: 857}
 <p>This new form of the data looks very familiar to <em>qiskit</em> practitioners. It represents a discretized form of the continuous dataset, and can in fact be plotted together with our quantum circuit outcomes:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots(1, 1)
 
-<span class="n">x_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+x_points = np.linspace(-1.5, 1.5, 1000)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
-    <span class="n">training_data_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
-    <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>  <span class="c1"># turn the counts into probabilities</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Data&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
-    <span class="n">model_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
-    <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>  <span class="c1"># turn the counts into probabilities</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Model Data&quot;</span><span class="p">,</span>
-<span class="p">)</span>
+plt.bar(
+    training_data_dict.keys(),
+    np.array(list(training_data_dict.values()))
+    / sum(training_data_dict.values()),  # turn the counts into probabilities
+    alpha=0.5,
+    edgecolor=&quot;royalblue&quot;,
+    linewidth=2,
+    label=&quot;Training Data&quot;,
+)
+plt.bar(
+    model_dict.keys(),
+    np.array(list(model_dict.values()))
+    / sum(model_dict.values()),  # turn the counts into probabilities
+    alpha=0.5,
+    edgecolor=&quot;red&quot;,
+    linewidth=2,
+    label=&quot;Model Data&quot;,
+)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Probability&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Outcome&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+plt.xticks(rotation=&quot;vertical&quot;)
+plt.legend(fontsize=15)
+ax.set_ylabel(&quot;Probability&quot;, fontsize=16)
+ax.set_xlabel(&quot;Outcome&quot;, fontsize=16)
+ax.tick_params(labelsize=14)
+plt.show()
 </pre></div>
 </div>
 </div>
@@ -791,29 +801,29 @@ The results for theta = 2.356 was: {&#39;0&#39;: 143, &#39;1&#39;: 857}
 <p>Since we are now working with discrete <span class="math notranslate nohighlight">\(x\)</span> as well as dictionaries of measurement counts, we will have to define a KL divergence loss function that accepts these formats:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">kl_divergence</span><span class="p">(</span><span class="n">data_distribution</span><span class="p">,</span> <span class="n">model_distribution</span><span class="p">):</span>
-    <span class="c1"># we will require a small offset &quot;e&quot; to avoid possible log(0) singularities</span>
-    <span class="n">e</span> <span class="o">=</span> <span class="mf">1e-6</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def kl_divergence(data_distribution, model_distribution):
+    # we will require a small offset &quot;e&quot; to avoid possible log(0) singularities
+    e = 1e-6
 
-    <span class="c1"># make sure the values in the dictionaries add up to 1</span>
-    <span class="n">sum_data</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">data_distribution</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-    <span class="n">sum_model</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">model_distribution</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-    <span class="k">for</span> <span class="n">bin_outcome</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">data_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">data_distribution</span><span class="p">[</span><span class="n">bin_outcome</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">count</span> <span class="o">/</span> <span class="n">sum_data</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">bin_outcome</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">model_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">model_distribution</span><span class="p">[</span><span class="n">bin_outcome</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">count</span> <span class="o">/</span> <span class="n">sum_model</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    # make sure the values in the dictionaries add up to 1
+    sum_data = sum(data_distribution.values())
+    sum_model = sum(model_distribution.values())
+    for bin_outcome, count in data_distribution.items():
+        data_distribution[bin_outcome] = max(count / sum_data, e)
+    for bin_outcome, count in model_distribution.items():
+        model_distribution[bin_outcome] = max(count / sum_model, e)
 
-    <span class="c1"># calculate the first term in the KL divergence formula</span>
-    <span class="n">term1</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">bin_outcome</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">data_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">term1</span> <span class="o">+=</span> <span class="n">prob</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span>
+    # calculate the first term in the KL divergence formula
+    term1 = 0
+    for bin_outcome, prob in data_distribution.items():
+        term1 += prob * np.log(prob)
 
-    <span class="c1"># calculate the second term in the KL divergence formula</span>
-    <span class="n">term2</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">bin_outcome</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">data_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">term2</span> <span class="o">+=</span> <span class="n">prob</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">model_distribution</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">bin_outcome</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+    # calculate the second term in the KL divergence formula
+    term2 = 0
+    for bin_outcome, prob in data_distribution.items():
+        term2 += prob * np.log(model_distribution.get(bin_outcome, e))
 
-    <span class="k">return</span> <span class="n">term1</span> <span class="o">-</span> <span class="n">term2</span>
+    return term1 - term2
 </pre></div>
 </div>
 </div>
@@ -821,7 +831,7 @@ The results for theta = 2.356 was: {&#39;0&#39;: 143, &#39;1&#39;: 857}
 <p>And measure our <em>initial</em> loss given the dataset, our quantum circuit, and a random parameter guess.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>kl_divergence(training_data_dict, model_dict)
 </pre></div>
 </div>
 </div>

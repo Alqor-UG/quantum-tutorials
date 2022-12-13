@@ -215,6 +215,11 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/quantum_metrology.html">
+   Tutorial 2 - Quantum metrology
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../qtech_basics/bell_inequalities.html">
    Tutorial on the nobel prize 2022 - How to win Bell’s game
   </a>
@@ -249,6 +254,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../hardware_tutorial/quantum_hardware_104.html">
    Tutorial 4 - A few words about quantum computing with superconducting qubits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_105.html">
+   Tutorial 5 -Quantum simulation with cold atoms
   </a>
  </li>
 </ul>
@@ -425,43 +435,43 @@ const thebe_selector_output = ".output, .cell_output"
 <p>But first, lets recap:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fmt: off</span>
-<span class="n">data_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-      <span class="p">[</span><span class="o">-</span><span class="mf">3.61078109e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.29291442e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.82588388e-02</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.58432923e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">4.97863965e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.78795061e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.10663163e-01</span><span class="p">,</span>  <span class="mf">4.36223299e-02</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">1.01858250e-02</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.57657880e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.61011437e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.63656495e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">5.00136079e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.30125377e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.12999295e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.22838879e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">7.75881873e-01</span><span class="p">,</span>  <span class="mf">1.68190537e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.69496934e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.04754810e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">2.62099948e-01</span><span class="p">,</span>  <span class="mf">1.36922064e-01</span><span class="p">,</span>  <span class="mf">3.93391710e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.12181958e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">3.15903057e-01</span><span class="p">,</span>  <span class="mf">1.10533721e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.50864695e-01</span><span class="p">,</span>  <span class="mf">6.56386891e-02</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">2.37497275e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.04398679e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.32560555e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.62669444e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">4.45701188e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.67952827e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.07722157e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.51854037e-02</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">1.35821066e+00</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.39440908e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.41656480e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.51452941e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">8.23083293e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.69844420e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.04400576e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.71350420e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">8.65458568e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.64222047e-01</span><span class="p">,</span>  <span class="mf">8.06578890e-04</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.68337779e-01</span><span class="p">,</span>
-       <span class="o">-</span><span class="mf">6.25077227e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.00012510e+00</span><span class="p">,</span>  <span class="mf">7.59518951e-01</span><span class="p">,</span>  <span class="mf">2.46827712e-01</span><span class="p">,</span>
-        <span class="mf">5.70561107e-01</span><span class="p">,</span>  <span class="mf">6.52003162e-01</span><span class="p">,</span>  <span class="mf">6.73384341e-01</span><span class="p">,</span>  <span class="mf">8.04894781e-01</span><span class="p">,</span>
-        <span class="mf">6.34541410e-01</span><span class="p">,</span>  <span class="mf">3.63315273e-01</span><span class="p">,</span>  <span class="mf">4.36242632e-01</span><span class="p">,</span>  <span class="mf">3.31473086e-01</span><span class="p">,</span>
-        <span class="mf">5.18170902e-01</span><span class="p">,</span>  <span class="mf">6.00943305e-01</span><span class="p">,</span>  <span class="mf">7.09919182e-01</span><span class="p">,</span>  <span class="mf">5.42156544e-01</span><span class="p">,</span>
-        <span class="mf">5.96010036e-01</span><span class="p">,</span>  <span class="mf">6.32350524e-01</span><span class="p">,</span>  <span class="mf">5.11792431e-01</span><span class="p">,</span>  <span class="mf">7.26352234e-01</span><span class="p">,</span>
-        <span class="mf">5.24889933e-01</span><span class="p">,</span>  <span class="mf">6.33500447e-01</span><span class="p">,</span>  <span class="mf">7.76251971e-01</span><span class="p">,</span>  <span class="mf">7.53647980e-01</span><span class="p">,</span>
-        <span class="mf">3.36153030e-01</span><span class="p">,</span>  <span class="mf">8.15441364e-01</span><span class="p">,</span>  <span class="mf">5.57272462e-01</span><span class="p">,</span>  <span class="mf">1.44661947e-01</span><span class="p">,</span>
-        <span class="mf">6.16792976e-01</span><span class="p">,</span>  <span class="mf">6.91086153e-01</span><span class="p">,</span>  <span class="mf">6.87286823e-01</span><span class="p">,</span>  <span class="mf">3.98429153e-01</span><span class="p">,</span>
-        <span class="mf">1.07054311e+00</span><span class="p">,</span>  <span class="mf">6.24690432e-01</span><span class="p">,</span>  <span class="mf">6.84406406e-01</span><span class="p">,</span>  <span class="mf">7.26905590e-01</span><span class="p">,</span>
-        <span class="mf">3.09651946e-01</span><span class="p">,</span>  <span class="mf">7.78085930e-01</span><span class="p">,</span>  <span class="mf">3.60425786e-01</span><span class="p">,</span>  <span class="mf">6.33481589e-01</span><span class="p">,</span>
-        <span class="mf">3.17310855e-01</span><span class="p">,</span>  <span class="mf">6.56363955e-01</span><span class="p">,</span>  <span class="mf">6.10979533e-01</span><span class="p">,</span>  <span class="mf">8.08938177e-01</span><span class="p">,</span>
-        <span class="mf">7.71336408e-01</span><span class="p">,</span>  <span class="mf">6.11452930e-01</span><span class="p">,</span>  <span class="mf">5.03192825e-01</span><span class="p">,</span>  <span class="mf">5.66868324e-01</span><span class="p">,</span>
-        <span class="mf">7.22434360e-01</span><span class="p">,</span>  <span class="mf">5.64687162e-01</span><span class="p">,</span>  <span class="mf">5.11510302e-01</span><span class="p">,</span>  <span class="mf">7.02255988e-01</span><span class="p">]</span>
-<span class="p">)</span>
-<span class="c1"># fmt: on</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">data_samples</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># fmt: off
+data_samples = np.array(
+      [-3.61078109e-01, -1.29291442e-01, -9.82588388e-02, -2.58432923e-01,
+       -4.97863965e-01, -4.78795061e-01, -5.10663163e-01,  4.36223299e-02,
+       -1.01858250e-02, -5.57657880e-01, -5.61011437e-01, -2.63656495e-01,
+       -5.00136079e-01, -6.30125377e-01, -1.12999295e-01, -3.22838879e-01,
+       -7.75881873e-01,  1.68190537e-01, -2.69496934e-01, -3.04754810e-01,
+       -2.62099948e-01,  1.36922064e-01,  3.93391710e-01, -8.12181958e-01,
+       -3.15903057e-01,  1.10533721e-01, -2.50864695e-01,  6.56386891e-02,
+       -2.37497275e-01, -6.04398679e-01, -5.32560555e-01, -1.62669444e-01,
+       -4.45701188e-01, -1.67952827e-01, -5.07722157e-01, -8.51854037e-02,
+       -1.35821066e+00, -3.39440908e-01, -6.41656480e-01, -9.51452941e-01,
+       -8.23083293e-01, -5.69844420e-01, -1.04400576e-01, -3.71350420e-01,
+       -8.65458568e-01, -2.64222047e-01,  8.06578890e-04, -5.68337779e-01,
+       -6.25077227e-01, -1.00012510e+00,  7.59518951e-01,  2.46827712e-01,
+        5.70561107e-01,  6.52003162e-01,  6.73384341e-01,  8.04894781e-01,
+        6.34541410e-01,  3.63315273e-01,  4.36242632e-01,  3.31473086e-01,
+        5.18170902e-01,  6.00943305e-01,  7.09919182e-01,  5.42156544e-01,
+        5.96010036e-01,  6.32350524e-01,  5.11792431e-01,  7.26352234e-01,
+        5.24889933e-01,  6.33500447e-01,  7.76251971e-01,  7.53647980e-01,
+        3.36153030e-01,  8.15441364e-01,  5.57272462e-01,  1.44661947e-01,
+        6.16792976e-01,  6.91086153e-01,  6.87286823e-01,  3.98429153e-01,
+        1.07054311e+00,  6.24690432e-01,  6.84406406e-01,  7.26905590e-01,
+        3.09651946e-01,  7.78085930e-01,  3.60425786e-01,  6.33481589e-01,
+        3.17310855e-01,  6.56363955e-01,  6.10979533e-01,  8.08938177e-01,
+        7.71336408e-01,  6.11452930e-01,  5.03192825e-01,  5.66868324e-01,
+        7.22434360e-01,  5.64687162e-01,  5.11510302e-01,  7.02255988e-01]
+)
+# fmt: on
+print(data_samples.shape)
 </pre></div>
 </div>
 </div>
@@ -474,18 +484,18 @@ const thebe_selector_output = ".output, .cell_output"
 <p>This is our dataset. It consists of 100 real numbers that are mostly in the interval [-1, 1]. After plotting a histogram of the data, we realized that it might be distributed according to a gaussian distribution. This is why we defined our model to consist of the sum of two parametrized gaussians:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">**</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def gaussian(x, mu, sigma):
+    return np.exp(-0.5 * ((x - mu) / sigma) ** 2.0) / (sigma * np.sqrt(2 * np.pi))
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_density_function</span><span class="p">(</span><span class="n">x_points</span><span class="p">,</span> <span class="n">mus</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">):</span>
-    <span class="n">density_left</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">x_points</span><span class="p">,</span> <span class="n">mus</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sigmas</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">density_right</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">x_points</span><span class="p">,</span> <span class="n">mus</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sigmas</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">density_left</span> <span class="o">+</span> <span class="n">density_right</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def model_density_function(x_points, mus, sigmas):
+    density_left = gaussian(x_points, mus[0], sigmas[0])
+    density_right = gaussian(x_points, mus[1], sigmas[1])
+    return (density_left + density_right) / 2
 </pre></div>
 </div>
 </div>
@@ -493,8 +503,8 @@ const thebe_selector_output = ".output, .cell_output"
 <p>As the initial guesses to the model parameters, we chose <span class="math notranslate nohighlight">\(\mu_1=-0.3, \mu_2 = 0.6\)</span>, which are close to the peaks that we observe in the histogram with wider bins. For the width of the gaussians,we picked <span class="math notranslate nohighlight">\(\sigma_1=\sigma_2=0.2\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_mus</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">]</span>
-<span class="n">model_sigmas</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model_mus = [-0.3, 0.6]
+model_sigmas = [0.2, 0.2]
 </pre></div>
 </div>
 </div>
@@ -502,39 +512,39 @@ const thebe_selector_output = ".output, .cell_output"
 <p>When we input these values for <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> into the model density function, and then scan values of <span class="math notranslate nohighlight">\(x\)</span>, we get the following plot:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots(1, 1)
 
-<span class="n">x_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+x_points = np.linspace(-1.5, 1.5, 1000)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
-    <span class="n">data_samples</span><span class="p">,</span>
-    <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
-    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Data&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-    <span class="n">x_points</span><span class="p">,</span>
-    <span class="n">model_density_function</span><span class="p">(</span><span class="n">x_points</span><span class="p">,</span> <span class="n">model_mus</span><span class="p">,</span> <span class="n">model_sigmas</span><span class="p">),</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Model&quot;</span><span class="p">,</span>
-<span class="p">)</span>
+plt.hist(
+    data_samples,
+    bins=15,
+    density=True,
+    alpha=0.5,
+    edgecolor=&quot;royalblue&quot;,
+    linewidth=2,
+    label=&quot;Training Data&quot;,
+)
+plt.plot(
+    x_points,
+    model_density_function(x_points, model_mus, model_sigmas),
+    color=&quot;red&quot;,
+    linewidth=2,
+    label=&quot;Model&quot;,
+)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Data Value&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+plt.legend(fontsize=15)
+ax.set_ylabel(&quot;Density&quot;, fontsize=16)
+ax.set_xlabel(&quot;Data Value&quot;, fontsize=16)
+ax.tick_params(labelsize=14)
+plt.show()
 </pre></div>
 </div>
 </div>
@@ -553,9 +563,9 @@ const thebe_selector_output = ".output, .cell_output"
 <p>In Python code:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">kl_divergence</span><span class="p">(</span><span class="n">px_data</span><span class="p">,</span> <span class="n">px_model</span><span class="p">):</span>
-    <span class="c1"># px_data and px_model are numpy arrays</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">px_data</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">px_data</span><span class="p">)</span> <span class="o">-</span> <span class="n">px_data</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">px_model</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def kl_divergence(px_data, px_model):
+    # px_data and px_model are numpy arrays
+    return np.mean(px_data * np.log(px_data) - px_data * np.log(px_model))
 </pre></div>
 </div>
 </div>
@@ -564,15 +574,15 @@ const thebe_selector_output = ".output, .cell_output"
 <p>First, for convenience, lets put all parameters into one array.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_parameters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-    <span class="p">[</span>
-        <span class="n">model_mus</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-        <span class="n">model_mus</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-        <span class="n">model_sigmas</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-        <span class="n">model_sigmas</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-    <span class="p">]</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">model_parameters</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model_parameters = np.array(
+    [
+        model_mus[0],
+        model_mus[1],
+        model_sigmas[0],
+        model_sigmas[1],
+    ]
+)
+print(model_parameters)
 </pre></div>
 </div>
 </div>
@@ -586,16 +596,16 @@ const thebe_selector_output = ".output, .cell_output"
 <p>So, how can we estimate <span class="math notranslate nohighlight">\(p_{\mathcal{D}}(x)\)</span>? One idea is to count the number of data samples which are inside a small interval <span class="math notranslate nohighlight">\([x-b, x+b]\)</span> for a small <span class="math notranslate nohighlight">\(b\)</span>, and divide that number by the total number of data samples. This is connected to the integral <span class="math notranslate nohighlight">\(p_{\mathcal{D}}(x) \sim \int \rho_{\mathcal{D}}(x) dx\)</span> of the empirical data density <span class="math notranslate nohighlight">\(\rho_{\mathcal{D}}(x)\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="mf">1e-3</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>b = 1e-3
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate_px_data</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="n">points_in_interval</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_samples</span> <span class="o">&gt;=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">data_samples</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">points_in_interval</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_samples</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def calculate_px_data(x):
+    points_in_interval = (data_samples &gt;= x - b / 2) * (data_samples &lt; x + b / 2)
+    return sum(points_in_interval) / len(data_samples)
 </pre></div>
 </div>
 </div>
@@ -607,15 +617,15 @@ const thebe_selector_output = ".output, .cell_output"
 <p>Lets code our case up:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate_px_model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">model_parameters</span><span class="p">):</span>
-    <span class="n">mus</span> <span class="o">=</span> <span class="n">model_parameters</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">sigmas</span> <span class="o">=</span> <span class="n">model_parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def calculate_px_model(x, model_parameters):
+    mus = model_parameters[:2]
+    sigmas = model_parameters[2:4]
 
-    <span class="n">density_left</span> <span class="o">=</span> <span class="n">model_density_function</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">mus</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">)</span>
-    <span class="n">density_right</span> <span class="o">=</span> <span class="n">model_density_function</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="p">,</span> <span class="n">mus</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">)</span>
-    <span class="n">px_model</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="p">(</span><span class="n">density_right</span> <span class="o">+</span> <span class="n">density_left</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    density_left = model_density_function(x - b / 2, mus, sigmas)
+    density_right = model_density_function(x + b, mus, sigmas)
+    px_model = b * (density_right + density_left) / 2
 
-    <span class="k">return</span> <span class="n">px_model</span>
+    return px_model
 </pre></div>
 </div>
 </div>
@@ -626,32 +636,32 @@ const thebe_selector_output = ".output, .cell_output"
 <p>with a small <span class="math notranslate nohighlight">\(\epsilon\)</span> (epsilon).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate_gradient</span><span class="p">(</span><span class="n">model_parameters</span><span class="p">,</span> <span class="n">finite_distance_eps</span><span class="p">):</span>
-    <span class="n">gradient_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model_parameters</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def calculate_gradient(model_parameters, finite_distance_eps):
+    gradient_vector = np.zeros(len(model_parameters))
 
-    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model_parameters</span><span class="p">)):</span>
-        <span class="n">delta_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model_parameters</span><span class="p">))</span>
-        <span class="n">delta_vector</span><span class="p">[</span><span class="n">kk</span><span class="p">]</span> <span class="o">=</span> <span class="n">finite_distance_eps</span>
+    for kk in range(len(model_parameters)):
+        delta_vector = np.zeros(len(model_parameters))
+        delta_vector[kk] = finite_distance_eps
 
-        <span class="n">params_plus</span> <span class="o">=</span> <span class="n">model_parameters</span> <span class="o">+</span> <span class="n">delta_vector</span>
-        <span class="n">params_minus</span> <span class="o">=</span> <span class="n">model_parameters</span> <span class="o">-</span> <span class="n">delta_vector</span>
+        params_plus = model_parameters + delta_vector
+        params_minus = model_parameters - delta_vector
 
-        <span class="n">px_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">calculate_px_data</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data_samples</span><span class="p">])</span>
+        px_data = np.array([calculate_px_data(x) for x in data_samples])
 
-        <span class="n">px_model_plus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">calculate_px_model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">params_plus</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data_samples</span><span class="p">]</span>
-        <span class="p">)</span>
-        <span class="n">px_model_minus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">calculate_px_model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">params_minus</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data_samples</span><span class="p">]</span>
-        <span class="p">)</span>
+        px_model_plus = np.array(
+            [calculate_px_model(x, params_plus) for x in data_samples]
+        )
+        px_model_minus = np.array(
+            [calculate_px_model(x, params_minus) for x in data_samples]
+        )
 
-        <span class="n">kl_plus</span> <span class="o">=</span> <span class="n">kl_divergence</span><span class="p">(</span><span class="n">px_data</span><span class="p">,</span> <span class="n">px_model_plus</span><span class="p">)</span>
-        <span class="n">kl_minus</span> <span class="o">=</span> <span class="n">kl_divergence</span><span class="p">(</span><span class="n">px_data</span><span class="p">,</span> <span class="n">px_model_minus</span><span class="p">)</span>
+        kl_plus = kl_divergence(px_data, px_model_plus)
+        kl_minus = kl_divergence(px_data, px_model_minus)
 
-        <span class="n">gradient</span> <span class="o">=</span> <span class="p">(</span><span class="n">kl_plus</span> <span class="o">-</span> <span class="n">kl_minus</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">finite_distance_eps</span><span class="p">)</span>
-        <span class="n">gradient_vector</span><span class="p">[</span><span class="n">kk</span><span class="p">]</span> <span class="o">=</span> <span class="n">gradient</span>
+        gradient = (kl_plus - kl_minus) / (2 * finite_distance_eps)
+        gradient_vector[kk] = gradient
 
-    <span class="k">return</span> <span class="n">gradient_vector</span>
+    return gradient_vector
 </pre></div>
 </div>
 </div>
@@ -659,7 +669,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p>Choose <span class="math notranslate nohighlight">\(\epsilon = 10^{-3}\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-3</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>eps = 1e-3
 </pre></div>
 </div>
 </div>
@@ -670,30 +680,30 @@ const thebe_selector_output = ".output, .cell_output"
 <p>with a <em>learning rate</em> <span class="math notranslate nohighlight">\(\eta\)</span> (eta).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%time
 
-<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.2</span>
-<span class="n">T</span> <span class="o">=</span> <span class="mi">100</span>
+learning_rate = 0.2
+T = 100
 
-<span class="n">all_kls</span> <span class="o">=</span> <span class="p">[]</span>
+all_kls = []
 
-<span class="c1"># evaluate and record the initial KL divergence loss</span>
-<span class="n">initial_model_parameters</span> <span class="o">=</span> <span class="n">model_parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">px_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">calculate_px_data</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data_samples</span><span class="p">])</span>
-<span class="n">px_model</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-    <span class="p">[</span><span class="n">calculate_px_model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">initial_model_parameters</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data_samples</span><span class="p">]</span>
-<span class="p">)</span>
-<span class="n">all_kls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">px_data</span><span class="p">,</span> <span class="n">px_model</span><span class="p">))</span>
+# evaluate and record the initial KL divergence loss
+initial_model_parameters = model_parameters.copy()
+px_data = np.array([calculate_px_data(x) for x in data_samples])
+px_model = np.array(
+    [calculate_px_model(x, initial_model_parameters) for x in data_samples]
+)
+all_kls.append(kl_divergence(px_data, px_model))
 
-<span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
-    <span class="c1"># one gradient descent step</span>
-    <span class="n">gradient_vector</span> <span class="o">=</span> <span class="n">calculate_gradient</span><span class="p">(</span><span class="n">model_parameters</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
-    <span class="n">model_parameters</span> <span class="o">-=</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">gradient_vector</span>
+for it in range(T):
+    # one gradient descent step
+    gradient_vector = calculate_gradient(model_parameters, eps)
+    model_parameters -= learning_rate * gradient_vector
 
-    <span class="c1"># evaluate and record the KL divergence loss</span>
-    <span class="n">px_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">calculate_px_data</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data_samples</span><span class="p">])</span>
-    <span class="n">px_model</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">calculate_px_model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">model_parameters</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data_samples</span><span class="p">])</span>
-    <span class="n">all_kls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">px_data</span><span class="p">,</span> <span class="n">px_model</span><span class="p">))</span>
+    # evaluate and record the KL divergence loss
+    px_data = np.array([calculate_px_data(x) for x in data_samples])
+    px_model = np.array([calculate_px_model(x, model_parameters) for x in data_samples])
+    all_kls.append(kl_divergence(px_data, px_model))
 </pre></div>
 </div>
 </div>
@@ -706,15 +716,15 @@ const thebe_selector_output = ".output, .cell_output"
 <p>Plot up the loss progression of over the training iterations:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots(1, 1)
 
-<span class="n">x_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+x_points = np.linspace(-1.5, 1.5, 1000)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">all_kls</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+plt.plot(all_kls, linewidth=3)
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;KL Divergence&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Iteration $t$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+ax.set_ylabel(&quot;KL Divergence&quot;, fontsize=16)
+ax.set_xlabel(&quot;Iteration $t$&quot;, fontsize=16)
+plt.show()
 </pre></div>
 </div>
 </div>
@@ -725,40 +735,40 @@ const thebe_selector_output = ".output, .cell_output"
 <p>We see that the KL divergence loss value is slowly plateauing, which means that our model has converged. Now, compare the initial model distribution to the final distribution and the training data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots(1, 1)
 
-<span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+points = np.linspace(-1.5, 1.5, 1000)
 
-<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
-    <span class="n">data_samples</span><span class="p">,</span>
-    <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Data&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-    <span class="n">points</span><span class="p">,</span>
-    <span class="n">model_density_function</span><span class="p">(</span>
-        <span class="n">points</span><span class="p">,</span> <span class="n">initial_model_parameters</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">initial_model_parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
-    <span class="p">),</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Initial Model&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-    <span class="n">points</span><span class="p">,</span>
-    <span class="n">model_density_function</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">model_parameters</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">model_parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">:]),</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Final Model&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Data Value&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+ax.hist(
+    data_samples,
+    bins=100,
+    density=True,
+    alpha=0.5,
+    edgecolor=&quot;royalblue&quot;,
+    linewidth=1,
+    label=&quot;Training Data&quot;,
+)
+ax.plot(
+    points,
+    model_density_function(
+        points, initial_model_parameters[:2], initial_model_parameters[2:]
+    ),
+    color=&quot;red&quot;,
+    linewidth=3,
+    label=&quot;Initial Model&quot;,
+)
+ax.plot(
+    points,
+    model_density_function(points, model_parameters[:2], model_parameters[2:]),
+    color=&quot;orange&quot;,
+    linewidth=3,
+    label=&quot;Final Model&quot;,
+)
+ax.legend(fontsize=15)
+ax.set_xlabel(&quot;Data Value&quot;, fontsize=16)
+ax.set_ylabel(&quot;Density&quot;, fontsize=16)
+ax.tick_params(labelsize=14)
+plt.show()
 </pre></div>
 </div>
 </div>
@@ -769,8 +779,8 @@ const thebe_selector_output = ".output, .cell_output"
 <p>While our inital parameter guess were quite good, the optimized parameters appear to define a model which describes the data much better. But let us not just guess. We (here at <a class="reference external" href="http://alqor.io">alqor.io</a>) know the <em>true</em> distribution from which the data was sampled. The “correct” parameters were:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mus</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">]</span>
-<span class="n">sigmas</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mus = [-0.4, 0.6]
+sigmas = [0.3, 0.15]
 </pre></div>
 </div>
 </div>
@@ -778,10 +788,10 @@ const thebe_selector_output = ".output, .cell_output"
 <p>When comparing this to our final trained parameters,</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_mus</span> <span class="o">=</span> <span class="n">model_parameters</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;model mus:&quot;</span><span class="p">,</span> <span class="n">model_mus</span><span class="p">)</span>
-<span class="n">model_sigmas</span> <span class="o">=</span> <span class="n">model_parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;model sigmas:&quot;</span><span class="p">,</span> <span class="n">model_sigmas</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model_mus = model_parameters[:2]
+print(&quot;model mus:&quot;, model_mus)
+model_sigmas = model_parameters[2:]
+print(&quot;model sigmas:&quot;, model_sigmas)
 </pre></div>
 </div>
 </div>
@@ -796,47 +806,47 @@ model sigmas: [0.3387956  0.14697371]
 <p>Plotting all distributions together makes it much clearer how much the training improved our model:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots(1, 1)
 
-<span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+points = np.linspace(-1.5, 1.5, 1000)
 
-<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
-    <span class="n">data_samples</span><span class="p">,</span>
-    <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Data&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-    <span class="n">points</span><span class="p">,</span>
-    <span class="n">model_density_function</span><span class="p">(</span>
-        <span class="n">points</span><span class="p">,</span> <span class="n">initial_model_parameters</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">initial_model_parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
-    <span class="p">),</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Initial Model&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-    <span class="n">points</span><span class="p">,</span>
-    <span class="n">model_density_function</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">model_parameters</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">model_parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">:]),</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Final Model&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-    <span class="n">points</span><span class="p">,</span>
-    <span class="n">model_density_function</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">mus</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">),</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Black&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;True Distribution&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Data Value&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+ax.hist(
+    data_samples,
+    bins=100,
+    density=True,
+    alpha=0.5,
+    edgecolor=&quot;royalblue&quot;,
+    linewidth=1,
+    label=&quot;Training Data&quot;,
+)
+ax.plot(
+    points,
+    model_density_function(
+        points, initial_model_parameters[:2], initial_model_parameters[2:]
+    ),
+    color=&quot;red&quot;,
+    linewidth=3,
+    label=&quot;Initial Model&quot;,
+)
+ax.plot(
+    points,
+    model_density_function(points, model_parameters[:2], model_parameters[2:]),
+    color=&quot;orange&quot;,
+    linewidth=3,
+    label=&quot;Final Model&quot;,
+)
+ax.plot(
+    points,
+    model_density_function(points, mus, sigmas),
+    color=&quot;Black&quot;,
+    linewidth=3,
+    label=&quot;True Distribution&quot;,
+)
+ax.legend(fontsize=15)
+ax.set_xlabel(&quot;Data Value&quot;, fontsize=16)
+ax.set_ylabel(&quot;Density&quot;, fontsize=16)
+ax.tick_params(labelsize=14)
+plt.show()
 </pre></div>
 </div>
 </div>
@@ -847,78 +857,78 @@ model sigmas: [0.3387956  0.14697371]
 <p>Lets sample 100 times from our newly trained model, and decide for yourself if you can spot a systematic difference:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sample_model_distribution</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">mus</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">):</span>
-    <span class="n">n_left_samples</span> <span class="o">=</span> <span class="n">n_samples</span> <span class="o">//</span> <span class="mi">2</span>
-    <span class="n">n_right_samples</span> <span class="o">=</span> <span class="n">n_samples</span> <span class="o">-</span> <span class="n">n_left_samples</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def sample_model_distribution(n_samples, mus, sigmas):
+    n_left_samples = n_samples // 2
+    n_right_samples = n_samples - n_left_samples
 
-    <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mus</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sigmas</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">n_left_samples</span><span class="p">),</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mus</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sigmas</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">n_right_samples</span><span class="p">),</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">samples</span>
+    samples = np.append(
+        np.random.normal(mus[0], sigmas[0], size=n_left_samples),
+        np.random.normal(mus[1], sigmas[1], size=n_right_samples),
+    )
+    return samples
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">generated_samples</span> <span class="o">=</span> <span class="n">sample_model_distribution</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">model_mus</span><span class="p">,</span> <span class="n">model_sigmas</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>np.random.seed(42)
+generated_samples = sample_model_distribution(100, model_mus, model_sigmas)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
-<span class="n">ax1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
-    <span class="n">data_samples</span><span class="p">,</span>
-    <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
-    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Data&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
-    <span class="n">generated_samples</span><span class="p">,</span>
-    <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
-    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Generated Data&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
-    <span class="n">data_samples</span><span class="p">,</span>
-    <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Data&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
-    <span class="n">generated_samples</span><span class="p">,</span>
-    <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Generated Data&quot;</span><span class="p">,</span>
-<span class="p">)</span>
+ax1.hist(
+    data_samples,
+    bins=15,
+    density=True,
+    alpha=0.5,
+    edgecolor=&quot;royalblue&quot;,
+    linewidth=2,
+    label=&quot;Training Data&quot;,
+)
+ax1.hist(
+    generated_samples,
+    bins=15,
+    density=True,
+    alpha=0.5,
+    edgecolor=&quot;red&quot;,
+    linewidth=2,
+    label=&quot;Generated Data&quot;,
+)
+ax2.hist(
+    data_samples,
+    bins=100,
+    density=True,
+    alpha=0.5,
+    edgecolor=&quot;royalblue&quot;,
+    linewidth=1,
+    label=&quot;Training Data&quot;,
+)
+ax2.hist(
+    generated_samples,
+    bins=100,
+    density=True,
+    alpha=0.5,
+    edgecolor=&quot;red&quot;,
+    linewidth=1,
+    label=&quot;Generated Data&quot;,
+)
 
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Wider Histogram Bins&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Thinner Histogram Bins&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Data Value&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Data Value&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+ax1.set_title(&quot;Wider Histogram Bins&quot;, fontsize=16)
+ax2.set_title(&quot;Thinner Histogram Bins&quot;, fontsize=16)
+ax1.set_xlabel(&quot;Data Value&quot;, fontsize=16)
+ax1.set_ylabel(&quot;Density&quot;, fontsize=16)
+ax2.set_xlabel(&quot;Data Value&quot;, fontsize=16)
+ax2.set_ylabel(&quot;Density&quot;, fontsize=16)
+ax1.tick_params(labelsize=14)
+ax2.tick_params(labelsize=14)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+plt.show()
 </pre></div>
 </div>
 </div>

@@ -215,6 +215,11 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="../qtech_basics/quantum_metrology.html">
+   Tutorial 2 - Quantum metrology
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../qtech_basics/bell_inequalities.html">
    Tutorial on the nobel prize 2022 - How to win Bell’s game
   </a>
@@ -249,6 +254,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../hardware_tutorial/quantum_hardware_104.html">
    Tutorial 4 - A few words about quantum computing with superconducting qubits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hardware_tutorial/quantum_hardware_105.html">
+   Tutorial 5 -Quantum simulation with cold atoms
   </a>
  </li>
 </ul>
@@ -444,11 +454,11 @@ const thebe_selector_output = ".output, .cell_output"
 <p>Lets get started and import the necessary Python tools.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+import matplotlib.pyplot as plt
 
-<span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span><span class="p">,</span> <span class="n">Parameter</span>
-<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">Aer</span>
+from qiskit.circuit import QuantumCircuit, Parameter
+from qiskit import Aer
 </pre></div>
 </div>
 </div>
@@ -461,37 +471,37 @@ where <span class="math notranslate nohighlight">\(\theta\)</span> are the param
 <p>Let us recollect the function that flexibly constructs a quantum circuit with any number of qubits <span class="math notranslate nohighlight">\(n\)</span> and layers <span class="math notranslate nohighlight">\(d\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_circuit</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">,</span> <span class="n">number_of_layers</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def get_circuit(number_of_qubits, number_of_layers):
 
-    <span class="n">number_of_parameters</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">number_of_qubits</span> <span class="o">*</span> <span class="n">number_of_layers</span>
-    <span class="n">thetas</span> <span class="o">=</span> <span class="p">[</span><span class="n">Parameter</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\theta$&quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ii</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_parameters</span><span class="p">)]</span>
+    number_of_parameters = 2 * number_of_qubits * number_of_layers
+    thetas = [Parameter(r&quot;$\theta$&quot; + f&quot;{ii+1}&quot;) for ii in range(number_of_parameters)]
 
-    <span class="c1"># initialize the qiskit circuit</span>
-    <span class="n">circuit</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">)</span>
+    # initialize the qiskit circuit
+    circuit = QuantumCircuit(number_of_qubits)
 
-    <span class="n">parameter_counter</span> <span class="o">=</span> <span class="mi">0</span>
+    parameter_counter = 0
 
-    <span class="c1"># loop over the layers of the quantum circuit</span>
-    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_layers</span><span class="p">):</span>
+    # loop over the layers of the quantum circuit
+    for l in range(number_of_layers):
 
-        <span class="c1"># apply a layer of RX rotations</span>
-        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">):</span>
-            <span class="n">circuit</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="n">parameter_counter</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span>
-            <span class="n">parameter_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+        # apply a layer of RX rotations
+        for n in range(number_of_qubits):
+            circuit.rx(thetas[parameter_counter], n)
+            parameter_counter += 1
 
-        <span class="c1"># apply a layer of RZ rotations</span>
-        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">):</span>
-            <span class="n">circuit</span><span class="o">.</span><span class="n">rz</span><span class="p">(</span><span class="n">thetas</span><span class="p">[</span><span class="n">parameter_counter</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span>
-            <span class="n">parameter_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+        # apply a layer of RZ rotations
+        for n in range(number_of_qubits):
+            circuit.rz(thetas[parameter_counter], n)
+            parameter_counter += 1
 
-        <span class="c1"># apply a layer of CNOTs</span>
-        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_qubits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="n">circuit</span><span class="o">.</span><span class="n">cnot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        # apply a layer of CNOTs
+        for n in range(number_of_qubits - 1):
+            circuit.cnot(n, n + 1)
 
-    <span class="c1"># instructions to measure all qubits</span>
-    <span class="n">circuit</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+    # instructions to measure all qubits
+    circuit.measure_all()
 
-    <span class="k">return</span> <span class="n">circuit</span>
+    return circuit
 </pre></div>
 </div>
 </div>
@@ -499,11 +509,11 @@ where <span class="math notranslate nohighlight">\(\theta\)</span> are the param
 <p>For  <span class="math notranslate nohighlight">\(n=4\)</span> and <span class="math notranslate nohighlight">\(d=2\)</span>, the quantum circuit looks like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">number_of_qubits</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">number_of_layers</span> <span class="o">=</span> <span class="mi">2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>number_of_qubits = 4
+number_of_layers = 2
 
-<span class="n">circuit</span> <span class="o">=</span> <span class="n">get_circuit</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">,</span> <span class="n">number_of_layers</span><span class="p">)</span>
-<span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+circuit = get_circuit(number_of_qubits, number_of_layers)
+circuit.draw(&quot;mpl&quot;)
 </pre></div>
 </div>
 </div>
@@ -514,31 +524,31 @@ where <span class="math notranslate nohighlight">\(\theta\)</span> are the param
 <p>The dataset that we constructed last time was a discretized version of the dataset used in Part 1 and Part 2 of our tutorial series:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">training_data_dict</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;0000&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s2">&quot;0001&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="s2">&quot;0010&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-    <span class="s2">&quot;0011&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-    <span class="s2">&quot;0100&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-    <span class="s2">&quot;0101&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-    <span class="s2">&quot;0110&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
-    <span class="s2">&quot;0111&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
-    <span class="s2">&quot;1000&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
-    <span class="s2">&quot;1001&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-    <span class="s2">&quot;1010&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-    <span class="s2">&quot;1011&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
-    <span class="s2">&quot;1100&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span>
-    <span class="s2">&quot;1101&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span>
-    <span class="s2">&quot;1110&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
-    <span class="s2">&quot;1111&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-<span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>training_data_dict = {
+    &quot;0000&quot;: 1,
+    &quot;0001&quot;: 0,
+    &quot;0010&quot;: 2,
+    &quot;0011&quot;: 4,
+    &quot;0100&quot;: 4,
+    &quot;0101&quot;: 10,
+    &quot;0110&quot;: 7,
+    &quot;0111&quot;: 9,
+    &quot;1000&quot;: 7,
+    &quot;1001&quot;: 5,
+    &quot;1010&quot;: 3,
+    &quot;1011&quot;: 8,
+    &quot;1100&quot;: 14,
+    &quot;1101&quot;: 19,
+    &quot;1110&quot;: 6,
+    &quot;1111&quot;: 1,
+}
 
-<span class="c1"># normalize the counts to be interpreted as probabilities</span>
-<span class="n">count_sum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-<span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">training_data_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="n">training_data_dict</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">/</span> <span class="n">count_sum</span>
+# normalize the counts to be interpreted as probabilities
+count_sum = sum(training_data_dict.values())
+for x, prob in training_data_dict.items():
+    training_data_dict[x] = prob / count_sum
 
-<span class="nb">print</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">)</span>
+print(training_data_dict)
 </pre></div>
 </div>
 </div>
@@ -551,21 +561,21 @@ where <span class="math notranslate nohighlight">\(\theta\)</span> are the param
 <p>For convenience, let us define a function to get samples from our model given a circuit and a vector of parameters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simulator</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s2">&quot;aer_simulator&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>simulator = Aer.get_backend(&quot;aer_simulator&quot;)
 
 
-<span class="k">def</span> <span class="nf">get_model_dict</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
-    <span class="c1"># bind the circuit parameters to numbers</span>
-    <span class="n">circuit_with_params</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">bind_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+def get_model_dict(circuit, parameters):
+    # bind the circuit parameters to numbers
+    circuit_with_params = circuit.bind_parameters(parameters)
 
-    <span class="c1"># run the circuit and get the result</span>
+    # run the circuit and get the result
 
-    <span class="n">result</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circuit_with_params</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+    result = simulator.run(circuit_with_params, shots=10000).result()
 
-    <span class="c1"># extract the measurement counts as a python dictionary</span>
-    <span class="n">model_dict</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+    # extract the measurement counts as a python dictionary
+    model_dict = result.get_counts()
 
-    <span class="k">return</span> <span class="n">model_dict</span>
+    return model_dict
 </pre></div>
 </div>
 </div>
@@ -573,49 +583,49 @@ where <span class="math notranslate nohighlight">\(\theta\)</span> are the param
 <p>With a random initial guess for our parameter vector <span class="math notranslate nohighlight">\(\theta\)</span>, we can plot the quantum circuit model distribution together with the dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>np.random.seed(42)
 
-<span class="c1"># the quantum circuit has 2*n*d parameters</span>
-<span class="n">number_of_parameters</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">number_of_qubits</span> <span class="o">*</span> <span class="n">number_of_layers</span>
+# the quantum circuit has 2*n*d parameters
+number_of_parameters = 2 * number_of_qubits * number_of_layers
 
-<span class="c1"># define value for the initial parameters</span>
-<span class="n">parameters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">number_of_parameters</span><span class="p">)</span>
+# define value for the initial parameters
+parameters = np.random.uniform(0, 2 * np.pi, size=number_of_parameters)
 
-<span class="c1"># get the model dict using our function</span>
-<span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+# get the model dict using our function
+model_dict = get_model_dict(circuit, parameters)
 
-<span class="c1"># for convenience sort by binary order</span>
-<span class="n">model_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+# for convenience sort by binary order
+model_dict = dict(sorted(model_dict.items()))
 
-<span class="c1"># do the plotting</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+# do the plotting
+fig, ax = plt.subplots(1, 1)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
-    <span class="n">training_data_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
-    <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>  <span class="c1"># turn the counts into probabilities</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Distribution&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
-    <span class="n">model_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
-    <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>  <span class="c1"># turn the counts into probabilities</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Model Distribution&quot;</span><span class="p">,</span>
-<span class="p">)</span>
+plt.bar(
+    training_data_dict.keys(),
+    np.array(list(training_data_dict.values()))
+    / sum(training_data_dict.values()),  # turn the counts into probabilities
+    alpha=0.5,
+    edgecolor=&quot;royalblue&quot;,
+    linewidth=2,
+    label=&quot;Training Distribution&quot;,
+)
+plt.bar(
+    model_dict.keys(),
+    np.array(list(model_dict.values()))
+    / sum(model_dict.values()),  # turn the counts into probabilities
+    alpha=0.5,
+    edgecolor=&quot;red&quot;,
+    linewidth=2,
+    label=&quot;Model Distribution&quot;,
+)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Counts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Outcome&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+plt.xticks(rotation=&quot;vertical&quot;)
+plt.legend(fontsize=15)
+ax.set_ylabel(&quot;Counts&quot;, fontsize=16)
+ax.set_xlabel(&quot;Outcome&quot;, fontsize=16)
+ax.tick_params(labelsize=14)
+plt.ylim(0, 0.30)
+plt.show()
 </pre></div>
 </div>
 </div>
@@ -629,29 +639,29 @@ where <span class="math notranslate nohighlight">\(\theta\)</span> are the param
 <p>which measures the similarity between data generated from our model and from the dataset. The KL divergence approaches <span class="math notranslate nohighlight">\(0\)</span> if the distributions match perfectly, i.e.,  <span class="math notranslate nohighlight">\(p_{data} = p_{model}\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">kl_divergence</span><span class="p">(</span><span class="n">data_distribution</span><span class="p">,</span> <span class="n">model_distribution</span><span class="p">):</span>
-    <span class="c1"># we will require a small offset &quot;e&quot; to avoid possible log(0) singularities</span>
-    <span class="n">e</span> <span class="o">=</span> <span class="mf">1e-6</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def kl_divergence(data_distribution, model_distribution):
+    # we will require a small offset &quot;e&quot; to avoid possible log(0) singularities
+    e = 1e-6
 
-    <span class="c1"># make sure the values in the dictionaries add up to 1</span>
-    <span class="n">sum_data</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">data_distribution</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-    <span class="n">sum_model</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">model_distribution</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-    <span class="k">for</span> <span class="n">bin_outcome</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">data_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">data_distribution</span><span class="p">[</span><span class="n">bin_outcome</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">count</span> <span class="o">/</span> <span class="n">sum_data</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">bin_outcome</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">model_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">model_distribution</span><span class="p">[</span><span class="n">bin_outcome</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">count</span> <span class="o">/</span> <span class="n">sum_model</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    # make sure the values in the dictionaries add up to 1
+    sum_data = sum(data_distribution.values())
+    sum_model = sum(model_distribution.values())
+    for bin_outcome, count in data_distribution.items():
+        data_distribution[bin_outcome] = max(count / sum_data, e)
+    for bin_outcome, count in model_distribution.items():
+        model_distribution[bin_outcome] = max(count / sum_model, e)
 
-    <span class="c1"># calculate the first term in the KL divergence formula</span>
-    <span class="n">term1</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">bin_outcome</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">data_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">term1</span> <span class="o">+=</span> <span class="n">prob</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span>
+    # calculate the first term in the KL divergence formula
+    term1 = 0
+    for bin_outcome, prob in data_distribution.items():
+        term1 += prob * np.log(prob)
 
-    <span class="c1"># calculate the second term in the KL divergence formula</span>
-    <span class="n">term2</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">bin_outcome</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">data_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">term2</span> <span class="o">+=</span> <span class="n">prob</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">model_distribution</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">bin_outcome</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+    # calculate the second term in the KL divergence formula
+    term2 = 0
+    for bin_outcome, prob in data_distribution.items():
+        term2 += prob * np.log(model_distribution.get(bin_outcome, e))
 
-    <span class="k">return</span> <span class="n">term1</span> <span class="o">-</span> <span class="n">term2</span>
+    return term1 - term2
 </pre></div>
 </div>
 </div>
@@ -659,7 +669,7 @@ where <span class="math notranslate nohighlight">\(\theta\)</span> are the param
 <p>For our random initial parameter guess we can estimate the KL divergence value and obtain:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>kl_divergence(training_data_dict, model_dict)
 </pre></div>
 </div>
 </div>
@@ -678,32 +688,32 @@ where <span class="math notranslate nohighlight">\(\theta\)</span> are the param
 <p>with a small <span class="math notranslate nohighlight">\(\epsilon\)</span> (epsilon).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate_gradient</span><span class="p">(</span><span class="n">model_parameters</span><span class="p">,</span> <span class="n">circuit</span><span class="p">,</span> <span class="n">finite_distance_eps</span><span class="p">):</span>
-    <span class="n">gradient_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model_parameters</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def calculate_gradient(model_parameters, circuit, finite_distance_eps):
+    gradient_vector = np.zeros(len(model_parameters))
 
-    <span class="c1"># loop over all parameters</span>
-    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model_parameters</span><span class="p">)):</span>
-        <span class="c1"># define the eps vector in the direction of the parameter</span>
-        <span class="n">delta_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model_parameters</span><span class="p">))</span>
-        <span class="n">delta_vector</span><span class="p">[</span><span class="n">kk</span><span class="p">]</span> <span class="o">=</span> <span class="n">finite_distance_eps</span>
+    # loop over all parameters
+    for kk in range(len(model_parameters)):
+        # define the eps vector in the direction of the parameter
+        delta_vector = np.zeros(len(model_parameters))
+        delta_vector[kk] = finite_distance_eps
 
-        <span class="c1"># add or subtract eps from the parameter</span>
-        <span class="n">params_plus</span> <span class="o">=</span> <span class="n">model_parameters</span> <span class="o">+</span> <span class="n">delta_vector</span>
-        <span class="n">params_minus</span> <span class="o">=</span> <span class="n">model_parameters</span> <span class="o">-</span> <span class="n">delta_vector</span>
+        # add or subtract eps from the parameter
+        params_plus = model_parameters + delta_vector
+        params_minus = model_parameters - delta_vector
 
-        <span class="c1"># get the corresponding measurements from the quantum circuit</span>
-        <span class="n">model_dict_plus</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">params_plus</span><span class="p">)</span>
-        <span class="n">model_dict_minus</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">params_minus</span><span class="p">)</span>
+        # get the corresponding measurements from the quantum circuit
+        model_dict_plus = get_model_dict(circuit, params_plus)
+        model_dict_minus = get_model_dict(circuit, params_minus)
 
-        <span class="c1"># calculate the KL divergence values</span>
-        <span class="n">kl_plus</span> <span class="o">=</span> <span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict_plus</span><span class="p">)</span>
-        <span class="n">kl_minus</span> <span class="o">=</span> <span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict_minus</span><span class="p">)</span>
+        # calculate the KL divergence values
+        kl_plus = kl_divergence(training_data_dict, model_dict_plus)
+        kl_minus = kl_divergence(training_data_dict, model_dict_minus)
 
-        <span class="c1"># calculate the finite difference gradient</span>
-        <span class="n">gradient</span> <span class="o">=</span> <span class="p">(</span><span class="n">kl_plus</span> <span class="o">-</span> <span class="n">kl_minus</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">finite_distance_eps</span><span class="p">)</span>
-        <span class="n">gradient_vector</span><span class="p">[</span><span class="n">kk</span><span class="p">]</span> <span class="o">=</span> <span class="n">gradient</span>
+        # calculate the finite difference gradient
+        gradient = (kl_plus - kl_minus) / (2 * finite_distance_eps)
+        gradient_vector[kk] = gradient
 
-    <span class="k">return</span> <span class="n">gradient_vector</span>
+    return gradient_vector
 </pre></div>
 </div>
 </div>
@@ -711,7 +721,7 @@ where <span class="math notranslate nohighlight">\(\theta\)</span> are the param
 <p>This time, we choose <span class="math notranslate nohighlight">\(\epsilon = 0.05\)</span>, which is a little larger than last time. We do this because we want to be able to confidently differentiate the two evaluations of the model at <span class="math notranslate nohighlight">\(2\epsilon\)</span> different parameters with a finite number of samples from the quantum computer.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eps</span> <span class="o">=</span> <span class="mf">5e-2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>eps = 5e-2
 </pre></div>
 </div>
 </div>
@@ -722,42 +732,42 @@ where <span class="math notranslate nohighlight">\(\theta\)</span> are the param
 <p>with a <em>learning rate</em> <span class="math notranslate nohighlight">\(\eta\)</span> (eta), where <span class="math notranslate nohighlight">\(t\)</span> is the training iteration index.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># to keep track of the progress</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># to keep track of the progress
+from tqdm import tqdm
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%time
 
-<span class="c1"># generate initial random parameters</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">parameters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">number_of_parameters</span><span class="p">)</span>
+# generate initial random parameters
+np.random.seed(42)
+parameters = np.random.uniform(0, 2 * np.pi, size=number_of_parameters)
 
-<span class="c1"># learning rate and number of iterations</span>
-<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.1</span>
-<span class="n">T</span> <span class="o">=</span> <span class="mi">100</span>
+# learning rate and number of iterations
+learning_rate = 0.1
+T = 100
 
-<span class="n">all_kls</span> <span class="o">=</span> <span class="p">[]</span>
+all_kls = []
 
-<span class="c1"># evaluate and record the initial KL divergence loss</span>
-<span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
-<span class="n">all_kls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">))</span>
+# evaluate and record the initial KL divergence loss
+model_dict = get_model_dict(circuit, parameters)
+all_kls.append(kl_divergence(training_data_dict, model_dict))
 
-<span class="c1"># train!</span>
-<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">)):</span>
-    <span class="c1"># one gradient descent step</span>
-    <span class="n">gradient_vector</span> <span class="o">=</span> <span class="n">calculate_gradient</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">circuit</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
-    <span class="n">parameters</span> <span class="o">-=</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">gradient_vector</span>
+# train!
+for t in tqdm(range(T)):
+    # one gradient descent step
+    gradient_vector = calculate_gradient(parameters, circuit, eps)
+    parameters -= learning_rate * gradient_vector
 
-    <span class="c1"># evaluate and record the KL divergence loss</span>
-    <span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
-    <span class="n">all_kls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">))</span>
+    # evaluate and record the KL divergence loss
+    model_dict = get_model_dict(circuit, parameters)
+    all_kls.append(kl_divergence(training_data_dict, model_dict))
 
 
-<span class="n">final_parameters</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+final_parameters = parameters.copy()
 </pre></div>
 </div>
 </div>
@@ -777,14 +787,14 @@ Wall time: 1min 9s
 <p>And plot up the optimization results:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots(1, 1)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">all_kls</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+plt.plot(all_kls, linewidth=3)
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;KL Divergence&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Iteration $t$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+ax.set_ylabel(&quot;KL Divergence&quot;, fontsize=16)
+ax.set_xlabel(&quot;Iteration $t$&quot;, fontsize=16)
+plt.ylim(0, 2)
+plt.show()
 </pre></div>
 </div>
 </div>
@@ -795,45 +805,45 @@ Wall time: 1min 9s
 <p>This is a lot of improvement in terms of the KL divergence! To visually confirm that the freshly optimized model represents the data distribution much better, let us plot the model distribution together with the training data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>np.random.seed(42)
 
-<span class="c1"># get the model dict using our function</span>
-<span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">final_parameters</span><span class="p">)</span>
+# get the model dict using our function
+model_dict = get_model_dict(circuit, final_parameters)
 
-<span class="c1"># for convenience sort by binary order</span>
-<span class="n">model_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+# for convenience sort by binary order
+model_dict = dict(sorted(model_dict.items()))
 
-<span class="c1"># do the plotting</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+# do the plotting
+fig, ax = plt.subplots(1, 1)
 
-<span class="n">x_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+x_points = np.linspace(-1.5, 1.5, 1000)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
-    <span class="n">training_data_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
-    <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>  <span class="c1"># turn the counts into probabilities</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Distribution&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
-    <span class="n">model_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
-    <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>  <span class="c1"># turn the counts into probabilities</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimized Model Distribution, d=2&quot;</span><span class="p">,</span>
-<span class="p">)</span>
+plt.bar(
+    training_data_dict.keys(),
+    np.array(list(training_data_dict.values()))
+    / sum(training_data_dict.values()),  # turn the counts into probabilities
+    alpha=0.5,
+    edgecolor=&quot;royalblue&quot;,
+    linewidth=2,
+    label=&quot;Training Distribution&quot;,
+)
+plt.bar(
+    model_dict.keys(),
+    np.array(list(model_dict.values()))
+    / sum(model_dict.values()),  # turn the counts into probabilities
+    alpha=0.5,
+    edgecolor=&quot;red&quot;,
+    linewidth=2,
+    label=&quot;Optimized Model Distribution, d=2&quot;,
+)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Counts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Outcome&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+plt.xticks(rotation=&quot;vertical&quot;)
+plt.legend(fontsize=15)
+ax.set_ylabel(&quot;Counts&quot;, fontsize=16)
+ax.set_xlabel(&quot;Outcome&quot;, fontsize=16)
+ax.tick_params(labelsize=14)
+plt.ylim(0, 0.30)
+plt.show()
 </pre></div>
 </div>
 </div>
@@ -849,10 +859,10 @@ Wall time: 1min 9s
 <p>Remember that we defined the number of layers <span class="math notranslate nohighlight">\(d=2\)</span>, which gave us the circuit layout that you can see above. How would this all have worked if we used <span class="math notranslate nohighlight">\(d=1\)</span>, i.e., only one layer of entangling <em>CNOT</em> gates? This exploration is similar to our QML 104 tutorial, which you can find <a class="reference external" href="https://alqor.io/tutorials/a-beginners-guide-to-quantum-machine-learning">here</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">number_of_layers</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>number_of_layers = 1
 
-<span class="n">circuit1</span> <span class="o">=</span> <span class="n">get_circuit</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">,</span> <span class="n">number_of_layers</span><span class="p">)</span>
-<span class="n">circuit1</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+circuit1 = get_circuit(number_of_qubits, number_of_layers)
+circuit1.draw(&quot;mpl&quot;)
 </pre></div>
 </div>
 </div>
@@ -863,36 +873,36 @@ Wall time: 1min 9s
 <p>Train it …</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%time
 
-<span class="n">number_of_parameters1</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">number_of_qubits</span> <span class="o">*</span> <span class="n">number_of_layers</span>
+number_of_parameters1 = 2 * number_of_qubits * number_of_layers
 
-<span class="c1"># generate initial random parameters</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">parameters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">number_of_parameters1</span><span class="p">)</span>
+# generate initial random parameters
+np.random.seed(42)
+parameters = np.random.uniform(0, 2 * np.pi, size=number_of_parameters1)
 
-<span class="c1"># learning rate and number of iterations</span>
-<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.1</span>
-<span class="n">T</span> <span class="o">=</span> <span class="mi">100</span>
+# learning rate and number of iterations
+learning_rate = 0.1
+T = 100
 
-<span class="n">all_kls1</span> <span class="o">=</span> <span class="p">[]</span>
+all_kls1 = []
 
-<span class="c1"># evaluate and record the initial KL divergence loss</span>
-<span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit1</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
-<span class="n">all_kls1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">))</span>
+# evaluate and record the initial KL divergence loss
+model_dict = get_model_dict(circuit1, parameters)
+all_kls1.append(kl_divergence(training_data_dict, model_dict))
 
-<span class="c1"># train!</span>
-<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">)):</span>
-    <span class="c1"># one gradient descent step</span>
-    <span class="n">gradient_vector</span> <span class="o">=</span> <span class="n">calculate_gradient</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">circuit1</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
-    <span class="n">parameters</span> <span class="o">-=</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">gradient_vector</span>
+# train!
+for t in tqdm(range(T)):
+    # one gradient descent step
+    gradient_vector = calculate_gradient(parameters, circuit1, eps)
+    parameters -= learning_rate * gradient_vector
 
-    <span class="c1"># evaluate and record the KL divergence loss</span>
-    <span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit1</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
-    <span class="n">all_kls1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">))</span>
+    # evaluate and record the KL divergence loss
+    model_dict = get_model_dict(circuit1, parameters)
+    all_kls1.append(kl_divergence(training_data_dict, model_dict))
 
 
-<span class="n">final_parameters1</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+final_parameters1 = parameters.copy()
 </pre></div>
 </div>
 </div>
@@ -912,16 +922,16 @@ Wall time: 35.1 s
 <p>… and plot it together with the previous run with <span class="math notranslate nohighlight">\(d=2\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots(1, 1)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">all_kls1</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;d=1 layer&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">all_kls</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;d=2 layers&quot;</span><span class="p">)</span>
+plt.plot(all_kls1, linewidth=3, label=&quot;d=1 layer&quot;)
+plt.plot(all_kls, linewidth=3, label=&quot;d=2 layers&quot;)
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;KL Divergence&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Iteration $t$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+ax.set_ylabel(&quot;KL Divergence&quot;, fontsize=16)
+ax.set_xlabel(&quot;Iteration $t$&quot;, fontsize=16)
+plt.legend(fontsize=14)
+plt.ylim(0, 2)
+plt.show()
 </pre></div>
 </div>
 </div>
@@ -932,45 +942,45 @@ Wall time: 35.1 s
 <p>We can see that <span class="math notranslate nohighlight">\(d=2\)</span> reaches slightly better KL divergence values than <span class="math notranslate nohighlight">\(d=1\)</span>. Let’s try the more adventurous <span class="math notranslate nohighlight">\(d = 5\)</span> and compare.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">number_of_layers</span> <span class="o">=</span> <span class="mi">5</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>number_of_layers = 5
 
-<span class="n">circuit5</span> <span class="o">=</span> <span class="n">get_circuit</span><span class="p">(</span><span class="n">number_of_qubits</span><span class="p">,</span> <span class="n">number_of_layers</span><span class="p">)</span>
+circuit5 = get_circuit(number_of_qubits, number_of_layers)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%time
 
-<span class="n">number_of_parameters5</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">number_of_qubits</span> <span class="o">*</span> <span class="n">number_of_layers</span>
+number_of_parameters5 = 2 * number_of_qubits * number_of_layers
 
-<span class="c1"># generate initial random parameters</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">parameters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">number_of_parameters5</span><span class="p">)</span>
+# generate initial random parameters
+np.random.seed(42)
+parameters = np.random.uniform(0, 2 * np.pi, size=number_of_parameters5)
 
-<span class="c1"># learning rate and number of iterations</span>
-<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.1</span>
-<span class="n">T</span> <span class="o">=</span> <span class="mi">100</span>
+# learning rate and number of iterations
+learning_rate = 0.1
+T = 100
 
-<span class="n">all_kls5</span> <span class="o">=</span> <span class="p">[]</span>
+all_kls5 = []
 
-<span class="c1"># evaluate and record the initial KL divergence loss</span>
-<span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit5</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
-<span class="n">all_kls5</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">))</span>
+# evaluate and record the initial KL divergence loss
+model_dict = get_model_dict(circuit5, parameters)
+all_kls5.append(kl_divergence(training_data_dict, model_dict))
 
-<span class="c1"># train!</span>
-<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">)):</span>
-    <span class="c1"># one gradient descent step</span>
-    <span class="n">gradient_vector</span> <span class="o">=</span> <span class="n">calculate_gradient</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">circuit5</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
-    <span class="n">parameters</span> <span class="o">-=</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">gradient_vector</span>
+# train!
+for t in tqdm(range(T)):
+    # one gradient descent step
+    gradient_vector = calculate_gradient(parameters, circuit5, eps)
+    parameters -= learning_rate * gradient_vector
 
-    <span class="c1"># evaluate and record the KL divergence loss</span>
-    <span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit5</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
-    <span class="n">all_kls5</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kl_divergence</span><span class="p">(</span><span class="n">training_data_dict</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">))</span>
+    # evaluate and record the KL divergence loss
+    model_dict = get_model_dict(circuit5, parameters)
+    all_kls5.append(kl_divergence(training_data_dict, model_dict))
 
 
-<span class="n">final_parameters5</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+final_parameters5 = parameters.copy()
 </pre></div>
 </div>
 </div>
@@ -990,17 +1000,17 @@ Wall time: 3min 21s
 <p>Plot up all KL divergences that we collected:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots(1, 1)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">all_kls1</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;d=1 layers&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">all_kls</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;d=2 layers&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">all_kls5</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;d=5 layers&quot;</span><span class="p">)</span>
+plt.plot(all_kls1, linewidth=3, label=&quot;d=1 layers&quot;)
+plt.plot(all_kls, linewidth=3, label=&quot;d=2 layers&quot;)
+plt.plot(all_kls5, linewidth=3, label=&quot;d=5 layers&quot;)
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;KL Divergence&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Iteration $t$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+ax.set_ylabel(&quot;KL Divergence&quot;, fontsize=16)
+ax.set_xlabel(&quot;Iteration $t$&quot;, fontsize=16)
+plt.legend(fontsize=14)
+plt.ylim(0, 2)
+plt.show()
 </pre></div>
 </div>
 </div>
@@ -1011,43 +1021,43 @@ Wall time: 3min 21s
 <p><span class="math notranslate nohighlight">\(d=5\)</span> enables the KL divergence to go much lower, and approach the perfect value of <span class="math notranslate nohighlight">\(KL = 0\)</span>. The corresponding model distribution looks like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>np.random.seed(42)
 
-<span class="c1"># get the model dict using our function</span>
-<span class="n">model_dict</span> <span class="o">=</span> <span class="n">get_model_dict</span><span class="p">(</span><span class="n">circuit5</span><span class="p">,</span> <span class="n">final_parameters5</span><span class="p">)</span>
+# get the model dict using our function
+model_dict = get_model_dict(circuit5, final_parameters5)
 
-<span class="c1"># for convenience sort by binary order</span>
-<span class="n">model_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+# for convenience sort by binary order
+model_dict = dict(sorted(model_dict.items()))
 
-<span class="c1"># do the plotting</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+# do the plotting
+fig, ax = plt.subplots(1, 1)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
-    <span class="n">training_data_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
-    <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">training_data_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>  <span class="c1"># turn the counts into probabilities</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Distribution&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
-    <span class="n">model_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
-    <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">model_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>  <span class="c1"># turn the counts into probabilities</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimized Model Distribution, d=5&quot;</span><span class="p">,</span>
-<span class="p">)</span>
+plt.bar(
+    training_data_dict.keys(),
+    np.array(list(training_data_dict.values()))
+    / sum(training_data_dict.values()),  # turn the counts into probabilities
+    alpha=0.5,
+    edgecolor=&quot;royalblue&quot;,
+    linewidth=2,
+    label=&quot;Training Distribution&quot;,
+)
+plt.bar(
+    model_dict.keys(),
+    np.array(list(model_dict.values()))
+    / sum(model_dict.values()),  # turn the counts into probabilities
+    alpha=0.5,
+    edgecolor=&quot;red&quot;,
+    linewidth=2,
+    label=&quot;Optimized Model Distribution, d=5&quot;,
+)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Counts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Outcome&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+plt.xticks(rotation=&quot;vertical&quot;)
+plt.legend(fontsize=15)
+ax.set_ylabel(&quot;Counts&quot;, fontsize=16)
+ax.set_xlabel(&quot;Outcome&quot;, fontsize=16)
+ax.tick_params(labelsize=14)
+plt.ylim(0, 0.30)
+plt.show()
 </pre></div>
 </div>
 </div>
