@@ -32,5 +32,6 @@ parts:
     - file: hardware_tutorial/quantum_hardware_102
     - file: hardware_tutorial/quantum_hardware_103
     - file: hardware_tutorial/quantum_hardware_104
+    - file: hardware_tutorial/quantum_hardware_105
 
   
