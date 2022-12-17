@@ -5,4 +5,4 @@
 ## Licence
 ![](https://i.creativecommons.org/l/by/4.0/88x31.png)
 
-All the content of the `book` folder is licensed under a [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/). It is further specified in the [LICENCE](LICENCE.md) file.
+All the content of the `book` folder is licensed under a [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/). It is further specified in the [LICENSE](LICENSE.md) file.
