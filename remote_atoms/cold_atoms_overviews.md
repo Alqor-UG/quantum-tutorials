@@ -111,3 +111,18 @@ remote_counts_rabi = result_rabi.get_counts()
 ---
 
 ## Executing the job
+
+- The control PC for the cold atom device pulls the job from the queue.
+- The job is executed on the cold atom device.
+- The results are sent back to the storage.
+- Alice can retrieve the results.
+- All of this is done with the `sqooler` library that is installed on the control PC.
+
+---
+
+## Summary
+
+![bg fit left:33%](SoftwareStack.png)
+
+
+Add nice colors for Alice and Bob such that it is recognizable who is doing what.

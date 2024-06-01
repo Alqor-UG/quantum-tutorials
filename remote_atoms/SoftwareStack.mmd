@@ -1,0 +1,16 @@
+block-beta
+    columns 2
+    qiskit["qiskit-cold-atoms"]:2
+    space:2
+    web["qlued webserver"]:2
+    space:2
+    storage[("Storage")]:2
+    space:2
+    labscript:2
+    hardware:2
+    qiskit-- "communicate through API" --> web
+    web -- "communicate through API" --> qiskit
+    web -- "sqooler" --> storage
+    storage -- "sqooler" --> web
+    storage -- "sqooler" --> labscript
+    labscript -- "sqooler" --> storage
