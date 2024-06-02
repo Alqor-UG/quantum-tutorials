@@ -1,14 +1,14 @@
 ---
 marp: true
 theme: uncover
-
+paginate: true
 ---
 
 # Cloud control for cold atoms
 
 Presented by
 
-Fred Jendrzejewski, i.e. [fretchen](https://linktr.ee/fretchen)
+Fred J - aka [fretchen](https://linktr.ee/fretchen)
 
 ---
 
@@ -118,6 +118,6 @@ remote_counts_rabi = result_rabi.get_counts()
 
 ![bg fit left:33%](SoftwareStack.svg)
 
-- <span style="color:#2ac082;">Alice</span> was able to write quantum circuits in the widely used QISKIT framework.
-- <span style="color:#ff9900;">Bob</span> could control his machine through his standard `labscript` software.
-- Both could communicate through an open source software framework involving `qlued` and `sqooler`.
+- <span style="color:#2ac082;">Alice</span> was able to write quantum circuits in the widely used QISKIT.
+- <span style="color:#ff9900;">Bob</span> could control his machine through `labscript` software.
+- Both could communicate through open source involving `qlued` and `sqooler`.
