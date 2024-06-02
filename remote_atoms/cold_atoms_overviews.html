@@ -34,8 +34,8 @@
 </ul>
 </section>
 </foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-theme="uncover" lang="de-DE" style="" data-marpit-advanced-background="pseudo" data-marpit-advanced-background-split="left"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-theme="uncover" lang="de-DE" style="--theme:uncover;--marpit-advanced-background-split:33%;" data-marpit-advanced-background="background" data-marpit-advanced-background-split="left"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;tutorials_09_ryberg_dynamics_3_0.png&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="67%" height="720" x="33%"><section id="4" data-theme="uncover" lang="de-DE" style="--theme:uncover;--marpit-advanced-background-split:33%;" data-marpit-advanced-background="content" data-marpit-advanced-background-split="left">
-<h2 id="alice-first-step">Alice first step</h2>
-<p>Write a quantum circuit in<br />
+<h2 id="span-stylecolor2ac082alicespan-uses-qiskit"><span style="color:#2ac082;">Alice</span> uses QISKIT</h2>
+<p>Write the quantum circuit in<br />
 <a href="https://github.com/qiskit-community/qiskit-cold-atom">qiskit-cold-atom</a>.</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python">Nwires = <span class="hljs-number">2</span>
 qc_rabi = QuantumCircuit(QuantumRegister(Nwires, <span class="hljs-string">&quot;spin&quot;</span>))
@@ -50,8 +50,8 @@ qc_rabi.draw(output=<span class="hljs-string">&#x27;mpl&#x27;</span>)
 </code></pre>
 </section>
 </foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-theme="uncover" lang="de-DE" style="" data-marpit-advanced-background="pseudo" data-marpit-advanced-background-split="left"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="5" data-theme="uncover" lang="de-DE" style="--theme:uncover;">
-<h2 id="calculate-it-locally">Calculate it locally</h2>
-<p>For small circuits Alice can simply execute the code locally.</p>
+<h2 id="span-stylecolor2ac082alicespan-calculates-locally"><span style="color:#2ac082;">Alice</span> calculates locally</h2>
+<p>For small circuits <span style="color:#2ac082;">Alice</span> can simply execute the code on her own machine.</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-keyword">from</span> qiskit_cold_atom.spins <span class="hljs-keyword">import</span> SpinSimulator
 
 backend = SpinSimulator()
@@ -67,8 +67,8 @@ counts_rabi = result_rabi.get_counts()
 <p><code>SpinSimulator</code> is a local simulator for cold atoms and works for up to 10 spins.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="6" data-theme="uncover" lang="de-DE" style="--theme:uncover;">
-<h2 id="choosing-a-cloud-backend">Choosing a cloud backend</h2>
-<p>For more complex problem Alice can send the code to a cloud backend with <code>ColdAtomProvider</code>.</p>
+<h2 id="span-stylecolor2ac082alicespan-chooses-a-cloud-backend"><span style="color:#2ac082;">Alice</span> chooses a cloud backend</h2>
+<p>For more complex problem <span style="color:#2ac082;">Alice</span> can send the code to a cloud backend with <code>ColdAtomProvider</code>.</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-keyword">from</span> qiskit_cold_atom.providers <span class="hljs-keyword">import</span> ColdAtomProvider
 
 cloud_backend = ColdAtomProvider()
@@ -79,7 +79,7 @@ remote_counts_rabi = result_rabi.get_counts()
 </code></pre>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-theme="uncover" lang="de-DE" style="--theme:uncover;--marpit-advanced-background-split:33%;" data-marpit-advanced-background="background" data-marpit-advanced-background-split="left"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;json.png&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="67%" height="720" x="33%"><section id="7" data-theme="uncover" lang="de-DE" style="--theme:uncover;--marpit-advanced-background-split:33%;" data-marpit-advanced-background="content" data-marpit-advanced-background-split="left">
-<h2 id="sending-the-json">Sending the json</h2>
+<h2 id="span-stylecolor2ac082alicespan-sends-the-json"><span style="color:#2ac082;">Alice</span> sends the json</h2>
 
 <ul>
 <li>Alice sent a json file to the webserver.</li>
@@ -88,21 +88,19 @@ remote_counts_rabi = result_rabi.get_counts()
 </ul>
 </section>
 </foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-theme="uncover" lang="de-DE" style="" data-marpit-advanced-background="pseudo" data-marpit-advanced-background-split="left"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="8" data-theme="uncover" lang="de-DE" style="--theme:uncover;">
-<h2 id="executing-the-job">Executing the job</h2>
+<h2 id="span-stylecolorff9900bobspan-executes-the-job"><span style="color:#ff9900;">Bob</span>  executes the job</h2>
 <ul>
-<li>The control PC for the cold atom device pulls the job from the queue.</li>
-<li>The job is executed on the cold atom device.</li>
+<li><span style="color:#ff9900;">Bob</span>  pulls the job from the queue to his control PC.</li>
+<li>He executes the job on the cold atom device, e.g. with <a href="https://github.com/labscript-suite">labscript</a>.</li>
 <li>The results are sent back to the storage.</li>
-<li>Alice can retrieve the results.</li>
-<li>All of this is done with the <a href="https://github.com/Alqor-UG/sqooler">sqooler</a> library that is installed on the control PC.</li>
 </ul>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-theme="uncover" lang="de-DE" style="--theme:uncover;--marpit-advanced-background-split:33%;" data-marpit-advanced-background="background" data-marpit-advanced-background-split="left"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;SoftwareStack.svg&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="67%" height="720" x="33%"><section id="9" data-theme="uncover" lang="de-DE" style="--theme:uncover;--marpit-advanced-background-split:33%;" data-marpit-advanced-background="content" data-marpit-advanced-background-split="left">
 <h2 id="summary">Summary</h2>
 
 <ul>
-<li>Alice was able to write quantum circuits in the widely used QISKIT framework.</li>
-<li>Bob could control his machine through his standard <code>labscript</code> software.</li>
+<li><span style="color:#2ac082;">Alice</span> was able to write quantum circuits in the widely used QISKIT framework.</li>
+<li><span style="color:#ff9900;">Bob</span> could control his machine through his standard <code>labscript</code> software.</li>
 <li>Both could communicate through an open source software framework involving <code>qlued</code> and <code>sqooler</code>.</li>
 </ul>
 </section>
