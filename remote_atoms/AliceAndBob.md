@@ -1,3 +1,4 @@
+```mermaid
 sequenceDiagram
   autonumber
   actor Alice
@@ -11,3 +12,4 @@ sequenceDiagram
         Bob->>Bob: Save the results in a nice fashion!
   end
   Bob->>Alice: Here are the (signed) results.
+```

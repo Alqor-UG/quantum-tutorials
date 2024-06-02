@@ -1,12 +1,7 @@
 ---
 marp: true
 theme: uncover
-style: |
-  .columns {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-  }
+
 ---
 
 # Cloud control for cold atoms
@@ -32,17 +27,18 @@ Cold atoms are:
 
 ## The challenge
 
-![bg fit left:50%](AliceAndBob.png)
+![bg fit left:50%](AliceAndBob.svg)
 
-- Alice is the interested user
-- Bob is the owner of the quantum hardware.
+-  <span style="color:#2ac082;">Alice</span>  is the interested user
+- <span style="color:#ff9900;">Bob</span> is the owner of the quantum hardware.
 - Now they need to communicate in an efficient way.
 
 ---
 
-## Alice first step
+## <span style="color:#2ac082;">Alice</span> uses QISKIT
 
-Write a quantum circuit in  `qiskit-cold-atoms`.
+Write the quantum circuit in  
+[qiskit-cold-atom](https://github.com/qiskit-community/qiskit-cold-atom).
 
 ```python
 Nwires = 2
@@ -61,9 +57,9 @@ qc_rabi.draw(output='mpl')
 
 ---
 
-## Calculate it locally
+## <span style="color:#2ac082;">Alice</span> calculates locally
 
-For small circuits Alice can simply execute the code locally.
+For small circuits <span style="color:#2ac082;">Alice</span> can simply execute the code on her own machine.
   
 ```python
 from qiskit_cold_atom.spins import SpinSimulator
@@ -79,13 +75,13 @@ result_rabi = job_rabi.result()
 counts_rabi = result_rabi.get_counts()
 ```
 
-- `SpinSimulator` is a local simulator for cold atoms and works for up to 10 spins.
+`SpinSimulator` is a local simulator for cold atoms and works for up to 10 spins.
 
 ---
 
-## Choosing a cloud backend
+## <span style="color:#2ac082;">Alice</span> chooses a cloud backend
 
-For more complex problem Alice can send the code to a cloud backend with `ColdAtomProvider`.
+For more complex problem <span style="color:#2ac082;">Alice</span> can send the code to a cloud backend with `ColdAtomProvider`.
 
 ```python
 from qiskit_cold_atom.providers import ColdAtomProvider
@@ -99,30 +95,29 @@ remote_counts_rabi = result_rabi.get_counts()
 
 ---
 
-## Sending the json
+## <span style="color:#2ac082;">Alice</span> sends the json
 
 
 ![bg fit left:33%](json.png)
 
-- With `qiskit-cold-atoms` Alice sent a json file to the webserver.
+- Alice sent a json file to the webserver.
 - The webserver validates it and sends it to the queue of the cloud backend.
 - All of this is done within the [qlued](https://github.com/Alqor-UG/qlued) framework.
 
 ---
 
-## Executing the job
+## <span style="color:#ff9900;">Bob</span>  executes the job
 
-- The control PC for the cold atom device pulls the job from the queue.
-- The job is executed on the cold atom device.
+- <span style="color:#ff9900;">Bob</span>  pulls the job from the queue to his control PC.
+- He executes the job on the cold atom device, e.g. with [labscript](https://github.com/labscript-suite).
 - The results are sent back to the storage.
-- Alice can retrieve the results.
-- All of this is done with the `sqooler` library that is installed on the control PC.
 
 ---
 
 ## Summary
 
-![bg fit left:33%](SoftwareStack.png)
+![bg fit left:33%](SoftwareStack.svg)
 
-
-Add nice colors for Alice and Bob such that it is recognizable who is doing what.
+- <span style="color:#2ac082;">Alice</span> was able to write quantum circuits in the widely used QISKIT framework.
+- <span style="color:#ff9900;">Bob</span> could control his machine through his standard `labscript` software.
+- Both could communicate through an open source software framework involving `qlued` and `sqooler`.
